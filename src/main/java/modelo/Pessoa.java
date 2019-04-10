@@ -1,8 +1,8 @@
 package modelo;
 
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import javax.persistence.*;
 import javax.validation.constraints.*;
@@ -10,25 +10,40 @@ import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
 @NamedQueries(value = 
-        {@NamedQuery(name = "Usuario.RetornaUsuario", query= " SELECT u FROM Usuario u WHERE u.telefone = :tel")})
+        {@NamedQuery(name = "Pessoa.retornaPessoa", query= " SELECT u FROM Pessoa u WHERE u.nip = :nip")})
 @Table(name = "TB_PESSOA")
-public abstract class Pessoa implements Serializable {
+public class Pessoa implements Serializable {
     private static final long serialVersionUID = 1L;
     
-    public Pessoa(String nome, String senha, String documento, boolean militar, String corpo, String posto){
+    public Pessoa(String nome, String senha, String nip, boolean militar, String especialidade, String posto){
         this.nome = nome;
         this.senha = senha;
-        this.documento = documento;
+        this.nip = nip;
         this.militar = militar;
-        this.corpo = corpo;
+        this.especialidade = especialidade;
         this.posto = posto;
+        this.chamados = new ArrayList<>();
     }
     
-    public Pessoa(){};
+    public Pessoa(){   
+    }
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID_PESSOA")
     private Long id;
+    
+    @OneToMany(mappedBy = "pessoa", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Chamado> chamados;
+    
+    @NotNull
+    @ManyToOne
+    @JoinColumn(name = "ID_DIVISAO", referencedColumnName = "ID_DIVISAO")
+    private Divisao divisao;
+    
+    @NotNull
+    @Column(name = "tipo")
+    private char tipo; //Se tipo='A', administrador, quem cadastra divisões, usuários, etc, se tipo='U', pessoa normal
     
     @Size(min = 2, max = 40)
     @NotNull
@@ -40,8 +55,8 @@ public abstract class Pessoa implements Serializable {
     private String posto;
     
     @NotNull
-    @Column(name = "CORPO")
-    private String corpo;
+    @Column(name = "ESPECIALIDADE")
+    private String especialidade;
     
     @NotNull
     @Column(name = "MILITAR")
@@ -53,16 +68,38 @@ public abstract class Pessoa implements Serializable {
     
     @NotBlank
     @Column(name = "DOCUMENTO")
-    private String documento;
+    private String nip;
+    
+    public void addChamado(Chamado chamado) {
+        chamados.add(chamado);
+    }
 
     public String getDocumento() {
-        return documento;
+        return nip;
     }
 
     public void setDocumento(String documento) {
-        this.documento = documento;
+        this.nip = documento;
     }
 
+    public List<Chamado> getChamados() {
+        return chamados;
+    }
+
+    public void setChamados(List<Chamado> chamados) {
+        this.chamados = chamados;
+    }
+
+    public char getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(char tipo) {
+        this.tipo = tipo;
+    }
+
+    
+    
     public String getPosto() {
         return posto;
     }
@@ -71,15 +108,15 @@ public abstract class Pessoa implements Serializable {
         this.posto = posto;
     }
 
-    public String getCorpo() {
-        return corpo;
+    public String getEspecialidade() {
+        return especialidade;
     }
 
-    public void setCorpo(String corpo) {
-        this.corpo = corpo;
+    public void setEspecialidade(String especialidade) {
+        this.especialidade = especialidade;
     }
 
-    public boolean isMilitar() {
+    public boolean getMilitar() {
         return militar;
     }
 
@@ -87,7 +124,21 @@ public abstract class Pessoa implements Serializable {
         this.militar = militar;
     }
 
-    
+    public Divisao getDivisao() {
+        return divisao;
+    }
+
+    public void setDivisao(Divisao divisao) {
+        this.divisao = divisao;
+    }
+
+    public String getNip() {
+        return nip;
+    }
+
+    public void setNip(String nip) {
+        this.nip = nip;
+    }
 
     public String getNome() {
         return nome;
@@ -130,9 +181,7 @@ public abstract class Pessoa implements Serializable {
     }
 
     public boolean equals(Pessoa usu) {
-        return this.nome.equals(usu.nome);
+        return this.nip.equals(usu.nip);
     }
-    
-    public abstract char tipo();
     
 }

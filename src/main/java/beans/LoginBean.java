@@ -55,7 +55,7 @@ public class LoginBean implements Serializable{
     public boolean validaUsuario()throws SQLException{
         PessoaServico ud = new PessoaServico();
         try {
-            String senhaRetornada = ud.retornaUsuario(this.nip).getSenha();
+            String senhaRetornada = ud.retornaPessoa(this.nip).getSenha();
             return this.senha.equals(senhaRetornada);
         } catch (Exception e) {
             return false;
@@ -65,7 +65,7 @@ public class LoginBean implements Serializable{
     public Pessoa retornaUsuario()throws SQLException{
         PessoaServico ud = new PessoaServico();
         try {
-            Pessoa usu = ud.retornaUsuario(this.nip);
+            Pessoa usu = ud.retornaPessoa(this.nip);
             return usu;
         } catch (Exception e) {
             return null;
@@ -85,7 +85,7 @@ public class LoginBean implements Serializable{
                 return "login";
             } else {
                 PessoaServico ud = new PessoaServico();
-                usu = ud.retornaUsuario(this.nip);
+                usu = ud.retornaPessoa(this.nip);
 
                 tipo = usu.getTipo();
                 this.setNome(usu.getNome());

@@ -12,6 +12,7 @@ import javax.faces.bean.SessionScoped;
 import modelo.Chamado;
 import modelo.Divisao;
 import modelo.Pessoa;
+import servico.PessoaServico;
 
 /**
  *

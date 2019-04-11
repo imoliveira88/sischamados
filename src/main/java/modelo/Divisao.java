@@ -14,6 +14,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -25,11 +27,14 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "TB_DIVISAO")
+@NamedQueries(value = 
+        {@NamedQuery(name = "Divisao.TODAS", query= " SELECT u FROM Chamado u WHERE u.status = :status  ORDER BY u.data DESC"),
+         @NamedQuery(name = "Divisao.DIVISAO_POR_NUMERO", query = " SELECT u FROM Divisao u WHERE u.numero = :numero")})
 public class Divisao implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID_DIVISAO")
     private Long id;
     

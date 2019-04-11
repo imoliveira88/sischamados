@@ -14,6 +14,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -24,11 +26,13 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "TB_CHAMADO")
+@NamedQueries(value = 
+        {@NamedQuery(name = "Chamado.porStatus", query= " SELECT u FROM Chamado u WHERE u.status = :status  ORDER BY u.data DESC")})
 public class Chamado implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID_CHAMADO")
     private Long id;
     

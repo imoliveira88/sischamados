@@ -4,13 +4,12 @@
  * and open the template in the editor.
  */
 package beans;
-
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import modelo.Chamado;
+import servico.ChamadoServico;
 
 /**
  *
@@ -30,25 +29,23 @@ public class ChamadoMB extends Artificial{
         this.chamado = chamado;
     }
     
-    public String adicionaItem(){
+    /*public String adicionaItem(){
         ItemPedido ip = new ItemPedido(this.prato,this.quantidade,pedido);
         
         pedido.addItem(ip);
         this.addItem(ip);
         
         
-        setMensagem("Item adicionado ao pedido!");
+        this.setMensagem("Item adicionado ao pedido!");
         return "homeC";
-    }
+    }*/
     
     public String fechaChamado(){
         ChamadoServico chamadoDAO = new ChamadoServico();
-        this.chamado.setTempo_solucao(Math.floor((Calendar.getInstance().getTimeInMillis()-chamado.getData())/(1000*3600*24)));
-        pedidoDAO.save(pedido);
+        this.chamado.setTempo_solucao(2);    //(Math.floor((Calendar.getInstance().getTimeInMillis()-chamado.getData())/(1000*3600*24)));
+        chamadoDAO.save(chamado);
         
         this.adicionaMensagem("Chamado concluído!","destinoAviso");
-        this.itens = new ArrayList<>();
-        this.pedido = new Pedido();
         return "chamados";
     }
     

@@ -31,21 +31,40 @@ public class PessoaServico extends DAOGenericoJPA<Long, Pessoa>{
         }
     }
     
+    public void atualizar(Pessoa p){
+        super.getEm().getTransaction().begin();
+        Query query = super.getEm().createQuery("Select e.id FROM Pessoa e WHERE e.nip = :nip");
+        query.setParameter("num",p.getNip());
+        
+        Long id = (Long) query.getSingleResult();
+        
+        Pessoa pes = super.getEm().find(Pessoa.class,id);
+        pes.setNome(pes.getNome());
+        pes.setNip(pes.getNip());
+        pes.setChamados(pes.getChamados());
+        pes.setEspecialidade(pes.getEspecialidade());
+        pes.setMilitar(pes.getMilitar());
+        pes.setPosto(pes.getPosto());
+        pes.setSenha(pes.getSenha());
+        super.getEm().merge(pes);
+        super.getEm().getTransaction().commit();
+        super.getEm().close();;
+    }
+    
     //Retorna a id caso usuário exista e zero, caso não exista
     public boolean existePessoa(Pessoa usu){
-        String query = "select e from Pessoa e";
-        List<Pessoa> pessoas = super.getEm().createQuery(query, Pessoa.class).getResultList();
+        Query query = super.getEm().createQuery("SELECT e FROM Pessoa e WHERE e.nip = :nip");
+        query.setParameter("nip", usu.getNip());
+        Long quantidade = (Long) query.getResultList().get(0);
+       
+        System.out.println("Primeiro número " + quantidade);
         try{
-            for(Pessoa pessoa : pessoas){
-                if(pessoa.equals(usu)){
-                    return true;
-                }
-            }
-            return false;
+            if(quantidade > 0) return true;
         }
         catch(NoResultException e){
             return false;
         }
+        return false;
     }
     
     public boolean salvar(Pessoa b) {

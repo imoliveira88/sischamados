@@ -28,7 +28,7 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "TB_DIVISAO")
 @NamedQueries(value = 
-        {@NamedQuery(name = "Divisao.TODAS", query= " SELECT u FROM Chamado u WHERE u.status = :status  ORDER BY u.data DESC"),
+        {@NamedQuery(name = "Divisao.TODAS", query= " SELECT u FROM Divisao u ORDER BY u.nome"),
          @NamedQuery(name = "Divisao.DIVISAO_POR_NUMERO", query = " SELECT u FROM Divisao u WHERE u.numero = :numero")})
 public class Divisao implements Serializable {
 
@@ -47,7 +47,6 @@ public class Divisao implements Serializable {
     @Column(name = "NOME")
     private String nome;
     
-    @Size(min = 2, max = 40)
     @NotNull
     @Column(name = "NUMERO")
     private int numero;

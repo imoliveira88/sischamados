@@ -18,16 +18,16 @@ public class main {
         Chamado c = new Chamado();
         
         Divisao d = new Divisao();
-        d.setNome("Exocet");
+        d.setNome("Exocet do meu Magal!");
         d.setNumero(232);
         
         DivisaoServico ds = new DivisaoServico();
-        ds.salvar(d);
+        ds.atualizar(d);
         
-        Pessoa p = new Pessoa("Igor","oxente","18031480",true,"EN","1T");
+        /*Pessoa p = new Pessoa("Igor","oxente","18031480",true,"EN","1T");
         p.setDivisao(d);
         PessoaServico ps = new PessoaServico();
-        ps.salvar(p);
+        ps.salvar(p);*/
         
         System.out.println("Último: " + c.ultimo(teste) + "\n" + "Tracking: " + c.exibeTrack(teste));
     }

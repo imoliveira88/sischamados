@@ -31,7 +31,7 @@ public class ChamadoServico extends DAOGenericoJPA<Long, Chamado>{
             return pedidos;
         }
         catch(NoResultException e){
-            return new ArrayList<Chamado>();
+            return new ArrayList<>();
         }
     }
     

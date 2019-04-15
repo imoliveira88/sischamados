@@ -33,7 +33,7 @@ public class Pessoa implements Serializable {
     @Column(name = "ID_PESSOA")
     private Long id;
     
-    @OneToMany(mappedBy = "pessoa", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "solicitante", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Chamado> chamados;
     
     //@NotNull

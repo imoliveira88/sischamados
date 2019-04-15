@@ -8,6 +8,7 @@ package modelo;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -51,7 +52,7 @@ public class Divisao implements Serializable {
     @Column(name = "NUMERO")
     private int numero;
     
-    @OneToMany(mappedBy = "divisao", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "divisao", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private final List<Pessoa> pessoas;
 
     public Long getId() {

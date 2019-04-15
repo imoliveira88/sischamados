@@ -27,7 +27,8 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "TB_CHAMADO")
 @NamedQueries(value = 
-        {@NamedQuery(name = "Chamado.porStatus", query= " SELECT u FROM Chamado u WHERE u.status = :status  ORDER BY u.data DESC")})
+        {@NamedQuery(name = "Chamado.porStatus", query= " SELECT u FROM Chamado u WHERE u.status = :status  ORDER BY u.data DESC"),
+         @NamedQuery(name = "Chamado.TODOS", query= " SELECT u FROM Chamado u ORDER BY u.data DESC")})
 public class Chamado implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -36,19 +37,15 @@ public class Chamado implements Serializable {
     @Column(name = "ID_CHAMADO")
     private Long id;
     
-    @NotNull
+    //@NotNull
     @ManyToOne
     @JoinColumn(name = "ID_PESSOA", referencedColumnName = "ID_PESSOA")
-    private Pessoa pessoa;
+    private Pessoa solicitante;
     
     @Size(min = 2, max = 40)
     @NotNull
     @Column(name = "TITULO")
     private String titulo;
-    
-    @NotNull
-    @Column(name = "SOLICITANTE")
-    private Pessoa solicitante;
     
     @NotNull
     @Column(name = "PRIORIDADE")
@@ -69,7 +66,7 @@ public class Chamado implements Serializable {
     private String status; //Track do status do chamado
     
     @Column(name = "ATRIBUIDO_A")
-    private String atribuido; //Track do status do chamado
+    private String atribuido; //Track das atribuições
     
     @Column(name = "TEMPO_SOLUCAO")
     private int tempo_solucao; //Tempo dado em dias. Quando o status for definido como "Executado", atualizar também esse campo
@@ -98,14 +95,6 @@ public class Chamado implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Pessoa getPessoa() {
-        return pessoa;
-    }
-
-    public void setPessoa(Pessoa pessoa) {
-        this.pessoa = pessoa;
     }
 
     public String getTitulo() {

@@ -17,7 +17,7 @@ public class PessoaServico extends DAOGenericoJPA<Long, Pessoa>{
     }
     
     public Pessoa retornaPessoa(String nip){
-        Query query = super.getEm().createNamedQuery("Pessoa.RetornaPessoa");
+        Query query = super.getEm().createNamedQuery("Pessoa.retornaPessoa");
         
         query.setParameter("nip", nip);
         Pessoa usu;
@@ -31,10 +31,11 @@ public class PessoaServico extends DAOGenericoJPA<Long, Pessoa>{
         }
     }
     
+    
     public void atualizar(Pessoa p){
         super.getEm().getTransaction().begin();
         Query query = super.getEm().createQuery("Select e.id FROM Pessoa e WHERE e.nip = :nip");
-        query.setParameter("num",p.getNip());
+        query.setParameter("nip",p.getNip());
         
         Long id = (Long) query.getSingleResult();
         
@@ -48,20 +49,20 @@ public class PessoaServico extends DAOGenericoJPA<Long, Pessoa>{
         pes.setSenha(pes.getSenha());
         super.getEm().merge(pes);
         super.getEm().getTransaction().commit();
-        super.getEm().close();;
+        super.getEm().close();
     }
     
     //Retorna a id caso usuário exista e zero, caso não exista
-    public boolean existePessoa(Pessoa usu){
-        Query query = super.getEm().createQuery("SELECT e FROM Pessoa e WHERE e.nip = :nip");
+    public boolean existePessoa(Pessoa usu) throws NoResultException, IndexOutOfBoundsException{
+        Query query = super.getEm().createQuery("SELECT count(e) FROM Pessoa e WHERE e.nip = :nip");
         query.setParameter("nip", usu.getNip());
-        Long quantidade = (Long) query.getResultList().get(0);
        
-        System.out.println("Primeiro número " + quantidade);
         try{
+            int quantidade = Integer.parseInt(query.getResultList().get(0).toString());
+            System.out.println("Primeiro número " + quantidade);
             if(quantidade > 0) return true;
         }
-        catch(NoResultException e){
+        catch(NoResultException | IndexOutOfBoundsException e){
             return false;
         }
         return false;

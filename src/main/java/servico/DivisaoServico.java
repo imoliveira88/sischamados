@@ -70,7 +70,7 @@ public class DivisaoServico extends DAOGenericoJPA<Long, Divisao>{
     public Divisao retornaDivisao(int numero){
         TypedQuery<Divisao> query = super.getEm().createNamedQuery("Divisao.DIVISAO_POR_NUMERO", Divisao.class);
         
-        query.setParameter(1, numero);
+        query.setParameter("numero", numero);
         
        return query.getSingleResult();
     }

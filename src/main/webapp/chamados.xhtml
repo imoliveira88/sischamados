@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Pedidos</title>
+        <h:outputStylesheet library="css" name="style.css" />
+    </h:head>
+    <h:body>
+        <h:form>
+            <p:tabMenu activeIndex="-1">
+                <p:menuitem value="Logout" iconPos="top" action="#{logoutBean.logout()}"/>
+                <p:menuitem value="Home" outcome="chamados.xhtml" iconPos="top"/>
+                <p:menuitem value="Chamados" outcome="chamados.xhtml" iconPos="top"/>
+            </p:tabMenu>
+        </h:form>
+        
+        <table>
+            <tr>
+                <td>
+                    <h:form>
+                        <p:growl id="msgs" showDetail="true" />
+                    </h:form>
+
+                </td>
+                <td>
+                    <h:form enctype="multipart/form-data">
+                        <p:fieldset legend="Chamados" style="margin-bottom:20px">
+                            <p:dataTable var="chamado" value="#{chamadoMB.chamados}" >
+                                <p:column>
+                                    <f:facet name="header">Status</f:facet>
+                                    <h:outputText value="#{chamado.status}"/>
+                                </p:column>
+                                <p:column>
+                                    <f:facet name="header">Solicitante</f:facet>
+                                    <h:outputText value="#{chamado.solicitante}"/>
+                                </p:column>
+                                <p:column>
+                                    <f:facet name="header">Título</f:facet>
+                                    <h:outputText value="#{chamado.titulo}"/>
+                                </p:column>
+                                <p:column>
+                                    <f:facet name="header">Data</f:facet>
+                                    <h:outputText value="#{chamado.data}"/>
+                                </p:column>
+                            </p:dataTable>
+                        </p:fieldset>
+                    </h:form>
+                </td>
+            </tr>
+        </table>
+            
+    </h:body>
+</html>

@@ -53,5 +53,9 @@ public class ChamadoMB extends Artificial{
         return new ChamadoServico().chamadosStatus(status);
     }
     
+    public List<Chamado> getChamados(){
+        return new ChamadoServico().todosChamados();
+    }
+    
     
 }

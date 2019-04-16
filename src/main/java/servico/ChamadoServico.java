@@ -41,7 +41,7 @@ public class ChamadoServico extends DAOGenericoJPA<Long, Chamado>{
         cha.setStatus(cha.getStatus() + "," + c.getStatus());
         super.getEm().merge(cha);
         super.getEm().getTransaction().commit();
-        super.getEm().close();;
+        super.getEm().close();
     }
     
     public void atualizaSolicitado(Chamado c){

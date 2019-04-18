@@ -10,6 +10,8 @@ import java.util.List;
 import modelo.Chamado;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
+import modelo.Divisao;
+import modelo.Pessoa;
 
 public class ChamadoServico extends DAOGenericoJPA<Long, Chamado>{
 
@@ -29,7 +31,7 @@ public class ChamadoServico extends DAOGenericoJPA<Long, Chamado>{
     
       //Solicitado, status, atribuído a: os três são Strings formatadas
     
-    public void atualizaStatus(Chamado c){
+    public boolean atualizaStatus(Chamado c){
         super.getEm().getTransaction().begin();
         Query query = super.getEm().createQuery("Select e.id FROM Chamado e WHERE e.data = :data AND e.titulo = :titulo");
         query.setParameter("data",c.getData());
@@ -38,10 +40,12 @@ public class ChamadoServico extends DAOGenericoJPA<Long, Chamado>{
         Long id = (Long) query.getSingleResult();
         
         Chamado cha = super.getEm().find(Chamado.class,id);
-        cha.setStatus(cha.getStatus() + "," + c.getStatus());
+        //cha.setStatus(cha.getStatus() + "," + c.getStatus());
+        cha.setStatus(c.getStatus());
         super.getEm().merge(cha);
         super.getEm().getTransaction().commit();
         super.getEm().close();
+        return true;
     }
     
     public void atualizaSolicitado(Chamado c){
@@ -92,6 +96,35 @@ public class ChamadoServico extends DAOGenericoJPA<Long, Chamado>{
     
     public List<Chamado> todosChamados()throws NoResultException{
         Query query = super.getEm().createNamedQuery("Chamado.TODOS");
+        List<Chamado> chamados;
+        
+        try{
+            chamados = query.getResultList();
+            return chamados;
+        }
+        catch(NoResultException e){
+            return new ArrayList<>();
+        }
+    }
+    
+    public List<Chamado> chamadosDivisao(Divisao d)throws NoResultException{
+        Query query = super.getEm().createNamedQuery("Chamado.porDivisao");
+        query.setParameter("soicitante", d.getNome());
+        List<Chamado> chamados;
+        
+        try{
+            chamados = query.getResultList();
+            return chamados;
+        }
+        catch(NoResultException e){
+            return new ArrayList<>();
+        }
+    }
+
+
+    public List<Chamado> chamadosSolicitante(Pessoa sol)throws NoResultException{
+        Query query = super.getEm().createNamedQuery("Chamado.porSolicitante");
+        query.setParameter("solicitante", sol);
         List<Chamado> chamados;
         
         try{

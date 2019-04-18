@@ -6,15 +6,25 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Chamados</title>
-        <h:outputStylesheet library="css" name="style.css" />
+        
     </h:head>
     <h:body>
+        <f:facet name="first">
+            <style type="text/css">
+            .custom .ui-menu-parent > a .ui-menuitem-text, .menu-sistema > .ui-menu-list > .ui-menuitem > a > .ui-menuitem-text {
+            overflow: visible !important;
+            color: #ffcccc !important;
+            }
+            </style>
+        </f:facet>
+
+
         <h:form>
-            <p:tabMenu activeIndex="-1">
-                <p:menuitem value="Logout" iconPos="top" action="#{logoutBean.logout()}"/>
-                <p:menuitem value="Home" outcome="chamados.xhtml" iconPos="top"/>
-                <p:menuitem value="Chamados" outcome="chamados.xhtml" iconPos="top"/>
-            </p:tabMenu>
+        <p:tabMenu activeIndex="-1" styleClass="custom">
+            <p:menuitem value="Logout" iconPos="top" action="#{logoutBean.logout()}"/>
+            <p:menuitem value="Home" outcome="chamados.xhtml" iconPos="top"/>
+            <p:menuitem value="Chamados" outcome="chamados.xhtml" iconPos="top"/>
+        </p:tabMenu>
         </h:form>
         
         <table>
@@ -28,10 +38,13 @@
                 <td>
                     <h:form enctype="multipart/form-data">
                         <p:fieldset legend="Chamados" style="margin-bottom:20px">
-                            <p:dataTable var="chamado" value="#{chamadoMB.chamados}" >
+                            <p:dataTable var="chamado" value="#{chamadoMB.chamados}" editable="true" editMode="cell">
                                 <p:column>
                                     <f:facet name="header">Status</f:facet>
-                                    <h:outputText value="#{chamado.status}"/>
+                                    <p:selectOneMenu id="status" value="#{chamado.status}">
+                                        <f:selectItem itemLabel="#{chamado.status}" itemValue="" />
+                                        <f:selectItems value="#{chamadoMB.listaStatus()}" />
+                                    </p:selectOneMenu>
                                 </p:column>
                                 <p:column>
                                     <f:facet name="header">Solicitante</f:facet>
@@ -45,6 +58,17 @@
                                     <f:facet name="header">Data</f:facet>
                                     <h:outputText value="#{chamado.data}"/>
                                 </p:column>
+                                <p:column>
+                                        <f:facet name="header">Descrição</f:facet>
+                                        <p:cellEditor>
+                                            <f:facet name="output"><h:outputText value="#{chamado.descricao}" /></f:facet>
+                                            <f:facet name="input"><p:inputText value="#{chamado.descricao}"/></f:facet>
+                                        </p:cellEditor>
+                                </p:column>
+                                <p:column>
+                                        <f:facet name="header">Atualizar</f:facet>
+                                        <h:commandButton value="Atualizar" action="#{chamadoMB.atualizaStatus(chamado)}"/>
+                                    </p:column>
                             </p:dataTable>
                         </p:fieldset>
                     </h:form>

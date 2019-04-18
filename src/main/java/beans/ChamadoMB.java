@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package beans;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
@@ -23,6 +24,15 @@ public class ChamadoMB extends Artificial{
 
     public Chamado getChamado() {
         return chamado;
+    }
+    
+    public List listaStatus(){
+        List lista = new ArrayList<>();
+        lista.add("Iniciado");
+        lista.add("Executando");
+        lista.add("Executado");
+        lista.add("Finalizado");
+        return lista;
     }
 
     public void setChamado(Chamado chamado) {
@@ -46,6 +56,16 @@ public class ChamadoMB extends Artificial{
         chamadoDAO.save(chamado);
         
         this.adicionaMensagem("Chamado concluído!","destinoAviso");
+        return "chamados";
+    }
+    
+    public String atualizaStatus(Chamado cha) throws Exception{
+        ChamadoServico pra = new ChamadoServico();
+        if(pra.atualizaStatus(cha)){
+            adicionaMensagem("Status alterado com sucesso!","destinoAviso");
+        }else{
+            adicionaMensagem("Status não pode ser alterado!","destinoAviso");
+        }
         return "chamados";
     }
     

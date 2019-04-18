@@ -5,9 +5,12 @@
  */
 package servico;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
+import modelo.Chamado;
+import modelo.Divisao;
 import modelo.Pessoa;
 
 public class PessoaServico extends DAOGenericoJPA<Long, Pessoa>{
@@ -77,6 +80,21 @@ public class PessoaServico extends DAOGenericoJPA<Long, Pessoa>{
         }
         return false;
     }
+    
+    public List<Chamado> pessoasDivisao(Divisao d)throws NoResultException{
+        Query query = super.getEm().createNamedQuery("Pessoa.retornaPessoasDivisao");
+        query.setParameter("divisao", d);
+        List<Chamado> chamados;
+        
+        try{
+            chamados = query.getResultList();
+            return chamados;
+        }
+        catch(NoResultException e){
+            return new ArrayList<>();
+        }
+    }
+
     
     public Pessoa getById(long pk) {
         return super.getById(pk);

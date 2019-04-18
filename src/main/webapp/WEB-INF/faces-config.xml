@@ -4,4 +4,12 @@
               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
               xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
 
+    <navigation-rule>
+        <from-view-id>/chamados.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>chamados</from-outcome>
+            <to-view-id>/chamados.xhtml</to-view-id>
+            <redirect/>     
+    </navigation-rule>
+    
 </faces-config>

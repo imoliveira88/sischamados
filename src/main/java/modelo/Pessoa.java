@@ -10,7 +10,8 @@ import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
 @NamedQueries(value = 
-        {@NamedQuery(name = "Pessoa.retornaPessoa", query= " SELECT u FROM Pessoa u WHERE u.nip = :nip")})
+         {@NamedQuery(name = "Pessoa.retornaPessoa", query= " SELECT u FROM Pessoa u WHERE u.nip = :nip"),
+         @NamedQuery(name = "Pessoa.retornaPessoasDivisao", query= " SELECT u FROM Pessoa u WHERE u.divisao = :divisao")})
 @Table(name = "TB_PESSOA")
 public class Pessoa implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -168,7 +169,7 @@ public class Pessoa implements Serializable {
     public String toString(){
         String s = "";
         
-        s += "Nome: " + this.getNome();
+        s = this.getNome();
         
         return s;
     }

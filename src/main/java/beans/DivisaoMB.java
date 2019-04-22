@@ -5,6 +5,7 @@
  */
 package beans;
 
+import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import modelo.Divisao;
@@ -42,6 +43,10 @@ public class DivisaoMB extends Artificial{
             adicionaMensagem("Erro! A divisão já está cadastrada!","destinoAviso");
             return "divisao";
         }
+    }
+    
+    public List<Divisao> getDivisoes(){
+        return new DivisaoServico().todasDivisoes();
     }
     
     public String excluir(Divisao pr) throws Exception{

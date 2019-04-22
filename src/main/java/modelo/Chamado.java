@@ -17,6 +17,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -49,15 +50,14 @@ public class Chamado implements Serializable {
     @Column(name = "TITULO")
     private String titulo;
     
-    @NotNull
     @Column(name = "PRIORIDADE")
     private String prioridade; //Valores pré-definidos
     
-    @Size(min = 2, max = 40)
-    @NotNull
+    @Size(min = 2)
     @Column(name = "DESCRICAO")
     private String descricao;
     
+    @Temporal(javax.persistence.TemporalType.DATE)
     @Column(name = "DATA_ABERTURA")
     private Date data;
     
@@ -174,23 +174,17 @@ public class Chamado implements Serializable {
     
 
     @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
+    public boolean equals(Object other) {
+    return (other instanceof Chamado) && (id != null)
+        ? id.equals(((Chamado) other).id)
+        : (other == this);
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Chamado)) {
-            return false;
-        }
-        Chamado other = (Chamado) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
+    public int hashCode() {
+    return (id != null)
+        ? (this.getClass().hashCode() + id.hashCode())
+        : super.hashCode();
     }
 
     @Override

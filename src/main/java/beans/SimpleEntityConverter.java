@@ -13,7 +13,7 @@ import javax.faces.convert.FacesConverter;
 
 
 @FacesConverter("simpleConverter")
-    public class SimpleEntityConverter implements Converter {
+public class SimpleEntityConverter implements Converter {
 
     @Override
     public Object getAsObject(FacesContext ctx, UIComponent component, String value) {

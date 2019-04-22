@@ -31,21 +31,20 @@ public class ChamadoServico extends DAOGenericoJPA<Long, Chamado>{
     
       //Solicitado, status, atribuído a: os três são Strings formatadas
     
-    public boolean atualizaStatus(Chamado c){
-        super.getEm().getTransaction().begin();
-        Query query = super.getEm().createQuery("Select e.id FROM Chamado e WHERE e.data = :data AND e.titulo = :titulo");
-        query.setParameter("data",c.getData());
-        query.setParameter("titulo",c.getTitulo());
-        
-        Long id = (Long) query.getSingleResult();
+    public boolean atualizaStatus(Chamado c, Long id) throws Exception{
+        super.getEm().getTransaction().begin();        
         
         Chamado cha = super.getEm().find(Chamado.class,id);
         //cha.setStatus(cha.getStatus() + "," + c.getStatus());
         cha.setStatus(c.getStatus());
-        super.getEm().merge(cha);
-        super.getEm().getTransaction().commit();
-        super.getEm().close();
-        return true;
+        try{
+            super.getEm().merge(cha);
+            super.getEm().getTransaction().commit();
+            super.getEm().close();
+            return true;
+        }catch(Exception e){
+            return false;
+        }
     }
     
     public void atualizaSolicitado(Chamado c){
@@ -60,7 +59,7 @@ public class ChamadoServico extends DAOGenericoJPA<Long, Chamado>{
         cha.setStatus(cha.getSolicitado() + "," + c.getSolicitado());
         super.getEm().merge(cha);
         super.getEm().getTransaction().commit();
-        super.getEm().close();;
+        super.getEm().close();
     }
     
     public void atualizaAtribuido(Chamado c){
@@ -75,7 +74,7 @@ public class ChamadoServico extends DAOGenericoJPA<Long, Chamado>{
         cha.setStatus(cha.getAtribuido() + "," + c.getAtribuido());
         super.getEm().merge(cha);
         super.getEm().getTransaction().commit();
-        super.getEm().close();;
+        super.getEm().close();
     }
     
     

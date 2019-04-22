@@ -8,9 +8,11 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
 import modelo.Chamado;
 import servico.ChamadoServico;
+import servico.PessoaServico;
 
 /**
  *
@@ -21,6 +23,15 @@ import servico.ChamadoServico;
 public class ChamadoMB extends Artificial{
     
     private Chamado chamado;
+    private String solicitado;
+    private String titulo;
+    private String status;
+    private String descricao;
+    private String prioridade;
+
+    public ChamadoMB() {
+        chamado = new Chamado();
+    }
 
     public Chamado getChamado() {
         return chamado;
@@ -49,6 +60,50 @@ public class ChamadoMB extends Artificial{
         this.setMensagem("Item adicionado ao pedido!");
         return "homeC";
     }*/
+
+    public String getSolicitado() {
+        return solicitado;
+    }
+
+    public void setSolicitado(String solicitado) {
+        this.solicitado = solicitado;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+    
+    
+
+    public String getPrioridade() {
+        return prioridade;
+    }
+
+    public void setPrioridade(String prioridade) {
+        this.prioridade = prioridade;
+    }
+    
+    
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
     
     public String fechaChamado(){
         ChamadoServico chamadoDAO = new ChamadoServico();
@@ -59,9 +114,12 @@ public class ChamadoMB extends Artificial{
         return "chamados";
     }
     
-    public String atualizaStatus(Chamado cha) throws Exception{
+    public String atualizaStatus(Long id, String status) throws Exception{
         ChamadoServico pra = new ChamadoServico();
-        if(pra.atualizaStatus(cha)){
+        Chamado cha = pra.getById(id);
+        cha.setStatus(status);
+        if(pra.atualizaStatus(cha,id)){
+            System.out.println("AQUIIIIIII" + "Status = " + status + "  Id =    " + id + cha.getTitulo() + cha.getData());
             adicionaMensagem("Status alterado com sucesso!","destinoAviso");
         }else{
             adicionaMensagem("Status não pode ser alterado!","destinoAviso");
@@ -75,6 +133,19 @@ public class ChamadoMB extends Artificial{
     
     public List<Chamado> getChamados(){
         return new ChamadoServico().todosChamados();
+    }
+    
+    public String salvar(){        
+        chamado.setData(Calendar.getInstance().getTime());
+        chamado.setStatus("Iniciado");
+        chamado.setDescricao(descricao);
+        chamado.setTitulo(titulo);
+        chamado.setSolicitado(solicitado);
+        chamado.setPrioridade(prioridade);
+        chamado.setSolicitante((new PessoaServico()).getById(1));//Alterar após implementação da tela de login
+        ChamadoServico chamadoDAO = new ChamadoServico();
+        chamadoDAO.save(chamado);
+        return "chamados";
     }
     
     

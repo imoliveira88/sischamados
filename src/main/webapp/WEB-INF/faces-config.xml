@@ -9,7 +9,8 @@
         <navigation-case>
             <from-outcome>chamados</from-outcome>
             <to-view-id>/chamados.xhtml</to-view-id>
-            <redirect/>     
+            <redirect/>   
+        </navigation-case>  
     </navigation-rule>
     
 </faces-config>

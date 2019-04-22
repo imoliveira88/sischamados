@@ -32,6 +32,9 @@ public class PessoaMB extends Artificial {
     private String senha;
     private String nip;
 
+    public PessoaMB() {
+    }
+
     public List<Chamado> getChamados() {
         return chamados;
     }

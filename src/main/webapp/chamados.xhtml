@@ -6,17 +6,9 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Chamados</title>
-        
+        <h:outputStylesheet library="css" name="style.css" />
     </h:head>
     <h:body>
-        <f:facet name="first">
-            <style type="text/css">
-            .custom .ui-menu-parent > a .ui-menuitem-text, .menu-sistema > .ui-menu-list > .ui-menuitem > a > .ui-menuitem-text {
-            overflow: visible !important;
-            color: #ffcccc !important;
-            }
-            </style>
-        </f:facet>
 
 
         <h:form>
@@ -31,18 +23,22 @@
             <tr>
                 <td>
                     <h:form>
-                        <p:growl id="msgs" showDetail="true" />
+                        <p:growl id="msgs" for="destinoAviso" showDetail="true" autoUpdate="true" sticky="true" life="6000"/>
                     </h:form>
 
                 </td>
                 <td>
-                    <h:form enctype="multipart/form-data">
+                    <h:form enctype="multipart/form-data" id="testForm">
                         <p:fieldset legend="Chamados" style="margin-bottom:20px">
-                            <p:dataTable var="chamado" value="#{chamadoMB.chamados}" editable="true" editMode="cell">
+                            <p:dataTable var="chamado" value="#{chamadoMB.chamados}" editable="true" editMode="cell" reflow="true" selection="true" >
+                                <p:column>
+                                    <f:facet name="header">ID</f:facet>
+                                    <h:outputText value="#{chamado.id}"/>
+                                </p:column>
                                 <p:column>
                                     <f:facet name="header">Status</f:facet>
-                                    <p:selectOneMenu id="status" value="#{chamado.status}">
-                                        <f:selectItem itemLabel="#{chamado.status}" itemValue="" />
+                                    <h:outputText value="#{chamado.status}"/>
+                                    Alterar para: <p:selectOneMenu id="status" value="#{chamadoMB.status}">
                                         <f:selectItems value="#{chamadoMB.listaStatus()}" />
                                     </p:selectOneMenu>
                                 </p:column>
@@ -67,7 +63,7 @@
                                 </p:column>
                                 <p:column>
                                         <f:facet name="header">Atualizar</f:facet>
-                                        <h:commandButton value="Atualizar" action="#{chamadoMB.atualizaStatus(chamado)}"/>
+                                        <h:commandButton value="Atualizar" action="#{chamadoMB.atualizaStatus(chamado.id,status)}"/>
                                     </p:column>
                             </p:dataTable>
                         </p:fieldset>

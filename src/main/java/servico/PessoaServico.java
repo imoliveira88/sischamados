@@ -105,7 +105,7 @@ public class PessoaServico extends DAOGenericoJPA<Long, Pessoa>{
     }
     
     public List<Pessoa> pessoas()throws NoResultException{
-        Query query = super.getEm().createNamedQuery("Pessoa.TODAS");
+        Query query = super.getEm().createNamedQuery("Pessoa.TODOS");
         List<Pessoa> pessoas;
         
         try{

@@ -8,14 +8,14 @@ package beans;
 import java.io.Serializable;
 import java.text.ParseException;
 import java.util.List;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
-import javax.enterprise.context.SessionScoped;
 import modelo.Chamado;
 import modelo.Divisao;
 import modelo.Pessoa;
 import servico.PessoaServico;
 
-@SessionScoped
+@RequestScoped
 @Named("pessoaMB")
 public class PessoaMB extends Artificial implements Serializable{
     

@@ -34,6 +34,7 @@ public class ChamadoMB extends Artificial implements Serializable{
 
     public ChamadoMB() {
         chamado = new Chamado();
+        solicitante = new Pessoa();
     }
 
     public Chamado getChamado() {

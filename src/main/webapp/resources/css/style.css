@@ -142,9 +142,15 @@ body {
     height: 40px;
     background-color: transparent;
     font-size: 14px;
+    border: 0;
 }
 
 .botao:hover{
+    background-color: background;
+    cursor:pointer;
+}
+
+.botaoTabela:hover{
     background-color: background;
     cursor:pointer;
 }

@@ -52,11 +52,9 @@ public class Pessoa implements Serializable {
     @Column(name = "NOME")
     private String nome;
     
-    @NotNull
     @Column(name = "POSTO")
     private String posto;
     
-    @NotNull
     @Column(name = "ESPECIALIDADE")
     private String especialidade;
     
@@ -170,7 +168,11 @@ public class Pessoa implements Serializable {
     public String toString(){
         String s = "";
         
-        s = this.getNome();
+        if(this.militar){
+            s += this.posto + "(" + this.especialidade + ") " + this.nome;
+        }else{
+            s += this.especialidade + " " + this.nome;
+        }
         
         return s;
     }

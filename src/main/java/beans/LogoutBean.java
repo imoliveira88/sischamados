@@ -15,7 +15,7 @@ import javax.servlet.http.HttpSession;
 
 @ManagedBean(name = "logoutBean")
 @ViewScoped
-public class LogoutBean implements Serializable {
+public class LogoutBean extends Artificial implements Serializable {
 
     public String logout() throws ServletException {
         FacesContext fc = FacesContext.getCurrentInstance();
@@ -26,6 +26,7 @@ public class LogoutBean implements Serializable {
         
         HttpServletRequest request = (HttpServletRequest) fc.getExternalContext().getRequest();        
         request.logout();
-        return "sair";
+        this.adicionaMensagem("Sessão encerrada!", "destinoAviso");
+        return "login";
     }
 }

@@ -21,12 +21,8 @@ public class DivisaoServico extends DAOGenericoJPA<Long, Divisao>{
         return super.getById(pk);
     }
     
-    public boolean deletarDivisao(Divisao d){
+    public boolean deletarDivisao(Long id){
         super.getEm().getTransaction().begin();
-        Query query = super.getEm().createQuery("Select e.id FROM Divisao e WHERE e.numero = :num");
-        query.setParameter("num",d.getNumero());
-        
-        Long id = (Long) query.getSingleResult();
         
         Divisao d1 = super.getEm().find(Divisao.class,id);
         
@@ -64,7 +60,7 @@ public class DivisaoServico extends DAOGenericoJPA<Long, Divisao>{
         divisao.setNumero(div.getNumero());
         super.getEm().merge(divisao);
         super.getEm().getTransaction().commit();
-        super.getEm().close();;
+        super.getEm().close();
     }
     
     public Divisao retornaDivisao(int numero){

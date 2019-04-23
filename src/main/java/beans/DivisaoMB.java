@@ -7,8 +7,8 @@ package beans;
 
 import java.io.Serializable;
 import java.util.List;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
-import javax.enterprise.context.SessionScoped;
 import modelo.Divisao;
 import servico.DivisaoServico;
 
@@ -16,7 +16,7 @@ import servico.DivisaoServico;
  *
  * @author usuario
  */
-@SessionScoped
+@RequestScoped
 @Named("divisaoMB")
 public class DivisaoMB extends Artificial implements Serializable{
     
@@ -25,6 +25,7 @@ public class DivisaoMB extends Artificial implements Serializable{
     private int numero;
 
     public DivisaoMB() {
+        divisao = new Divisao();
     }
 
     public Divisao getDivisao() {
@@ -72,12 +73,12 @@ public class DivisaoMB extends Artificial implements Serializable{
         return new DivisaoServico().todasDivisoes();
     }
     
-    public String excluir(Divisao pr) throws Exception{
+    public String excluir(Long id) throws Exception{
         DivisaoServico pra = new DivisaoServico();
-        if(pra.deletarDivisao(pr)){
+        if(pra.deletarDivisao(id)){
             adicionaMensagem("Divisão removida com sucesso!","destinoAviso");
         }else{
-            adicionaMensagem("Divisão não pode ser removido, pois há colaboradores cadastrados nela! Caso queira excluí-la atualize primeiro as informações de seus colaboradores e, então, tente novamente!","destinoAviso");
+            adicionaMensagem("Divisão não pode ser removida, pois há colaboradores cadastrados nela! Caso queira excluí-la atualize primeiro as informações de seus colaboradores e, então, tente novamente!","destinoAviso");
         }
         return "divisao";
     }

@@ -4,14 +4,15 @@
  * and open the template in the editor.
  */
 package beans;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
-import javax.faces.bean.SessionScoped;
+import javax.enterprise.context.SessionScoped;
+import javax.inject.Named;
 import modelo.Chamado;
+import modelo.Pessoa;
 import servico.ChamadoServico;
 import servico.PessoaServico;
 
@@ -19,9 +20,9 @@ import servico.PessoaServico;
  *
  * @author usuario
  */
-@ManagedBean(name = "chamadoMB")
+@Named("chamadoMB")
 @SessionScoped
-public class ChamadoMB extends Artificial{
+public class ChamadoMB extends Artificial implements Serializable{
     
     private Chamado chamado;
     private String solicitado;
@@ -29,6 +30,7 @@ public class ChamadoMB extends Artificial{
     private String status;
     private String descricao;
     private String prioridade;
+    private Pessoa solicitante;
 
     public ChamadoMB() {
         chamado = new Chamado();
@@ -50,21 +52,20 @@ public class ChamadoMB extends Artificial{
     public void setChamado(Chamado chamado) {
         this.chamado = chamado;
     }
-    
-    /*public String adicionaItem(){
-        ItemPedido ip = new ItemPedido(this.prato,this.quantidade,pedido);
-        
-        pedido.addItem(ip);
-        this.addItem(ip);
-        
-        
-        this.setMensagem("Item adicionado ao pedido!");
-        return "homeC";
-    }*/
 
     public String getSolicitado() {
         return solicitado;
     }
+
+    public Pessoa getSolicitante() {
+        return solicitante;
+    }
+
+    public void setSolicitante(Pessoa solicitante) {
+        this.solicitante = solicitante;
+    }
+    
+    
 
     public void setSolicitado(String solicitado) {
         this.solicitado = solicitado;
@@ -86,9 +87,7 @@ public class ChamadoMB extends Artificial{
 
     public void setPrioridade(String prioridade) {
         this.prioridade = prioridade;
-    }
-    
-    
+    } 
 
     public String getTitulo() {
         return titulo;
@@ -119,7 +118,7 @@ public class ChamadoMB extends Artificial{
         ChamadoServico pra = new ChamadoServico();
         Chamado cha = pra.getById(id);
         cha.setStatus(status);
-        if(pra.atualizaStatus(cha,id)){
+        if(pra.atualizaStatus(id,status)){
             System.out.println("AQUIIIIIII" + "Status = " + status + "  Id =    " + id + cha.getTitulo() + cha.getData());
             adicionaMensagem("Status alterado com sucesso!","destinoAviso");
         }else{
@@ -130,6 +129,10 @@ public class ChamadoMB extends Artificial{
     
     public List<Chamado> getChamadosPorStatus(String status){
         return new ChamadoServico().chamadosStatus(status);
+    }
+    
+    public List<Chamado> getChamadosPorDivisao(String div){
+        return new ChamadoServico().chamadosDivisao(div);
     }
     
     public List<Chamado> getChamadosEntreDatas(Date dinicio, Date dfim){
@@ -155,9 +158,10 @@ public class ChamadoMB extends Artificial{
         chamado.setTitulo(titulo);
         chamado.setSolicitado(solicitado);
         chamado.setPrioridade(prioridade);
-        chamado.setSolicitante((new PessoaServico()).getById(1));//Alterar após implementação da tela de login
+        chamado.setSolicitante(solicitante);
+        //chamado.setSolicitante((new PessoaServico()).getById(1));//Alterar após implementação da tela de login
         ChamadoServico chamadoDAO = new ChamadoServico();
-        chamadoDAO.save(chamado);
+        chamadoDAO.salvar(chamado);
         return "chamados";
     }
     

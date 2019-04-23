@@ -5,7 +5,7 @@ import java.sql.SQLException;
 import javax.faces.FacesException;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
 import modelo.Pessoa;
 import servico.PessoaServico;
@@ -16,6 +16,8 @@ public class LoginBean implements Serializable{
     private String nip;
     private String senha;
     private String nome;
+    
+    public LoginBean(){};
 
     public String getNip() {
         return nip;
@@ -79,11 +81,12 @@ public class LoginBean implements Serializable{
                 usu = ud.retornaPessoa(this.nip);
 
                 tipo = usu.getTipo();
-                this.setNome(usu.getNome());
+                this.nome = usu.getNome();
+                adicionaMensagem("Bem vindo, " + this.nome + "!", "destinoAviso");
                 if (tipo == 'A') {
                     return "cadastros";
                 } else {
-                    return "homeChamados";
+                    return "criarChamado";
                 }
             }
         } catch (Exception e) {

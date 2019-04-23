@@ -55,6 +55,15 @@ public class PessoaServico extends DAOGenericoJPA<Long, Pessoa>{
         super.getEm().close();
     }
     
+    public void excluir(Long id){
+        super.getEm().getTransaction().begin();
+        
+        Pessoa pes = super.getEm().find(Pessoa.class,id);
+        super.getEm().remove(pes);
+        super.getEm().getTransaction().commit();
+        super.getEm().close();
+    }
+    
     //Retorna a id caso usuário exista e zero, caso não exista
     public boolean existePessoa(Pessoa usu) throws NoResultException, IndexOutOfBoundsException{
         Query query = super.getEm().createQuery("SELECT count(e) FROM Pessoa e WHERE e.nip = :nip");
@@ -81,14 +90,27 @@ public class PessoaServico extends DAOGenericoJPA<Long, Pessoa>{
         return false;
     }
     
-    public List<Chamado> pessoasDivisao(Divisao d)throws NoResultException{
+    public List<Pessoa> pessoasDivisao(Divisao d)throws NoResultException{
         Query query = super.getEm().createNamedQuery("Pessoa.retornaPessoasDivisao");
         query.setParameter("divisao", d);
-        List<Chamado> chamados;
+        List<Pessoa> pessoas;
         
         try{
-            chamados = query.getResultList();
-            return chamados;
+            pessoas = query.getResultList();
+            return pessoas;
+        }
+        catch(NoResultException e){
+            return new ArrayList<>();
+        }
+    }
+    
+    public List<Pessoa> pessoas()throws NoResultException{
+        Query query = super.getEm().createNamedQuery("Pessoa.TODAS");
+        List<Pessoa> pessoas;
+        
+        try{
+            pessoas = query.getResultList();
+            return pessoas;
         }
         catch(NoResultException e){
             return new ArrayList<>();

@@ -28,11 +28,11 @@
                             <h:panelGrid columns="2" id = "sol"  cellpadding="5">
 
                                 <p:outputLabel for="nome" value="Solicitante" />
-                                <h:outputText id="nome" value="Nome do cidadão logado"/>
+                                <h:outputText id="nome" value="#{loginBean.nome}"/>
 
 
                                 <p:outputLabel for="divisao" value="Divisão solicitante" />
-                                <h:outputText id="divisao" value="Divisão do jovem"/>
+                                <h:outputText id="divisao" value="#{loginBean.retornaUsuario().divisao}"/>
 
                             </h:panelGrid>
                         </p:fieldset>
@@ -59,7 +59,8 @@
                                 <h:inputText id="titulo" value="#{chamadoMB.titulo}"/>
 
                                 <p:outputLabel for="descricao" value="Descricao" />
-                                <p:editor id="descricao" value="#{chamadoMB.descricao}" height="300" width="500"/>
+                                <p:inputTextarea id="descricao" value="#{chamadoMB.descricao}" rows="5" cols="30" maxlength="150" autoResize="true" />
+                                
 
                             </h:panelGrid>
                         </p:fieldset>

@@ -13,4 +13,40 @@
         </navigation-case>  
     </navigation-rule>
     
+    <navigation-rule>
+        <from-view-id>/login.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>login</from-outcome>
+            <to-view-id>/login.xhtml</to-view-id>
+            <redirect/>   
+        </navigation-case>  
+    </navigation-rule>
+    
+    <navigation-rule>
+        <from-view-id>/criarChamado.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>criarChamado</from-outcome>
+            <to-view-id>/criarChamado.xhtml</to-view-id>
+            <redirect/>   
+        </navigation-case>  
+    </navigation-rule>
+    
+    <navigation-rule>
+        <from-view-id>/admin/cadDivisao.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>cadDivisao</from-outcome>
+            <to-view-id>/admin/cadDivisao.xhtml</to-view-id>
+            <redirect/>   
+        </navigation-case>  
+    </navigation-rule>
+    
+    <navigation-rule>
+        <from-view-id>/admin/cadPessoa.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>cadPessoa</from-outcome>
+            <to-view-id>/admin/cadPessoa.xhtml</to-view-id>
+            <redirect/>   
+        </navigation-case>  
+    </navigation-rule>
+    
 </faces-config>

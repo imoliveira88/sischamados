@@ -5,9 +5,10 @@
  */
 package beans;
 
+import java.io.Serializable;
 import java.util.List;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.inject.Named;
+import javax.enterprise.context.SessionScoped;
 import modelo.Divisao;
 import servico.DivisaoServico;
 
@@ -15,11 +16,13 @@ import servico.DivisaoServico;
  *
  * @author usuario
  */
-@ManagedBean(name = "divisaoMB")
 @SessionScoped
-public class DivisaoMB extends Artificial{
+@Named("divisaoMB")
+public class DivisaoMB extends Artificial implements Serializable{
     
     private Divisao divisao;
+    private String nome;
+    private int numero;
 
     public DivisaoMB() {
     }
@@ -32,16 +35,36 @@ public class DivisaoMB extends Artificial{
         this.divisao = divisao;
     }
 
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public int getNumero() {
+        return numero;
+    }
+
+    public void setNumero(int numero) {
+        this.numero = numero;
+    }
+    
+    
+
     public String salvar() {
         DivisaoServico pra = new DivisaoServico();
+        divisao.setNome(nome);
+        divisao.setNumero(numero);
         if(!pra.existeDivisao(this.divisao)){
-            pra.save(divisao);
+            pra.salvar(divisao);
             adicionaMensagem("Divisão cadastrada com sucesso!","destinoAviso");
-            return "divisao";
+            return "cadDivisao";
         }
         else{
             adicionaMensagem("Erro! A divisão já está cadastrada!","destinoAviso");
-            return "divisao";
+            return "cadDivisao";
         }
     }
     

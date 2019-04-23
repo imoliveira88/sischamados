@@ -5,22 +5,19 @@
  */
 package beans;
 
+import java.io.Serializable;
 import java.text.ParseException;
 import java.util.List;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.inject.Named;
+import javax.enterprise.context.SessionScoped;
 import modelo.Chamado;
 import modelo.Divisao;
 import modelo.Pessoa;
 import servico.PessoaServico;
 
-/**
- *
- * @author usuario
- */
-@ManagedBean(name = "pessoaMB")
 @SessionScoped
-public class PessoaMB extends Artificial {
+@Named("pessoaMB")
+public class PessoaMB extends Artificial implements Serializable{
     
     private List<Chamado> chamados;
     private Divisao divisao;
@@ -107,7 +104,11 @@ public class PessoaMB extends Artificial {
         this.nip = nip;
     }
     
-     public String cadastraUsuario() throws ParseException{
+    public List<Pessoa> getPessoas(){
+        return (new PessoaServico()).pessoas();
+    }
+    
+    public String cadastraUsuario() throws ParseException{
         PessoaServico cli = new PessoaServico();
         
         try {
@@ -116,15 +117,28 @@ public class PessoaMB extends Artificial {
             
             if (cli.salvar(pes)) {
                 this.adicionaMensagem("Cadastro feito com sucesso!","destinoAviso");
-                return "usuario";
+                return "cadPessoa";
             } else {
                 this.adicionaMensagem("Já existe um usuário com este nip!","destinoAviso");
-                return "usuario";
+                return "cadPessoa";
             }
         } catch (Exception e) {
             this.adicionaMensagem("Houve um erro no cadastro! Tente novamente!","destinoAviso");
-            return "usuario";
+            return "cadPessoa";
         }  
-        
     }
+    
+    public String excluiUsuario(Long id) throws ParseException{
+        PessoaServico cli = new PessoaServico();
+        
+        try {
+            cli.excluir(id);
+            this.adicionaMensagem("Usuário removido!","destinoAviso");
+            return "cadPessoa";
+        } catch (Exception e) {
+            this.adicionaMensagem("Houve um erro no cadastro! Tente novamente!","destinoAviso");
+            return "cadPessoa";
+        }  
+    }
+    
 }

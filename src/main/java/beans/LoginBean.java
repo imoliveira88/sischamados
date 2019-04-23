@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package beans;
 
 import java.io.Serializable;
@@ -15,10 +10,6 @@ import javax.faces.context.FacesContext;
 import modelo.Pessoa;
 import servico.PessoaServico;
 
-/**
- *
- * @author Administrador
- */
 @ManagedBean(name = "loginBean")
 @SessionScoped
 public class LoginBean implements Serializable{
@@ -50,7 +41,7 @@ public class LoginBean implements Serializable{
         this.nome = nome;
     }
 
-    //Compara se o telefone digitado corresponde a um usuário válido, e, correspondendo,
+    //Compara se o nip digitado corresponde a um usuário válido, e, correspondendo,
     //compara a senha fornecida, com a senha que há no banco
     public boolean validaUsuario()throws SQLException{
         PessoaServico ud = new PessoaServico();
@@ -105,7 +96,12 @@ public class LoginBean implements Serializable{
     private void adicionaMensagem(String mensagem, String destino){
         FacesContext context = FacesContext.getCurrentInstance();
         FacesMessage msg;
-        msg = new FacesMessage(FacesMessage.FACES_MESSAGES,mensagem);
+        msg = new FacesMessage("",mensagem);
         context.addMessage(destino, msg);
     }
 }
+
+/*
+- Usuário que criou chamado pode excluí-lo (ou por ter resolvido, ou por ter errado algo)
+- Possibilidade de gerar relatórios entre datas
+*/

@@ -6,13 +6,18 @@ h2{
     margin-bottom: -30px;
 }
 
+h1{
+    color: aqua;
+    text-align: center;
+    margin-top: 15px;
+    margin-bottom: -30px;
+}
 
-.logo{
-    display: block;
-    height: 30%;
-    width: 30%;
-    margin-left: auto;
-    margin-right: auto;
+#sidebarLeft {
+    margin-top: 300px;
+   width: 400px;
+   height: 200px;
+   float: left;
 }
 
 #itens tr:nth-child(odd){
@@ -27,60 +32,58 @@ h2{
     font-size: large;
 }
 
-#listas{
-    border: #000000 1px solid;
-}
-
-#listas tr:nth-child(odd){
-    background-color: gainsboro;
-    font-size: large;
-}
-
-#listas tr:nth-child(even){
-    background-color: white;
-    font-size: large;
-}
-
-#listas thead{
-    background-color: burlywood;
-    font-weight: bold;
-}
-
-table#listas td:hover{
-	font-weight: bold;
-	cursor: pointer;       
+#content {
+    float: inside;
 }
 
 table#menu{
-        border: 1px solid #656565;
-        border-radius: 10px;
         box-shadow: 10px 10px 5px #888888;
-	width: 95%;
-	background-color: #000000;
+	width: 30%;
+        background-color: #ccccff;
 	text-align: center;
-        color: #ffffff;
 	height: 50px;
-        border: orange 1px solid;
-        margin-left: auto;
-        margin-right: auto;
 }
 
 table#menu td{
-	width: 15%;
-        border-radius: 10px;        
+        background-color: #ccccff;
+        color: #ffffff;      
+        font-size: large;
 }
-table#corpo{
+
+table#menu td:hover{
+        border: chartreuse solid 1px;
+	background-color: white;
+        color: #ccccff;
+	cursor: pointer;   
+}
+
+table#menuLeft{
+        box-shadow: 10px 10px 5px #888888;
+	width: 30%;
+        background-color: #ccccff;
+	text-align: center;
+	height: 30px;
+}
+
+table#menuLeft td{
+        background-color: darkcyan;
+        color: #ffffff;
+        font-size: large;        
+}
+
+table#menuLeft td:hover{
+        border: chartreuse solid 1px;
+	background-color: white;
+        color: darkcyan;
+	cursor: pointer;   
+}
+
+#corpo{
         align-self: center;
 	width: 70%;
         background-color: white;
 	text-align: justify;
         appearance: desktop;
-}
-
-table#menu td:hover{
-	background-color: #963;
-	font-weight: bold;
-	cursor: pointer;   
 }
 
 
@@ -115,25 +118,7 @@ table#menu td:hover{
 }
 
 body {
-    background-color: #cfc;
-}
-
-menuItem{
-    color: red;
-}
-
-tabMenu{
-        border: 1px solid #656565;
-        border-radius: 10px;
-        box-shadow: 10px 10px 5px #888888;
-	width: 95%;
-	background-color: #000000;
-	text-align: center;
-        color: #ffffff;
-	height: 50px;
-        border: orange 1px solid;
-        margin-left: auto;
-        margin-right: auto;
+    background-color: white;
 }
 
 .formGeral{
@@ -146,11 +131,15 @@ tabMenu{
 }
 
 .botao{
-    border: solid black 2px;
     width: 110px;
     height: 40px;
-    background-color: green;
-    font-weight: bold;
+    background-color: lightblue;
+    font-size: 14px;
+}
+
+.botao:hover{
+    background-color: background;
+    cursor:pointer;
 }
 
 h2{

@@ -6,6 +6,7 @@
 package beans;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
@@ -129,6 +130,18 @@ public class ChamadoMB extends Artificial{
     
     public List<Chamado> getChamadosPorStatus(String status){
         return new ChamadoServico().chamadosStatus(status);
+    }
+    
+    public List<Chamado> getChamadosEntreDatas(Date dinicio, Date dfim){
+        return new ChamadoServico().chamadosEntreDatas(dinicio, dfim);
+    }
+
+    public List<Chamado> getChamadosEntreDatasStatusDivisao(Date dinicio, Date dfim, String status, String divisao){
+        return new ChamadoServico().chamadosEntreDatasStatusDivisao(dinicio, dfim, status, divisao);
+    }
+    
+    public List<Chamado> getChamadosEntreDatasStatus(Date dinicio, Date dfim, String status){
+        return new ChamadoServico().chamadosEntreDatasStatus(dinicio, dfim, status);
     }
     
     public List<Chamado> getChamados(){

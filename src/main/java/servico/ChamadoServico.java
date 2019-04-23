@@ -6,6 +6,7 @@
 package servico;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import modelo.Chamado;
 import javax.persistence.NoResultException;
@@ -76,6 +77,63 @@ public class ChamadoServico extends DAOGenericoJPA<Long, Chamado>{
         super.getEm().getTransaction().commit();
         super.getEm().close();
     }
+    
+    // Retorna chamados entre duas datas distintas
+    public List<Chamado> chamadosEntreDatas(Date dinicio, Date dfim){
+        super.getEm().getTransaction().begin();
+        Query query = super.getEm().createQuery("Select e FROM Chamado e WHERE e.data BETWEEN :data1 AND :data2 ORDER BY e.data, e.status, e.solicitado");
+        query.setParameter("data1",dinicio);
+        query.setParameter("data2",dfim);
+        
+        List<Chamado> chamados;
+        
+        try{
+            chamados = query.getResultList();
+            return chamados;
+        }
+        catch(NoResultException e){
+            return new ArrayList<>();
+        }
+     }
+    
+    // Retorna chamados de certo status entre duas datas distintas
+    public List<Chamado> chamadosEntreDatasStatus(Date dinicio, Date dfim, String status){
+        super.getEm().getTransaction().begin();
+        Query query = super.getEm().createQuery("Select e FROM Chamado e WHERE (e.data BETWEEN :data1 AND :data2) AND e.status = :status ORDER BY e.data, e.status, e.solicitado");
+        query.setParameter("data1",dinicio);
+        query.setParameter("data2",dfim);
+        query.setParameter("status",status);
+        
+        List<Chamado> chamados;
+        
+        try{
+            chamados = query.getResultList();
+            return chamados;
+        }
+        catch(NoResultException e){
+            return new ArrayList<>();
+        }
+     }
+    
+    // Retorna chamados de certo status e divisão entre duas datas distintas
+    public List<Chamado> chamadosEntreDatasStatusDivisao(Date dinicio, Date dfim, String status, String divisao){
+        super.getEm().getTransaction().begin();
+        Query query = super.getEm().createQuery("Select e FROM Chamado e WHERE (e.data BETWEEN :data1 AND :data2) AND e.status = :status AND e.solicitado = :divisao ORDER BY e.data, e.status");
+        query.setParameter("data1",dinicio);
+        query.setParameter("data2",dfim);
+        query.setParameter("status",status);
+        query.setParameter("divisao",divisao);
+        
+        List<Chamado> chamados;
+        
+        try{
+            chamados = query.getResultList();
+            return chamados;
+        }
+        catch(NoResultException e){
+            return new ArrayList<>();
+        }
+     }
     
     
     //Método lista todos os chamados que se encontram no status pedido

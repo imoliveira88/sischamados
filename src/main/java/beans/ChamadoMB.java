@@ -31,10 +31,12 @@ public class ChamadoMB extends Artificial implements Serializable{
     private String descricao;
     private String prioridade;
     private Pessoa solicitante;
+    private Chamado chamadoSelecionado;
 
     public ChamadoMB() {
         chamado = new Chamado();
         solicitante = new Pessoa();
+        chamadoSelecionado = new Chamado();
     }
 
     public Chamado getChamado() {
@@ -52,6 +54,14 @@ public class ChamadoMB extends Artificial implements Serializable{
 
     public void setChamado(Chamado chamado) {
         this.chamado = chamado;
+    }
+
+    public Chamado getChamadoSelecionado() {
+        return chamadoSelecionado;
+    }
+
+    public void setChamadoSelecionado(Chamado chamadoSelecionado) {
+        this.chamadoSelecionado = chamadoSelecionado;
     }
 
     public String getSolicitado() {
@@ -159,12 +169,11 @@ public class ChamadoMB extends Artificial implements Serializable{
         chamado.setTitulo(titulo);
         chamado.setSolicitado(solicitado);
         chamado.setPrioridade(prioridade);
-        chamado.setSolicitante(solicitante);
+        chamado.setSolicitante((new PessoaServico()).retornaPessoa(this.solicitante.getNip()));
         //chamado.setSolicitante((new PessoaServico()).getById(1));//Alterar após implementação da tela de login
         ChamadoServico chamadoDAO = new ChamadoServico();
         chamadoDAO.salvar(chamado);
         return "chamados";
     }
-    
     
 }

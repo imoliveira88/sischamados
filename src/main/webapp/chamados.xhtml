@@ -17,15 +17,16 @@
         <table>
             <tr>
                 <td>
-                    <h:form>
+                    <h:form id="aviso">
                         <p:growl id="msgs" for="destinoAviso" showDetail="true" autoUpdate="true" sticky="true" life="6000"/>
                     </h:form>
 
                 </td>
                 <td>
-                    <h:form enctype="multipart/form-data" id="testForm">
+                    <h:form enctype="multipart/form-data" id="form">
                         <p:fieldset legend="Chamados" style="margin-bottom:20px">
-                            <p:dataTable var="chamado" value="#{chamadoMB.chamados}" editable="true" editMode="cell" reflow="true">
+                            <p:dataTable id="detalhes" var="chamado" value="#{chamadoMB.chamados}" rowKey="#{chamado.id}" selection="#{chamadoMB.chamadoSelecionado}" selectionMode="single">
+                                
                                 <p:column>
                                     <f:facet name="header">ID</f:facet>
                                     <h:outputText value="#{chamado.id}"/>
@@ -33,11 +34,6 @@
                                 <p:column>
                                     <f:facet name="header">Status</f:facet>
                                     <h:outputText value="#{chamado.status}"/>
-                                    <br/>
-                                    Alterar para: <p:selectOneMenu value="#{chamadoMB.status}">
-                                        <f:selectItems value="#{chamadoMB.listaStatus()}" var="status" itemValue="#{status}"/>
-                                        <p:ajax listener="#{chamadoMB.atualizaStatus(chamado.id, chamadoMB.status)}"
-                                    </p:selectOneMenu>
                                 </p:column>
                                 <p:column>
                                     <f:facet name="header">Solicitante</f:facet>
@@ -52,17 +48,47 @@
                                     <h:outputText value="#{chamado.data}"/>
                                 </p:column>
                                 <p:column>
-                                        <f:facet name="header">Descrição</f:facet>
-                                        <p:cellEditor>
-                                            <f:facet name="output"><h:outputText value="#{chamado.descricao}" /></f:facet>
-                                        </p:cellEditor>
+                                    <f:facet name="header">Descrição</f:facet>
+                                    <h:outputText value="#{chamado.descricao}" />
                                 </p:column>
-                                <p:column>
-                                        <f:facet name="header">Atualizar</f:facet>
-                                        <h:commandButton styleClass="botaoTabela" value="Atualizar" action="#{chamadoMB.atualizaStatus(chamado.id,chamadoMB.status)}"/>
-                                    </p:column>
+                                <f:facet name="footer">
+                                    <p:commandButton process="detalhes" update=":form:chamadoDetail" icon="pi pi-search" value="Ver" oncomplete="PF('chamadoDialog').show()" />
+                                </f:facet>
                             </p:dataTable>
                         </p:fieldset>
+
+
+                        <p:dialog header="Atualizar chamado" widgetVar="chamadoDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="true" width="500">
+                            <p:outputPanel id="chamadoDetail" style="text-align:center;" >
+                                <h:panelGrid columns="2"  cellpadding="5">
+                                
+                                    <h:outputText value="ID"/>
+                                    <h:outputText value="#{chamadoMB.chamadoSelecionado.id}"/>
+                                    
+                                    <h:outputText value="Status"/>
+                                    <h:outputText value="#{chamadoMB.chamadoSelecionado.status}"/>
+                                    
+                                    Alterar para: <p:selectOneMenu value="#{chamadoMB.chamadoSelecionado.status}">
+                                        <f:selectItems value="#{chamadoMB.listaStatus()}" var="status" itemValue="#{status}"/>
+                                    </p:selectOneMenu>
+                                    
+                                    <h:outputText value="Solicitante"/>
+                                    <h:outputText value="#{chamadoMB.chamadoSelecionado.solicitante}"/>
+                                    
+                                    <h:outputText value="Título"/>
+                                    <h:outputText value="#{chamadoMB.chamadoSelecionado.titulo}"/>
+                                    
+                                    <h:outputText value="Data"/>
+                                    <h:outputText value="#{chamadoMB.chamadoSelecionado.data}"/>
+                                    
+                                    <h:outputText value="Descrição"/>
+                                    <p:editor value="#{chamadoMB.chamadoSelecionado.descricao}" />
+                                    
+                                    <h:commandButton styleClass="botaoTabela" value="Atualizar" action="#{chamadoMB.atualizaStatus(chamadoMB.chamadoSelecionado.id,chamadoMB.chamadoSelecionado.status)}"/>
+                                </h:panelGrid>
+                            </p:outputPanel>
+                        </p:dialog>
+
                     </h:form>
                 </td>
             </tr>

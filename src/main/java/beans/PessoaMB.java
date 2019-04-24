@@ -7,6 +7,7 @@ package beans;
 
 import java.io.Serializable;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
@@ -28,8 +29,11 @@ public class PessoaMB extends Artificial implements Serializable{
     private boolean militar;//no front-end implementar a aquisição uma drop-down com "militar" e "civil" como opções
     private String senha;
     private String nip;
+    private Pessoa pessoaSelecionada;
 
     public PessoaMB() {
+        chamados = new ArrayList<>();
+        pessoaSelecionada = new Pessoa();
     }
 
     public List<Chamado> getChamados() {
@@ -47,6 +51,16 @@ public class PessoaMB extends Artificial implements Serializable{
     public void setDivisao(Divisao divisao) {
         this.divisao = divisao;
     }
+
+    public Pessoa getPessoaSelecionada() {
+        return pessoaSelecionada;
+    }
+
+    public void setPessoaSelecionada(Pessoa pessoaSelecionada) {
+        this.pessoaSelecionada = pessoaSelecionada;
+    }
+    
+    
 
     public char getTipo() {
         return tipo;

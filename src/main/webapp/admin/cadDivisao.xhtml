@@ -46,7 +46,7 @@
                     <td>
                         <p:fieldset class="field" legend="Divisões cadastradas">
                             <h:panelGrid columns="2" id = "sol"  cellpadding="5">
-                                <p:dataTable var="divisao" value="#{divisaoMB.divisoes}">
+                                <p:dataTable var="divisao" value="#{divisaoMB.divisoes}" rowKey="#{divisao.id}" selection="#{divisaoMB.divisaoSelecionada}" selectionMode="single">
                                     <p:column>
                                         <f:facet name="header">ID</f:facet>
                                         <h:outputText value="#{divisao.id}"/>
@@ -59,10 +59,9 @@
                                         <f:facet name="header">Número</f:facet>
                                         <h:outputText value="#{divisao.numero}"/>
                                     </p:column>
-                                    <p:column>
-                                        <f:facet name="header">Excluir</f:facet>
-                                        <h:commandButton styleClass="botaoTabela" value="Excluir" action="#{divisaoMB.excluir(divisao.id)}"/>
-                                    </p:column>
+                                    <f:facet name="footer">
+                                        <h:commandButton styleClass="botaoTabela" value="Excluir" action="#{divisaoMB.excluir(divisaoMB.divisaoSelecionada.id)}"/>
+                                    </f:facet>
                                 </p:dataTable>
                             </h:panelGrid>
                         </p:fieldset>

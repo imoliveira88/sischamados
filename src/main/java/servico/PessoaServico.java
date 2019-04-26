@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
-import modelo.Chamado;
 import modelo.Divisao;
 import modelo.Pessoa;
 
@@ -64,14 +63,12 @@ public class PessoaServico extends DAOGenericoJPA<Long, Pessoa>{
         super.getEm().close();
     }
     
-    //Retorna a id caso usuário exista e zero, caso não exista
     public boolean existePessoa(Pessoa usu) throws NoResultException, IndexOutOfBoundsException{
         Query query = super.getEm().createQuery("SELECT count(e) FROM Pessoa e WHERE e.nip = :nip");
         query.setParameter("nip", usu.getNip());
        
         try{
             int quantidade = Integer.parseInt(query.getResultList().get(0).toString());
-            System.out.println("Primeiro número " + quantidade);
             if(quantidade > 0) return true;
         }
         catch(NoResultException | IndexOutOfBoundsException e){

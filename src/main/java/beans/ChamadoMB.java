@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package beans;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -116,22 +112,17 @@ public class ChamadoMB extends Artificial implements Serializable{
         this.descricao = descricao;
     }
     
-    public String fechaChamado(){
-        ChamadoServico chamadoDAO = new ChamadoServico();
-        this.chamado.setTempo_solucao(2);    //(Math.floor((Calendar.getInstance().getTimeInMillis()-chamado.getData())/(1000*3600*24)));
-        chamadoDAO.save(chamado);
-        
-        this.adicionaMensagem("Chamado concluído!","destinoAviso");
-        return "chamados";
-    }
-    
     public String atualizaStatus(Long id, String status) throws Exception{
         ChamadoServico pra = new ChamadoServico();
         Chamado cha = pra.getById(id);
         cha.setStatus(status);
         if(pra.atualizaStatus(id,status)){
-            System.out.println("AQUIIIIIII" + "Status = " + status + "  Id =    " + id + cha.getTitulo() + cha.getData());
-            adicionaMensagem("Status alterado com sucesso!","destinoAviso");
+            if(status.equals("Finalizado")){
+                 cha.setTempo_solucao(2);
+                 adicionaMensagem("Chamado de número " + id +  " finalizado!","destinoAviso");
+            }else{
+                 adicionaMensagem("Status do chamado de número " + id + " alterado para " + status + "!","destinoAviso");
+            }
         }else{
             adicionaMensagem("Status não pode ser alterado!","destinoAviso");
         }

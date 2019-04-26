@@ -4,14 +4,14 @@ import java.io.Serializable;
 import java.sql.SQLException;
 import javax.faces.FacesException;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
+import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
 import modelo.Pessoa;
 import servico.PessoaServico;
 
-@ManagedBean(name = "loginBean")
 @SessionScoped
+@Named("loginBean")
 public class LoginBean implements Serializable{
     private String nip;
     private String senha;

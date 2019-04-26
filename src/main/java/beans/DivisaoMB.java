@@ -85,6 +85,7 @@ public class DivisaoMB extends Artificial implements Serializable{
     
     public String excluir(Long id) throws Exception{
         DivisaoServico pra = new DivisaoServico();
+        this.adicionaMensagem("Exibe id: " + id, "destinoAviso");
         if(pra.deletarDivisao(id)){
             adicionaMensagem("Divisão removida com sucesso!","destinoAviso");
         }else{

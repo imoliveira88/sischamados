@@ -20,9 +20,9 @@
 
             <table align="center">
                 <tr>
-                    <h:form class="formGeral">
+                    <h:form id="form1" class="formGeral">
                         <td>
-                            <p:growl id="msgs" for="destinoAviso" autoUpdate="true" showDetail="true" />
+                            <p:growl id="msgs" for="destinoAviso" autoUpdate="true" showDetail="true" life="4000" sticky="true"/>
 
                             <p:fieldset class="field" legend="Cadastro de divisão">
                                 <h:panelGrid columns="2" id = "sol"  cellpadding="5">
@@ -44,9 +44,11 @@
 
                 <tr>
                     <td>
+                        <h:form>
                         <p:fieldset class="field" legend="Divisões cadastradas">
                             <h:panelGrid columns="2" id = "sol"  cellpadding="5">
-                                <p:dataTable var="divisao" value="#{divisaoMB.divisoes}" rowKey="#{divisao.id}" selection="#{divisaoMB.divisaoSelecionada}" selectionMode="single">
+                                <p:dataTable id="lista" var="divisao" value="#{divisaoMB.divisoes}" rowKey="#{divisao.id}" selection="#{divisaoMB.divisaoSelecionada}" selectionMode="single">
+                                    <p:ajax event="rowSelect" update=":form1:msgs" />
                                     <p:column>
                                         <f:facet name="header">ID</f:facet>
                                         <h:outputText value="#{divisao.id}"/>
@@ -60,11 +62,12 @@
                                         <h:outputText value="#{divisao.numero}"/>
                                     </p:column>
                                     <f:facet name="footer">
-                                        <h:commandButton styleClass="botaoTabela" value="Excluir" action="#{divisaoMB.excluir(divisaoMB.divisaoSelecionada.id)}"/>
+                                        <p:commandButton styleClass="botaoTabela" value="Excluir" action="#{divisaoMB.excluir(divisaoMB.divisaoSelecionada.id)}"/>
                                     </f:facet>
                                 </p:dataTable>
                             </h:panelGrid>
                         </p:fieldset>
+                        </h:form>
                     </td>
                 </tr>
 

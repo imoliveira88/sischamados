@@ -22,10 +22,6 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-/**
- *
- * @author usuario
- */
 @Entity
 @Table(name = "TB_DIVISAO")
 @NamedQueries(value = 
@@ -77,6 +73,10 @@ public class Divisao implements Serializable {
 
     public void setNumero(int numero) {
         this.numero = numero;
+    }
+
+    public List<Pessoa> getPessoas() {
+        return pessoas;
     }
     
     

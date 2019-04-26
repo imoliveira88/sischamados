@@ -16,7 +16,8 @@ public abstract class Artificial {
     protected void adicionaMensagem(String mensagem, String destino){
         FacesContext context = FacesContext.getCurrentInstance();
         FacesMessage msg;
-        msg = new FacesMessage("",mensagem);
-        context.addMessage(destino, msg);
+        msg = new FacesMessage("SUCESSO!",mensagem);
+        context.addMessage(null, msg);
+        
     }
 }

@@ -7,7 +7,6 @@ package modelo;
 
 import java.util.Calendar;
 import servico.ChamadoServico;
-import servico.DivisaoServico;
 import servico.PessoaServico;
 
 /**

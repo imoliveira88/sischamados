@@ -24,6 +24,7 @@
 
                         <td>
 
+                            <p:growl id="msgs" for="destinoAviso" autoUpdate="true" showDetail="true" life="4000" sticky="true"/>
                             <p:fieldset class="field" legend="Cadastro de usuário">
                                 <h:panelGrid columns="2" id = "cham"  cellpadding="5">
 
@@ -47,7 +48,7 @@
                                         <f:selectItems value="#{divisaoMB.divisoes}" />
                                     </p:selectOneMenu>
 
-                                    <h:commandButton class="botao" value="Salvar" action="#{divisaoMB.salvar()}"/>
+                                    <h:commandButton class="botao" value="Salvar" action="#{pessoaMB.cadastraUsuario()}"/>
 
                                 </h:panelGrid>
                             </p:fieldset>
@@ -57,6 +58,7 @@
 
                 <tr>
                     <td>
+                        <h:form>
                         <p:fieldset class="field" legend="Usuários cadastrados">
                             <h:panelGrid columns="2" id = "sol"  cellpadding="5">
                                 <p:dataTable var="pessoa" value="#{pessoaMB.pessoas}"  rowKey="#{pessoa.id}" selection="#{pessoaMB.pessoaSelecionada}" selectionMode="single">
@@ -90,6 +92,7 @@
                                 </p:dataTable>
                             </h:panelGrid>
                         </p:fieldset>
+                        </h:form>
                     </td>
                 </tr>
 

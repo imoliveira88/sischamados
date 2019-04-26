@@ -1,22 +1,19 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package beans;
 
 import java.io.Serializable;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
-import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 import modelo.Chamado;
 import modelo.Divisao;
 import modelo.Pessoa;
+import servico.DivisaoServico;
 import servico.PessoaServico;
 
-@RequestScoped
+@SessionScoped
 @Named("pessoaMB")
 public class PessoaMB extends Artificial implements Serializable{
     
@@ -34,6 +31,7 @@ public class PessoaMB extends Artificial implements Serializable{
     public PessoaMB() {
         chamados = new ArrayList<>();
         pessoaSelecionada = new Pessoa();
+        divisao = new Divisao();
     }
 
     public List<Chamado> getChamados() {
@@ -128,6 +126,7 @@ public class PessoaMB extends Artificial implements Serializable{
         try {
             Pessoa pes = new Pessoa(nome,senha,nip,militar,especialidade,posto);
             pes.setTipo('U'); 
+            pes.setDivisao((new DivisaoServico()).retornaDivisao(divisao.getNumero()));
             
             if (cli.salvar(pes)) {
                 this.adicionaMensagem("Cadastro feito com sucesso!","destinoAviso");

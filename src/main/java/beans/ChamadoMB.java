@@ -29,11 +29,16 @@ public class ChamadoMB extends Artificial implements Serializable{
     private Pessoa solicitante;
     private Chamado chamadoSelecionado;
     private String exibir; //Guardará o status que se deseja exibir
+    private Date dataInicial;
+    private Date dataFinal;
+    private String divisao;
+    private List<Chamado> chamFiltrados;
 
     public ChamadoMB() {
         chamado = new Chamado();
         chamadoSelecionado = new Chamado();
         solicitante = new Pessoa();
+        chamFiltrados = new ArrayList<>();
     }
 
     public Chamado getChamado() {
@@ -46,12 +51,24 @@ public class ChamadoMB extends Artificial implements Serializable{
         lista.add("Executando");
         lista.add("Executado");
         lista.add("Finalizado");
+        dataInicial = null;
+        dataFinal = null;
         return lista;
     }
 
     public void setChamado(Chamado chamado) {
         this.chamado = chamado;
     }
+
+    public List<Chamado> getChamFiltrados() {
+        return chamFiltrados;
+    }
+
+    public void setChamFiltrados(List<Chamado> chamFiltrados) {
+        this.chamFiltrados = chamFiltrados;
+    }
+    
+    
 
     public Chamado getChamadoSelecionado() {
         return chamadoSelecionado;
@@ -60,6 +77,34 @@ public class ChamadoMB extends Artificial implements Serializable{
     public void setChamadoSelecionado(Chamado chamadoSelecionado) {
         this.chamadoSelecionado = chamadoSelecionado;
     }
+
+    public String getDivisao() {
+        return divisao;
+    }
+
+    public void setDivisao(String divisao) {
+        this.divisao = divisao;
+    }
+    
+    
+
+    public Date getDataInicial() {
+        return dataInicial;
+    }
+
+    public void setDataInicial(Date dataInicial) {
+        this.dataInicial = dataInicial;
+    }
+
+    public Date getDataFinal() {
+        return dataFinal;
+    }
+
+    public void setDataFinal(Date dataFinal) {
+        this.dataFinal = dataFinal;
+    }
+    
+    
 
     public String getSolicitado() {
         return solicitado;
@@ -167,6 +212,7 @@ public class ChamadoMB extends Artificial implements Serializable{
     }
     
     public List<Chamado> getChamadosEntreDatas(Date dinicio, Date dfim){
+        if(dinicio == null || dfim == null) return this.getChamados();
         return new ChamadoServico().chamadosEntreDatas(dinicio, dfim);
     }
 
@@ -185,6 +231,12 @@ public class ChamadoMB extends Artificial implements Serializable{
     public String atualizarLista(){
         return "meusChamados";
     }
+    
+    public String filtrarLista(){
+        System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA Dados: " + this.divisao + this.exibir + this.solicitado +this.dataFinal + this.dataInicial);
+        return "relatorioUsuario";
+    }
+    
     
     public String salvar(Long idsolicitante){        
         chamado.setData(Calendar.getInstance().getTime());

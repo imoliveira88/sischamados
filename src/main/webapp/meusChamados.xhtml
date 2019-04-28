@@ -33,7 +33,7 @@
                             </p:selectOneMenu>
                             <br/><br/>
                             
-                            <p:dataTable id="detalhes" var="chamado" value="#{chamadoMB.getChamadosPorDivisaoStatus(loginBean.retornaUsuario().divisao,chamadoMB.exibir)}" rowKey="#{chamado.id}" selection="#{chamadoMB.chamadoSelecionado}" selectionMode="single">
+                            <p:dataTable id="detalhes" emptyMessage="Não há chamados criados por sua divisão com esse critério!"  var="chamado" value="#{chamadoMB.getChamadosPorDivisaoStatus(loginBean.retornaUsuario().divisao,chamadoMB.exibir)}" rowKey="#{chamado.id}" selection="#{chamadoMB.chamadoSelecionado}" selectionMode="single">
                                                                 
                                 <p:column>
                                     <f:facet name="header">ID</f:facet>

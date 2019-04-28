@@ -13,6 +13,11 @@ h1{
     margin-bottom: -30px;
 }
 
+.ui-filter-column .ui-column-customfilter .custom-filter {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
 #sidebarLeft {
     margin-top: 300px;
    width: 400px;

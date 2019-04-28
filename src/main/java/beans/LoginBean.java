@@ -102,6 +102,7 @@ public class LoginBean implements Serializable{
         msg = new FacesMessage("",mensagem);
         context.addMessage(destino, msg);
     }
+
 }
 
 /*

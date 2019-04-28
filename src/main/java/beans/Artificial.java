@@ -8,16 +8,12 @@ package beans;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
-/**
- *
- * @author usuario
- */
-public abstract class Artificial {
-    protected void adicionaMensagem(String mensagem, String destino){
+public class Artificial {
+    public void adicionaMensagem(String mensagem, String destino){
         FacesContext context = FacesContext.getCurrentInstance();
         FacesMessage msg;
         msg = new FacesMessage("SUCESSO!",mensagem);
-        context.addMessage(null, msg);
+        context.addMessage(destino, msg);
         
     }
 }

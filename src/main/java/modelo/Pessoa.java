@@ -44,7 +44,7 @@ public class Pessoa implements Serializable {
     private Divisao divisao;
     
     @NotNull
-    @Column(name = "tipo")
+    @Column(name = "TIPO")
     private char tipo; //Se tipo='A', administrador, quem cadastra divisões, usuários, etc, se tipo='U', pessoa normal
     
     @Size(min = 2, max = 40)
@@ -54,6 +54,12 @@ public class Pessoa implements Serializable {
     
     @Column(name = "POSTO")
     private String posto;
+    
+    @Column(name = "TELEFONE")
+    private String telefone;
+    
+    @Column(name = "EMAIL")
+    private String email;
     
     @Column(name = "ESPECIALIDADE")
     private String especialidade;
@@ -67,20 +73,30 @@ public class Pessoa implements Serializable {
     private String senha;
     
     @NotBlank
-    @Column(name = "DOCUMENTO")
+    @Column(name = "NIP")
     private String nip;
     
     public void addChamado(Chamado chamado) {
         chamados.add(chamado);
     }
 
-    public String getDocumento() {
-        return nip;
+    public String getTelefone() {
+        return telefone;
     }
 
-    public void setDocumento(String documento) {
-        this.nip = documento;
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
     }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+    
+    
 
     public List<Chamado> getChamados() {
         return chamados;

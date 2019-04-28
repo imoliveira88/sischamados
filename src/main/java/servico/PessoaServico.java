@@ -5,6 +5,8 @@
  */
 package servico;
 
+import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.NoResultException;
@@ -33,6 +35,23 @@ public class PessoaServico extends DAOGenericoJPA<Long, Pessoa>{
         }
     }
     
+    public Pessoa retornaPessoaNome(String nome){
+        super.getEm().getTransaction().begin();
+        Query query = super.getEm().createQuery("Select e FROM Pessoa e WHERE e.nome = :nome");
+        query.setParameter("nome",nome);
+        
+        Pessoa usu;
+        
+        
+        try{
+            usu = (Pessoa) query.getSingleResult();
+            return usu;
+        }
+        catch(NoResultException e){
+            return null;
+        }
+    }
+    
     
     public void atualizar(Pessoa p){
         super.getEm().getTransaction().begin();
@@ -42,13 +61,15 @@ public class PessoaServico extends DAOGenericoJPA<Long, Pessoa>{
         Long id = (Long) query.getSingleResult();
         
         Pessoa pes = super.getEm().find(Pessoa.class,id);
-        pes.setNome(pes.getNome());
-        pes.setNip(pes.getNip());
-        pes.setChamados(pes.getChamados());
-        pes.setEspecialidade(pes.getEspecialidade());
-        pes.setMilitar(pes.getMilitar());
-        pes.setPosto(pes.getPosto());
-        pes.setSenha(pes.getSenha());
+        pes.setNome(p.getNome());
+        pes.setTelefone(p.getTelefone());
+        pes.setEmail(p.getEmail());
+        pes.setNip(p.getNip());
+        pes.setChamados(p.getChamados());
+        pes.setEspecialidade(p.getEspecialidade());
+        pes.setMilitar(p.getMilitar());
+        pes.setPosto(p.getPosto());
+        pes.setSenha(p.getSenha());
         super.getEm().merge(pes);
         super.getEm().getTransaction().commit();
         super.getEm().close();
@@ -69,22 +90,32 @@ public class PessoaServico extends DAOGenericoJPA<Long, Pessoa>{
        
         try{
             int quantidade = Integer.parseInt(query.getResultList().get(0).toString());
+            System.out.println("NO existePessoa, quantidade na busca = " + quantidade);
             if(quantidade > 0) return true;
         }
-        catch(NoResultException | IndexOutOfBoundsException e){
+        catch(NoResultException e){
             return false;
         }
         return false;
     }
     
-    public boolean salvar(Pessoa b) {
+    public boolean salvar(Pessoa b) throws SQLException, ParseException {
+        try{
         if(!existePessoa(b)){
             super.getEm().getTransaction().begin();
+             System.out.print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAntes Persist");
             super.getEm().persist(b);
+             System.out.print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADpsPErsist");
             super.getEm().getTransaction().commit();
+            System.out.print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADeu bom");
             return true;
         }
+        System.out.print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPegou o else");
         return false;
+        }catch(Exception e){
+            System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADeu ruim! ");
+            return false;
+        }
     }
     
     public List<Pessoa> pessoasDivisao(Divisao d)throws NoResultException{

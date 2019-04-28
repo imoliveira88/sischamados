@@ -11,28 +11,33 @@
     </h:head>
     <h:body>
 
-        <ui:decorate template="/templates/decoratorLogin.xhtml">
+        <ui:decorate template="/templates/masterDecorator.xhtml">
             
             <br/>
             <br/>
 
             <h:form id="login" class="formGeral">
-                <p:fieldset class="field" legend="Login" >
+                <p:fieldset class="field" legend="Sobre" >
                     <p:growl id="msgs" for="destinoAviso" autoUpdate="true" showDetail="true" life="4000"/>
 
+                    <p:outputLabel value="SisChamados" />
+                    
                     <h:panelGrid columns="2" id = "sol" cellpadding="5">
 
-                        <p:outputLabel for="login" value="Login" />
-                        <h:inputText id="login" value="#{loginBean.nip}"/>
+                        <p:outputLabel for="versao" value="Versão" />
+                        <p:outputLabel id="versao" value="1.0"/>
 
-                        <p:outputLabel for="senha" value="Senha" />
-                        <p:password id="senha" value="#{loginBean.senha}"/>
+                        <p:outputLabel for="descricao" value="Descrição:" />
+                        <p:outputLabel id="descricao" value="Sistema de gerenciamento corporativo de chamados, elaborado segundo requisitos definidos pelo CMASM" />
 
-                        <h:commandButton class="botao" value="Entrar" action="#{loginBean.doLogin()}"/>
+                        <p:outputLabel for="equipe" value="Desenvolvedores" />
+                        <p:outputLabel id="equipe" value="1T(EN) MAGALHÃES, 1T(EN) NUNES FILHO, 2T(T) BARRETO" />
+
 
                     </h:panelGrid>
 
                 </p:fieldset>
+                
             </h:form>
             
         </ui:decorate>

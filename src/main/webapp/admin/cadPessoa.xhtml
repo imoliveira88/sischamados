@@ -24,7 +24,7 @@
 
                         <td>
 
-                            <p:growl id="msgs" for="destinoAviso" autoUpdate="true" showDetail="true" life="4000" sticky="true"/>
+                            <p:growl id="msgs" for="destinoAviso" autoUpdate="true" showDetail="true" life="4000"/>
                             <p:fieldset class="field" legend="Cadastro de usuário">
                                 <h:panelGrid columns="2" id = "cham"  cellpadding="5">
 
@@ -33,9 +33,18 @@
 
                                     <p:outputLabel for="nip" value="NIP (Será o login do usuário)" />
                                     <h:inputText id="nip" value="#{pessoaMB.nip}"/>
+                                    
+                                    <p:outputLabel for="senha" value="Senha" />
+                                    <h:inputText id="senha" value="#{pessoaMB.senha}"/>
+                                    
+                                    <p:outputLabel for="telefone" value="Telefone" />
+                                    <h:inputText id="telefone" value="#{pessoaMB.telefone}"/>
+                                    
+                                    <p:outputLabel for="email" value="E-mail" />
+                                    <h:inputText id="email" value="#{pessoaMB.email}"/>
 
-                                    <p:selectBooleanCheckbox value="#{pessoaMB.militar}" itemLabel="Militar"/>
-                                    <p:outputLabel value=""/>
+                                    <p:outputLabel value="Militar"/>
+                                    <p:selectBooleanCheckbox value="#{pessoaMB.militar}" itemLabel=""/>
 
                                     <p:outputLabel for="especialidade" value="Especialidade" />
                                     <h:inputText id="especialidade" value="#{pessoaMB.especialidade}"/>
@@ -44,8 +53,8 @@
                                     <h:inputText id="posto" value="#{pessoaMB.posto}"/>
 
                                     <p:outputLabel for="divsol" value="Divisão" />
-                                    <p:selectOneMenu id="divsol" value="#{pessoaMB.divisao}" >
-                                        <f:selectItems value="#{divisaoMB.divisoes}" />
+                                    <p:selectOneMenu id="divsol" value="#{pessoaMB.divisao}">
+                                        <f:selectItems value="#{divisaoMB.divisoes}" var="divi" itemValue="#{divi.nome}" />
                                     </p:selectOneMenu>
 
                                     <h:commandButton class="botao" value="Salvar" action="#{pessoaMB.cadastraUsuario()}"/>

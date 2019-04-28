@@ -151,7 +151,7 @@ public class ChamadoServico extends DAOGenericoJPA<Long, Chamado>{
         }
     }
     
-    public List<Chamado> chamadosDivisao(String divisao)throws NoResultException{
+    public List<Chamado> chamadosDivisao(String divisao)throws NoResultException, NullPointerException{
         super.getEm().getTransaction().begin();
         Query query = super.getEm().createQuery("SELECT e FROM Chamado e ORDER BY e.data DESC, e.status, e.solicitado");
         List<Chamado> chamados;
@@ -159,16 +159,76 @@ public class ChamadoServico extends DAOGenericoJPA<Long, Chamado>{
         
         try{
             chamados = query.getResultList();
-            for(int i=0; i<chamados.size();i++){
-                if(chamados.get(i).getSolicitante().getDivisao().getNome().equals(divisao)){
-                    System.out.println("DDivisão: " + divisao + "  Atual: " + chamados.get(i).getSolicitante().getDivisao().getNome());
-                    resultado.add(chamados.get(i));
+            for (int i = 0; i < chamados.size(); i++) {
+                if (chamados.get(i).getSolicitante() != null) {
+                    if (chamados.get(i).getSolicitante().getDivisao().getNome().equals(divisao)) {
+                        resultado.add(chamados.get(i));
+                    }
                 }
             }
             return resultado;
         }
-        catch(NoResultException e){
-            return new ArrayList<>();
+        catch(NoResultException | NullPointerException e){
+            return resultado;
+        }
+    }
+    
+    //Lista todos os chamados que têm "divisao" como solicitada
+    public List<Chamado> chamadosParaDivisao(String divisao)throws NoResultException, NullPointerException{
+        super.getEm().getTransaction().begin();
+        Query query = super.getEm().createQuery("SELECT e FROM Chamado e WHERE e.solicitado = :divisao ORDER BY e.data DESC, e.status, e.solicitado");
+        query.setParameter("divisao",divisao);
+
+        List<Chamado> resultado = new ArrayList<>();
+        
+        
+        
+        try{
+            resultado = query.getResultList();
+            return resultado;
+        }
+        catch(NoResultException | NullPointerException e){
+            return resultado;
+        }
+    }
+    
+    public List<Chamado> chamadosDivisaoStatus(String divisao, String status)throws NoResultException, NullPointerException{
+        super.getEm().getTransaction().begin();
+        Query query = super.getEm().createQuery("SELECT e FROM Chamado e WHERE e.status = :status ORDER BY e.data DESC, e.status, e.solicitado");
+        List<Chamado> chamados;
+        List<Chamado> resultado = new ArrayList<>();
+        query.setParameter("status",status);
+        
+        try{
+            chamados = query.getResultList();
+            for (int i = 0; i < chamados.size(); i++) {
+                if (chamados.get(i).getSolicitante() != null) {
+                    if (chamados.get(i).getSolicitante().getDivisao().getNome().equals(divisao)) {
+                        resultado.add(chamados.get(i));
+                    }
+                }
+            }
+            return resultado;
+        }
+        catch(NoResultException | NullPointerException e){
+            return resultado;
+        }
+    }
+    
+    public List<Chamado> chamadosParaDivisaoStatus(String divisao, String status)throws NoResultException, NullPointerException{
+        super.getEm().getTransaction().begin();
+        Query query = super.getEm().createQuery("SELECT e FROM Chamado e WHERE e.solicitado = :solicitado AND e.status = :status ORDER BY e.data DESC, e.status, e.solicitado");
+        List<Chamado> resultado = new ArrayList<>();
+        
+        query.setParameter("solicitado",divisao);
+        query.setParameter("status",status);
+        
+        try{
+            resultado = query.getResultList();
+            return resultado;
+        }
+        catch(NoResultException | NullPointerException e){
+            return resultado;
         }
     }
     

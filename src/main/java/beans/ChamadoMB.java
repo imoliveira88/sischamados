@@ -28,11 +28,12 @@ public class ChamadoMB extends Artificial implements Serializable{
     private String prioridade;
     private Pessoa solicitante;
     private Chamado chamadoSelecionado;
+    private String exibir; //Guardará o status que se deseja exibir
 
     public ChamadoMB() {
         chamado = new Chamado();
-        solicitante = new Pessoa();
         chamadoSelecionado = new Chamado();
+        solicitante = new Pessoa();
     }
 
     public Chamado getChamado() {
@@ -64,6 +65,14 @@ public class ChamadoMB extends Artificial implements Serializable{
         return solicitado;
     }
 
+    public String getExibir() {
+        return exibir;
+    }
+
+    public void setExibir(String exibir) {
+        this.exibir = exibir;
+    }
+
     public Pessoa getSolicitante() {
         return solicitante;
     }
@@ -71,8 +80,6 @@ public class ChamadoMB extends Artificial implements Serializable{
     public void setSolicitante(Pessoa solicitante) {
         this.solicitante = solicitante;
     }
-    
-    
 
     public void setSolicitado(String solicitado) {
         this.solicitado = solicitado;
@@ -112,21 +119,29 @@ public class ChamadoMB extends Artificial implements Serializable{
         this.descricao = descricao;
     }
     
-    public String atualizaStatus(Long id, String status) throws Exception{
+    public String atualizaChamado(Long id, String status, String destino) throws Exception {
         ChamadoServico pra = new ChamadoServico();
         Chamado cha = pra.getById(id);
         cha.setStatus(status);
-        if(pra.atualizaStatus(id,status)){
-            if(status.equals("Finalizado")){
-                 cha.setTempo_solucao(2);
-                 adicionaMensagem("Chamado de número " + id +  " finalizado!","destinoAviso");
-            }else{
-                 adicionaMensagem("Status do chamado de número " + id + " alterado para " + status + "!","destinoAviso");
+        cha.setDescricao(descricao);
+        long diff = Calendar.getInstance().getTimeInMillis() - cha.getData().getTime();
+
+        long diffSeconds = diff / 1000 % 60;
+        long diffMinutes = diff / (60 * 1000) % 60;
+        long diffHours = diff / (60 * 60 * 1000) % 24;
+        long diffDays = diff / (24 * 60 * 60 * 1000);
+
+        if (status.equals("Finalizado")) cha.setTempo_solucao((int) diffHours);
+        if (pra.atualizaStatus(id, status)) {
+            if (status.equals("Finalizado")) {
+                adicionaMensagem("Chamado de número " + id + " finalizado!", "destinoAviso");
+            } else {
+                adicionaMensagem("Chamado de número " + id + " atualizado!", "destinoAviso");
             }
-        }else{
-            adicionaMensagem("Status não pode ser alterado!","destinoAviso");
+        } else {
+            adicionaMensagem("Status não pode ser alterado!", "destinoAviso");
         }
-        return "chamados";
+        return destino;
     }
     
     public List<Chamado> getChamadosPorStatus(String status){
@@ -135,6 +150,20 @@ public class ChamadoMB extends Artificial implements Serializable{
     
     public List<Chamado> getChamadosPorDivisao(String div){
         return new ChamadoServico().chamadosDivisao(div);
+    }
+    
+    public List<Chamado> getChamadosParaDivisao(String div){
+        return new ChamadoServico().chamadosParaDivisao(div);
+    }
+    
+    public List<Chamado> getChamadosPorDivisaoStatus(String div, String st){
+        if(st.equals("TODOS")) return this.getChamadosPorDivisao(div);
+        return new ChamadoServico().chamadosDivisaoStatus(div,st);
+    }
+    
+    public List<Chamado> getChamadosParaDivisaoStatus(String div, String st){
+        if(st.equals("TODOS")) return new ChamadoServico().chamadosParaDivisao(div);
+        return new ChamadoServico().chamadosParaDivisaoStatus(div,st);
     }
     
     public List<Chamado> getChamadosEntreDatas(Date dinicio, Date dfim){
@@ -153,18 +182,22 @@ public class ChamadoMB extends Artificial implements Serializable{
         return new ChamadoServico().todosChamados();
     }
     
-    public String salvar(){        
+    public String atualizarLista(){
+        return "meusChamados";
+    }
+    
+    public String salvar(Long idsolicitante){        
         chamado.setData(Calendar.getInstance().getTime());
         chamado.setStatus("Iniciado");
         chamado.setDescricao(descricao);
         chamado.setTitulo(titulo);
         chamado.setSolicitado(solicitado);
         chamado.setPrioridade(prioridade);
-        chamado.setSolicitante((new PessoaServico()).retornaPessoa(this.solicitante.getNip()));
+        chamado.setSolicitante((new PessoaServico()).getById(idsolicitante));
         //chamado.setSolicitante((new PessoaServico()).getById(1));//Alterar após implementação da tela de login
         ChamadoServico chamadoDAO = new ChamadoServico();
         chamadoDAO.salvar(chamado);
-        return "chamados";
+        return "meusChamados";
     }
     
 }

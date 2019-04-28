@@ -2,6 +2,7 @@
 package beans;
 
 import java.io.Serializable;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +19,7 @@ import servico.PessoaServico;
 public class PessoaMB extends Artificial implements Serializable{
     
     private List<Chamado> chamados;
-    private Divisao divisao;
+    private String divisao;
     private char tipo; //Se tipo='A', administrador, quem cadastra divisões, usuários, etc, se tipo='U', pessoa normal
     private String nome;
     private String posto;
@@ -26,12 +27,14 @@ public class PessoaMB extends Artificial implements Serializable{
     private boolean militar;//no front-end implementar a aquisição uma drop-down com "militar" e "civil" como opções
     private String senha;
     private String nip;
+    private String email;
+    private String telefone;
     private Pessoa pessoaSelecionada;
 
     public PessoaMB() {
         chamados = new ArrayList<>();
         pessoaSelecionada = new Pessoa();
-        divisao = new Divisao();
+        //divisao = new Divisao();
     }
 
     public List<Chamado> getChamados() {
@@ -42,11 +45,11 @@ public class PessoaMB extends Artificial implements Serializable{
         this.chamados = chamados;
     }
 
-    public Divisao getDivisao() {
+    public String getDivisao() {
         return divisao;
     }
 
-    public void setDivisao(Divisao divisao) {
+    public void setDivisao(String divisao) {
         this.divisao = divisao;
     }
 
@@ -57,8 +60,6 @@ public class PessoaMB extends Artificial implements Serializable{
     public void setPessoaSelecionada(Pessoa pessoaSelecionada) {
         this.pessoaSelecionada = pessoaSelecionada;
     }
-    
-    
 
     public char getTipo() {
         return tipo;
@@ -115,19 +116,42 @@ public class PessoaMB extends Artificial implements Serializable{
     public void setNip(String nip) {
         this.nip = nip;
     }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getTelefone() {
+        return telefone;
+    }
+
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
+    }
+    
+    
     
     public List<Pessoa> getPessoas(){
         return (new PessoaServico()).pessoas();
     }
     
-    public String cadastraUsuario() throws ParseException{
+    public String cadastraUsuario() throws ParseException, SQLException{
         PessoaServico cli = new PessoaServico();
-        
+        Divisao div;
+                
         try {
-            Pessoa pes = new Pessoa(nome,senha,nip,militar,especialidade,posto);
+            Pessoa pes = new Pessoa(nome.toUpperCase(),senha,nip,militar,especialidade.toUpperCase(),posto.toUpperCase());
             pes.setTipo('U'); 
-            pes.setDivisao((new DivisaoServico()).retornaDivisao(divisao.getNumero()));
+            pes.setEmail(email.toLowerCase());
+            pes.setTelefone(telefone);
             
+            div = (new DivisaoServico()).retornaDivisao(divisao);
+            pes.setDivisao(div);
+          
             if (cli.salvar(pes)) {
                 this.adicionaMensagem("Cadastro feito com sucesso!","destinoAviso");
                 return "cadPessoa";

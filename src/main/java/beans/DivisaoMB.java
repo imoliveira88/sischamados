@@ -7,7 +7,7 @@ package beans;
 
 import java.io.Serializable;
 import java.util.List;
-import javax.enterprise.context.SessionScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 import modelo.Divisao;
 import servico.DivisaoServico;
@@ -16,7 +16,7 @@ import servico.DivisaoServico;
  *
  * @author usuario
  */
-@SessionScoped
+@RequestScoped
 @Named("divisaoMB")
 public class DivisaoMB extends Artificial implements Serializable{
     
@@ -66,8 +66,9 @@ public class DivisaoMB extends Artificial implements Serializable{
 
     public String salvar() {
         DivisaoServico pra = new DivisaoServico();
-        divisao.setNome(nome);
+        divisao.setNome(nome.toUpperCase());
         divisao.setNumero(numero);
+        System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA " + divisao.getNome() + divisao.getNumero());
         if(!pra.existeDivisao(this.divisao)){
             pra.salvar(divisao);
             adicionaMensagem("Divisão cadastrada com sucesso!","destinoAviso");

@@ -14,6 +14,24 @@
     </navigation-rule>
     
     <navigation-rule>
+        <from-view-id>/meusChamados.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>meusChamados</from-outcome>
+            <to-view-id>/meusChamados.xhtml</to-view-id>
+            <redirect/>   
+        </navigation-case>  
+    </navigation-rule>
+    
+    <navigation-rule>
+        <from-view-id>/chamadosParaDivisao.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>chamadosParaDivisao</from-outcome>
+            <to-view-id>/chamadosParaDivisao.xhtml</to-view-id>
+            <redirect/>   
+        </navigation-case>  
+    </navigation-rule>
+    
+    <navigation-rule>
         <from-view-id>/login.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>login</from-outcome>

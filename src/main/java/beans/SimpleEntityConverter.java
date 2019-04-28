@@ -10,6 +10,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import modelo.Divisao;
 
 
 @FacesConverter("simpleConverter")
@@ -28,7 +29,7 @@ public class SimpleEntityConverter implements Converter {
 
         if (value != null && !"".equals(value)) {
 
-            BaseEntity entity = (BaseEntity) value;
+            Divisao entity = (Divisao) value;
 
             // adiciona item como atributo do componente  
             this.addAttribute(component, entity);
@@ -42,7 +43,7 @@ public class SimpleEntityConverter implements Converter {
         return (String) value;
     }
 
-    protected void addAttribute(UIComponent component, BaseEntity o) {
+    protected void addAttribute(UIComponent component, Divisao o) {
         String key = o.getId().toString();
         this.getAttributesFrom(component).put(key, o);
     }

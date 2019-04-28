@@ -24,9 +24,17 @@
                 </td>
                 <td>
                     <h:form enctype="multipart/form-data" id="form">
-                        <p:fieldset legend="Chamados" style="margin-bottom:20px">
-                            <p:dataTable id="detalhes" var="chamado" value="#{chamadoMB.chamados}" rowKey="#{chamado.id}" selection="#{chamadoMB.chamadoSelecionado}" selectionMode="single">
-                                
+                        <p:fieldset legend="Chamados para minha divisão" style="margin-bottom:20px">
+                            <h:outputText value="Exibir chamados com status " />
+                            <p:selectOneMenu value="#{chamadoMB.exibir}" >
+                                <f:selectItems value="#{chamadoMB.listaStatus()}" var="status" itemValue="#{status}"/>
+                                <f:selectItem itemLabel="TODOS" itemValue="TODOS" noSelectionOption="true"/>
+                                <p:ajax event="itemSelect" update=":form:detalhes"/>
+                            </p:selectOneMenu>
+                            <br/><br/>
+                            
+                            <p:dataTable id="detalhes" var="chamado" value="#{chamadoMB.getChamadosParaDivisaoStatus(loginBean.retornaUsuario().divisao,chamadoMB.exibir)}" rowKey="#{chamado.id}" selection="#{chamadoMB.chamadoSelecionado}" selectionMode="single">
+                                                                
                                 <p:column>
                                     <f:facet name="header">ID</f:facet>
                                     <h:outputText value="#{chamado.id}"/>
@@ -40,12 +48,8 @@
                                     <h:outputText value="#{chamado.solicitante.toString()}"/>
                                 </p:column>
                                 <p:column>
-                                    <f:facet name="header">Telefone</f:facet>
-                                    <h:outputText value="#{chamado.solicitante.telefone}"/>
-                                </p:column>
-                                <p:column>
-                                    <f:facet name="header">E-mail</f:facet>
-                                    <h:outputText value="#{chamado.solicitante.email}"/>
+                                    <f:facet name="header">Prioridade</f:facet>
+                                    <h:outputText value="#{chamado.prioridade}"/>
                                 </p:column>
                                 <p:column>
                                     <f:facet name="header">Título</f:facet>
@@ -56,8 +60,8 @@
                                     <h:outputText value="#{chamado.data}"/>
                                 </p:column>
                                 <p:column>
-                                    <f:facet name="header">Descrição</f:facet>
-                                    <h:outputText value="#{chamado.descricao}" />
+                                    <f:facet name="header">Tempo de resolução (em horas)</f:facet>
+                                    <h:outputText value="#{chamado.tempo_solucao}" />
                                 </p:column>
                                 <f:facet name="footer">
                                     <p:commandButton process="detalhes" update=":form:chamadoDetail" icon="pi pi-search" value="Ver" oncomplete="PF('chamadoDialog').show()" />
@@ -66,7 +70,7 @@
                         </p:fieldset>
 
 
-                        <p:dialog header="Atualizar chamado" widgetVar="chamadoDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="true" width="500">
+                        <p:dialog header="Atualizar chamado" widgetVar="chamadoDialog" modal="true" width="500">
                             <p:outputPanel id="chamadoDetail" style="text-align:center;" >
                                 <h:panelGrid columns="2"  cellpadding="5">
                                 
@@ -90,9 +94,9 @@
                                     <h:outputText value="#{chamadoMB.chamadoSelecionado.data}"/>
                                     
                                     <h:outputText value="Descrição"/>
-                                    <p:editor value="#{chamadoMB.chamadoSelecionado.descricao}" />
-                                    
-                                    <h:commandButton styleClass="botaoTabela" value="Atualizar" action="#{chamadoMB.atualizaStatus(chamadoMB.chamadoSelecionado.id,chamadoMB.chamadoSelecionado.status)}"/>
+                                    <p:inputTextarea value="#{chamadoMB.chamadoSelecionado.descricao}" rows="5" cols="30" maxlength="150" autoResize="true" />
+                            
+                                    <h:commandButton styleClass="botaoTabela" value="Atualizar" action="#{chamadoMB.atualizaChamado(chamadoMB.chamadoSelecionado.id,chamadoMB.chamadoSelecionado.status,'chamadosParaDivisao')}"/>
                                 </h:panelGrid>
                             </p:outputPanel>
                         </p:dialog>

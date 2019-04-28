@@ -22,14 +22,13 @@
             <tr>
                 <h:form class="formGeral">
                     <td>
-                        <p:growl id="msgs" for="destinoAviso" autoUpdate="true" showDetail="true" life="4000" sticky="true"/>
+                        <p:growl id="msgs" for="destinoAviso" autoUpdate="true" showDetail="true" life="4000"/>
 
                         <p:fieldset class="field" legend="Solicitante">
                             <h:panelGrid columns="2" id = "sol"  cellpadding="5">
 
                                 <p:outputLabel for="nome" value="Solicitante" />
-                                <h:outputText id="nome" value="#{loginBean.retornaUsuario().toString()}"/>
-
+                                <h:outputText id="nome" value="#{loginBean.retornaUsuario().toString()}" />
 
                                 <p:outputLabel for="divisao" value="Divisão solicitante" />
                                 <h:outputText id="divisao" value="#{loginBean.retornaUsuario().divisao}"/>
@@ -60,14 +59,13 @@
 
                                 <p:outputLabel for="descricao" value="Descricao" />
                                 <p:inputTextarea id="descricao" value="#{chamadoMB.descricao}" rows="5" cols="30" maxlength="150" autoResize="true" />
-                                
-
+                               
                             </h:panelGrid>
                         </p:fieldset>
                     </td>
 
                     <td>
-                        <h:commandButton class="botao" value="Criar" action="#{chamadoMB.salvar()}"/>
+                        <h:commandButton class="botao" value="Criar" action="#{chamadoMB.salvar(loginBean.retornaUsuario().id)}"/>
                     </td>
                 </h:form>
             </tr>

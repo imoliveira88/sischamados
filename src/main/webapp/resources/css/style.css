@@ -38,7 +38,7 @@ h1{
 
 table#menu{
         box-shadow: 10px 10px 5px #888888;
-	width: 40%;
+	width: 45%;
         background-color: #ccccff;
 	text-align: center;
 	height: 50px;
@@ -59,7 +59,7 @@ table#menu td:hover{
 
 table#menuLeft{
         box-shadow: 10px 10px 5px #888888;
-	width: 30%;
+	width: 35%;
         background-color: #ccccff;
 	text-align: center;
 	height: 30px;

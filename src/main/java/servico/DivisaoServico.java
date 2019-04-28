@@ -71,15 +71,20 @@ public class DivisaoServico extends DAOGenericoJPA<Long, Divisao>{
        return query.getSingleResult();
     }
     
+    public Divisao retornaDivisao(String nome){
+        Query query = super.getEm().createQuery("SELECT e FROM Divisao e WHERE e.nome = :nome");
+        query.setParameter("nome", nome);
+        
+       return (Divisao) query.getSingleResult();
+    }
+    
     //Houve diversos problemas com os resultados obtidos com esse método, no entanto com esta implementação obtivemos êxito
     public boolean existeDivisao(Divisao div){
         Query query = super.getEm().createQuery("SELECT COUNT(e) FROM Divisao e WHERE e.numero = :num");
         query.setParameter("num", div.getNumero());
        
-        Long quantidade = (Long) query.getResultList().get(0);
-       
-        System.out.println("Primeiro número " + quantidade);
         try{
+            int quantidade = Integer.parseInt(query.getResultList().get(0).toString());
             if(quantidade > 0) return true;
         }
         catch(NoResultException e){

@@ -58,7 +58,19 @@
                                 <h:inputText id="titulo" value="#{chamadoMB.titulo}"/>
 
                                 <p:outputLabel for="descricao" value="Descricao" />
-                                <p:inputTextarea id="descricao" value="#{chamadoMB.descricao}" rows="5" cols="30" maxlength="150" autoResize="true" />
+                                <p:textEditor id="descricao" value="#{chamadoMB.descricao}" height="200">
+                                        <f:facet name="toolbar">
+                                            <span class="ql-formats">
+                                                <button class="ql-bold"></button>
+                                                <button class="ql-italic"></button>
+                                                <button class="ql-underline"></button>
+                                                <button class="ql-strike"></button>
+                                            </span>
+                                            <span class="ql-formats">
+                                                <select class="ql-size"></select>
+                                            </span>
+                                        </f:facet>
+                                </p:textEditor>
                                
                             </h:panelGrid>
                         </p:fieldset>

@@ -8,6 +8,7 @@ import java.util.List;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 import modelo.Chamado;
+import modelo.Divisao;
 import modelo.Pessoa;
 import servico.ChamadoServico;
 import servico.PessoaServico;
@@ -33,16 +34,23 @@ public class ChamadoMB extends Artificial implements Serializable{
     private Date dataFinal;
     private String divisao;
     private List<Chamado> chamFiltrados;
+    private List<Chamado> chamFiltradosDivisao;
+    private int linhasExistentes;
+    private String atribuido;
 
     public ChamadoMB() {
         chamado = new Chamado();
         chamadoSelecionado = new Chamado();
         solicitante = new Pessoa();
-        chamFiltrados = new ArrayList<>();
+        chamFiltrados = this.getChamados();
+        chamFiltradosDivisao = new ArrayList<>();
+        dataInicial = null;
+        dataFinal = null;
     }
 
     public Chamado getChamado() {
         return chamado;
+        
     }
     
     public List listaStatus(){
@@ -51,14 +59,50 @@ public class ChamadoMB extends Artificial implements Serializable{
         lista.add("Executando");
         lista.add("Executado");
         lista.add("Finalizado");
-        dataInicial = null;
-        dataFinal = null;
+        return lista;
+    }
+    
+    public List listaProxStatus(String statusAtual){
+        List lista = new ArrayList<>();
+        if(statusAtual.equals("Iniciado")){
+            lista.add("Iniciado");
+            lista.add("Executando");
+            lista.add("Executado");
+            lista.add("Finalizado");
+        }else if(statusAtual.equals("Executando")){
+            lista.add("Executando");
+            lista.add("Executado");
+            lista.add("Finalizado");
+        }else if(statusAtual.equals("Executado")){
+            lista.add("Executado");
+            lista.add("Finalizado");
+        } else lista.add("Finalizado");
         return lista;
     }
 
     public void setChamado(Chamado chamado) {
         this.chamado = chamado;
     }
+    
+    
+
+    public List<Chamado> getChamFiltradosDivisao() {
+        return chamFiltradosDivisao;
+    }
+
+    public void setChamFiltradosDivisao(List<Chamado> chamFiltradosDivisao) {
+        this.chamFiltradosDivisao = chamFiltradosDivisao;
+    }
+
+    public String getAtribuido() {
+        return atribuido;
+    }
+
+    public void setAtribuido(String atribuido) {
+        this.atribuido = atribuido;
+    }
+    
+    
 
     public List<Chamado> getChamFiltrados() {
         return chamFiltrados;
@@ -67,8 +111,6 @@ public class ChamadoMB extends Artificial implements Serializable{
     public void setChamFiltrados(List<Chamado> chamFiltrados) {
         this.chamFiltrados = chamFiltrados;
     }
-    
-    
 
     public Chamado getChamadoSelecionado() {
         return chamadoSelecionado;
@@ -84,9 +126,7 @@ public class ChamadoMB extends Artificial implements Serializable{
 
     public void setDivisao(String divisao) {
         this.divisao = divisao;
-    }
-    
-    
+    }  
 
     public Date getDataInicial() {
         return dataInicial;
@@ -164,11 +204,12 @@ public class ChamadoMB extends Artificial implements Serializable{
         this.descricao = descricao;
     }
     
-    public String atualizaChamado(Long id, String status, String destino) throws Exception {
+    public String atualizaChamadoF(Long id, String status, String desc, String destino, String atr) throws Exception {
         ChamadoServico pra = new ChamadoServico();
         Chamado cha = pra.getById(id);
         cha.setStatus(status);
-        cha.setDescricao(descricao);
+        cha.setDescricao(desc);
+        cha.setAtribuido(atr);
         long diff = Calendar.getInstance().getTimeInMillis() - cha.getData().getTime();
 
         long diffSeconds = diff / 1000 % 60;
@@ -177,6 +218,33 @@ public class ChamadoMB extends Artificial implements Serializable{
         long diffDays = diff / (24 * 60 * 60 * 1000);
 
         if (status.equals("Finalizado")) cha.setTempo_solucao((int) diffHours);
+        if (pra.atualizaStatus(id, status)) {
+            if (status.equals("Finalizado")) {
+                adicionaMensagem("Chamado de número " + id + " finalizado!", "destinoAviso");
+            } else {
+                adicionaMensagem("Chamado de número " + id + " atualizado!", "destinoAviso");
+            }
+        } else {
+            adicionaMensagem("Status não pode ser alterado!", "destinoAviso");
+        }
+        return destino;
+    }
+    
+    public String atualizaChamado(Long id, String status, String desc, String destino) throws Exception {
+        ChamadoServico pra = new ChamadoServico();
+        Chamado cha = pra.getById(id);
+        cha.setStatus(status);
+        cha.setDescricao(desc);
+
+        if (status.equals("Finalizado")){
+            long diff = Calendar.getInstance().getTimeInMillis() - cha.getData().getTime();
+
+            long diffSeconds = diff / 1000 % 60;
+            long diffMinutes = diff / (60 * 1000) % 60;
+            long diffHours = diff / (60 * 60 * 1000) % 24;
+            long diffDays = diff / (24 * 60 * 60 * 1000);
+            cha.setTempo_solucao((int) diffHours);
+        }
         if (pra.atualizaStatus(id, status)) {
             if (status.equals("Finalizado")) {
                 adicionaMensagem("Chamado de número " + id + " finalizado!", "destinoAviso");
@@ -220,6 +288,11 @@ public class ChamadoMB extends Artificial implements Serializable{
         return new ChamadoServico().chamadosEntreDatasStatusDivisao(dinicio, dfim, status, divisao);
     }
     
+    public List<Chamado> getChamadosEntreDatasDivisao(Date dinicio, Date dfim, String divisao){
+        if(dinicio == null || dfim == null) return new ArrayList<>();
+        return new ChamadoServico().chamadosEntreDatasDivisao(dinicio, dfim, divisao);
+    }
+    
     public List<Chamado> getChamadosEntreDatasStatus(Date dinicio, Date dfim, String status){
         return new ChamadoServico().chamadosEntreDatasStatus(dinicio, dfim, status);
     }
@@ -233,7 +306,12 @@ public class ChamadoMB extends Artificial implements Serializable{
     }
     
     public String filtrarLista(){
-        System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA Dados: " + this.divisao + this.exibir + this.solicitado +this.dataFinal + this.dataInicial);
+        chamFiltrados = this.getChamadosEntreDatas(dataInicial, dataFinal);
+        return "relatorioUsuario";
+    }
+    
+    public String filtrarListaDivisao(Divisao div){
+        chamFiltradosDivisao = this.getChamadosEntreDatasDivisao(dataInicial, dataFinal, div.getNome());
         return "relatorioUsuario";
     }
     

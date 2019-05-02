@@ -12,7 +12,7 @@
     <h:body>
 
 
-        <ui:decorate template="/templates/masterDecorator.xhtml">
+        <ui:decorate template="/templates/decoratorAdmin.xhtml">
         
         <table>
             <tr>
@@ -36,7 +36,7 @@
                             <p:calendar id="dataFinal" value="#{chamadoMB.dataFinal}" pattern="dd-MM-yyyy" mask="true">
                             </p:calendar>
                             
-                            <h:commandButton action="#{chamadoMB.filtrarListaDivisao(loginBean.retornaUsuario().divisao)}" value="Filtrar"/>
+                            <h:commandButton action="#{chamadoMB.filtrarLista()}" value="Filtrar"/>
                             
                             </h:panelGrid>
                         </p:fieldset>
@@ -44,11 +44,15 @@
                         <br/>
 
                             <p:fieldset legend="Chamados" style="margin-bottom:20px">
-                                <p:dataTable  id="detalhes" rowIndexVar="indice" var="chamado" value="#{chamadoMB.chamFiltradosDivisao}" widgetVar="selecaoCham" emptyMessage="Não há chamados que atendam esses critérios!">
+                                <p:dataTable  id="detalhes" rowIndexVar="indice" var="chamado" value="#{chamadoMB.chamFiltrados}" widgetVar="selecaoCham" emptyMessage="Não há chamados que atendam esses critérios!">
 
                                 <p:column>
                                     <f:facet name="header">ID</f:facet>
                                     <h:outputText value="#{chamado.id}"/>
+                                </p:column>
+                                <p:column>
+                                    <f:facet name="header">Solicitante</f:facet>
+                                    <h:outputText value="#{chamado.solicitante}"/>
                                 </p:column>
                                 <p:column filterBy="#{chamado.status}" headerText="Status" filterMatchMode="exact">
                                     <f:facet name="filter">

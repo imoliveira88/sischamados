@@ -80,6 +80,10 @@ public class DivisaoMB extends Artificial implements Serializable{
         }
     }
     
+    public Divisao retornaDivisao(String div){
+        return (new DivisaoServico()).retornaDivisao(div);
+    }
+    
     public List<Divisao> getDivisoes(){
         return new DivisaoServico().todasDivisoes();
     }

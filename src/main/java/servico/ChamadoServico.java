@@ -89,6 +89,7 @@ public class ChamadoServico extends DAOGenericoJPA<Long, Chamado>{
         
         try{
             chamados = query.getResultList();
+            System.out.println("RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRresultado: " + chamados.toString());
             return chamados;
         }
         catch(NoResultException e){
@@ -122,6 +123,24 @@ public class ChamadoServico extends DAOGenericoJPA<Long, Chamado>{
         query.setParameter("data1",dinicio);
         query.setParameter("data2",dfim);
         query.setParameter("status",status);
+        query.setParameter("divisao",divisao);
+        
+        List<Chamado> chamados;
+        
+        try{
+            chamados = query.getResultList();
+            return chamados;
+        }
+        catch(NoResultException e){
+            return new ArrayList<>();
+        }
+     }
+    
+    public List<Chamado> chamadosEntreDatasDivisao(Date dinicio, Date dfim, String divisao){
+        super.getEm().getTransaction().begin();
+        Query query = super.getEm().createQuery("Select e FROM Chamado e WHERE (e.data BETWEEN :data1 AND :data2) AND e.solicitado = :divisao ORDER BY e.data DESC, e.status");
+        query.setParameter("data1",dinicio);
+        query.setParameter("data2",dfim);
         query.setParameter("divisao",divisao);
         
         List<Chamado> chamados;

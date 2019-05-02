@@ -23,7 +23,7 @@
             <div id="content">
                 <table id="menu" align="center">
                     <tr>
-                        <td><h:commandButton styleClass="botaoTabela" action="#{logoutBean.logout()}" value="Logout" /></td>
+                        <td><h:form><h:commandButton styleClass="botaoTabela" action="#{logoutBean.logout()}" value="Logout" /></h:form></td>
                         <td onclick="location.href='/sischamados/faces/admin/cadDivisao.xhtml'">Divisões</td>
                         <td onclick="location.href='/sischamados/faces/admin/cadPessoa.xhtml'">Usuários</td>
                         <td onclick="location.href='/sischamados/faces/admin/relatorios.xhtml'">Relatorios</td>

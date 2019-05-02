@@ -7,6 +7,7 @@ import javax.faces.application.FacesMessage;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
+import modelo.Divisao;
 import modelo.Pessoa;
 import servico.PessoaServico;
 
@@ -16,8 +17,11 @@ public class LoginBean implements Serializable{
     private String nip;
     private String senha;
     private String nome;
+    private Divisao divisao;
     
-    public LoginBean(){};
+    public LoginBean(){
+        divisao = new Divisao();
+    };
 
     public String getNip() {
         return nip;
@@ -42,6 +46,16 @@ public class LoginBean implements Serializable{
     public void setNome(String nome) {
         this.nome = nome;
     }
+
+    public Divisao getDivisao() {
+        return divisao;
+    }
+
+    public void setDivisao(Divisao divisao) {
+        this.divisao = divisao;
+    }
+    
+    
 
     //Compara se o nip digitado corresponde a um usuário válido, e, correspondendo,
     //compara a senha fornecida, com a senha que há no banco
@@ -77,16 +91,17 @@ public class LoginBean implements Serializable{
                 adicionaMensagem("Login ou senha incorretos!", "destinoAviso");
                 return "login";
             } else {
-                PessoaServico ud = new PessoaServico();
-                usu = ud.retornaPessoa(this.nip);
+                usu = this.retornaUsuario();
 
                 tipo = usu.getTipo();
+                
                 this.nome = usu.getNome();
                 adicionaMensagem("Bem vindo, " + this.nome + "!", "destinoAviso");
                 if (tipo == 'A') {
-                    return "cadastros";
+                    return "cadPessoa";
                 } else {
-                    return "criarChamado";
+                    this.divisao = usu.getDivisao();
+                    return "chamadosParaDivisao";
                 }
             }
         } catch (Exception e) {

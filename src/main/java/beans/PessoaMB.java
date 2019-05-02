@@ -165,6 +165,10 @@ public class PessoaMB extends Artificial implements Serializable{
         }  
     }
     
+    public List<Pessoa> retornaPessoasDivisao(Divisao d){
+        return (new PessoaServico()).pessoasDivisao(d);
+    }
+    
     public String excluiUsuario(Long id) throws ParseException{
         PessoaServico cli = new PessoaServico();
         

@@ -80,8 +80,17 @@
                                     <h:outputText value="Status"/>
                                     <h:outputText value="#{chamadoMB.chamadoSelecionado.status}"/>
                                     
-                                    Alterar para: <p:selectOneMenu value="#{chamadoMB.chamadoSelecionado.status}">
-                                        <f:selectItems value="#{chamadoMB.listaStatus()}" var="status" itemValue="#{status}"/>
+                                    <h:outputText value="Alterar para:"/>
+                                    <p:selectOneMenu value="#{chamadoMB.chamadoSelecionado.status}">
+                                        <f:selectItems value="#{chamadoMB.listaProxStatus(chamadoMB.chamadoSelecionado.status)}" var="status" itemValue="#{status}"/>
+                                    </p:selectOneMenu>
+                                    
+                                    <h:outputText value="Atribuído a"/>
+                                    <h:outputText value="#{chamadoMB.chamadoSelecionado.atribuido}" />
+                                    
+                                    <h:outputText value="Alterar para:"/>
+                                    <p:selectOneMenu value="#{chamadoMB.chamadoSelecionado.atribuido}">
+                                        <f:selectItems value="#{pessoaMB.retornaPessoasDivisao(loginBean.divisao)}" var="divi" itemValue="#{divi}"/>
                                     </p:selectOneMenu>
                                     
                                     <h:outputText value="Solicitante"/>
@@ -94,9 +103,22 @@
                                     <h:outputText value="#{chamadoMB.chamadoSelecionado.data}"/>
                                     
                                     <h:outputText value="Descrição"/>
-                                    <p:inputTextarea value="#{chamadoMB.chamadoSelecionado.descricao}" rows="5" cols="30" maxlength="150" autoResize="true" />
+                                    <p:textEditor widgetVar="editor2" value="#{chamadoMB.chamadoSelecionado.descricao}" height="200" >
+                                        <f:facet name="toolbar">
+                                            <span class="ql-formats">
+                                                <button class="ql-bold"></button>
+                                                <button class="ql-italic"></button>
+                                                <button class="ql-underline"></button>
+                                                <button class="ql-strike"></button>
+                                            </span>
+                                            <span class="ql-formats">
+                                                <select class="ql-size"></select>
+                                            </span>
+                                        </f:facet>
+                                    </p:textEditor>
+                                   
                             
-                                    <h:commandButton styleClass="botaoTabela" value="Atualizar" action="#{chamadoMB.atualizaChamado(chamadoMB.chamadoSelecionado.id,chamadoMB.chamadoSelecionado.status,'chamadosParaDivisao')}"/>
+                                    <h:commandButton styleClass="botaoTabela" value="Atualizar" action="#{chamadoMB.atualizaChamadoF(chamadoMB.chamadoSelecionado.id,chamadoMB.chamadoSelecionado.status,chamadoMB.chamadoSelecionado.descricao,'chamadosParaDivisao',chamadoMB.chamadoSelecionado.atribuido)}"/>
                                 </h:panelGrid>
                             </p:outputPanel>
                         </p:dialog>

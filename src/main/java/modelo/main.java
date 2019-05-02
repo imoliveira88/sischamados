@@ -5,6 +5,8 @@
  */
 package modelo;
 
+import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.Calendar;
 import servico.ChamadoServico;
 import servico.PessoaServico;
@@ -14,32 +16,21 @@ Classe de teste
  */
 public class main {
     
-    public static void main(String[] args){
+    public static void main(String[] args) throws SQLException, ParseException{
         String teste = "Igor,Magalhaes,Oliveira";
         Chamado c = new Chamado();
        
         
-        Pessoa p = new Pessoa("Igor","oxente","15480",true,"EN","1T");
+        Pessoa p = new Pessoa("admin","admin","admin",true,"","");
+        p.setTipo('A');
         //p.setDivisao((new DivisaoServico()).retornaDivisao(232));
         PessoaServico ps = new PessoaServico();
-        //ps.salvar(p);
+        ps.salvar(p);
         
         
-        c.setAtribuido("Igor");
-        c.setData(Calendar.getInstance().getTime());
-        c.setDescricao("Bobagem grande");
-        c.setPrioridade("Alta");
-        c.setSolicitado("16");
-        c.setSolicitante(ps.retornaPessoa(p.getNip()));
-        c.setStatus("Aberto");
-        c.setTitulo("BOmba em Hiroshima!");
-        
-        ChamadoServico cs = new ChamadoServico();
-        cs.salvar(c);
+      
         
         
-        
-        System.out.println("Último: " + c.ultimo(teste) + "\n" + "Tracking: " + c.exibeTrack(teste));
-    }
+        }
     
 }

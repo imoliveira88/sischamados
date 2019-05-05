@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package beans;
 
 import java.io.Serializable;
@@ -62,7 +57,6 @@ public class DivisaoMB extends Artificial implements Serializable{
         DivisaoServico pra = new DivisaoServico();
         divisao.setNome(nome.toUpperCase());
         divisao.setNumero(numero);
-        System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA " + divisao.getNome() + divisao.getNumero());
         if(!pra.existeDivisao(this.divisao)){
             pra.salvar(divisao);
             adicionaMensagem("Divisão cadastrada com sucesso!","destinoAviso");
@@ -84,7 +78,6 @@ public class DivisaoMB extends Artificial implements Serializable{
     
     public String excluir(Long id) throws Exception{
         DivisaoServico pra = new DivisaoServico();
-        this.adicionaMensagem("Exibe id: " + id, "destinoAviso");
         if(pra.deletarDivisao(id)){
             adicionaMensagem("Divisão removida com sucesso!","destinoAviso");
         }else{

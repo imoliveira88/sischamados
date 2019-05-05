@@ -103,17 +103,12 @@ public class PessoaServico extends DAOGenericoJPA<Long, Pessoa>{
         try{
         if(!existePessoa(b)){
             super.getEm().getTransaction().begin();
-             System.out.print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAntes Persist");
             super.getEm().persist(b);
-             System.out.print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADpsPErsist");
             super.getEm().getTransaction().commit();
-            System.out.print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADeu bom");
             return true;
         }
-        System.out.print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPegou o else");
         return false;
         }catch(Exception e){
-            System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADeu ruim! ");
             return false;
         }
     }

@@ -151,12 +151,14 @@ body {
 }
 
 .botao:hover{
-    background-color: background;
+    background-color: transparent;
+    color: aqua;
     cursor:pointer;
 }
 
 .botaoTabela:hover{
-    background-color: background;
+    background-color: transparent;
+    color: aqua;
     cursor:pointer;
 }
 

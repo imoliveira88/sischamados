@@ -13,10 +13,7 @@ import modelo.Pessoa;
 import servico.ChamadoServico;
 import servico.PessoaServico;
 
-/**
- *
- * @author usuario
- */
+
 @Named("chamadoMB")
 @SessionScoped
 public class ChamadoMB extends Artificial implements Serializable{
@@ -204,6 +201,11 @@ public class ChamadoMB extends Artificial implements Serializable{
         this.descricao = descricao;
     }
     
+    public String exibeChamado(Long id){
+        chamadoSelecionado = (new ChamadoServico()).getById(id);
+        return "exibeChamado.xhtml?faces-redirect=true";
+    }
+    
     public String atualizaChamado(String destino) throws Exception {
         ChamadoServico pra = new ChamadoServico();
         Chamado cha = pra.getById(chamadoSelecionado.getId());
@@ -216,10 +218,10 @@ public class ChamadoMB extends Artificial implements Serializable{
 
             long diff = Calendar.getInstance().getTimeInMillis() - cha.getData().getTime();
 
-            long diffSeconds = diff / 1000 % 60;
-            long diffMinutes = diff / (60 * 1000) % 60;
+            //long diffSeconds = diff / 1000 % 60;
+            //long diffMinutes = diff / (60 * 1000) % 60;
             long diffHours = diff / (60 * 60 * 1000) % 24;
-            long diffDays = diff / (24 * 60 * 60 * 1000);
+            //long diffDays = diff / (24 * 60 * 60 * 1000);
             cha.setTempo_solucao((int) diffHours);
         }
         if (pra.atualizaChamado(cha)) {

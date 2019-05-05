@@ -18,14 +18,14 @@
             <br/>
             <br/>
 
-            <table align="center">
+            <table align="center" width="80%">
                 <tr>
                     <h:form class="formGeral">
 
                         <td>
 
                             <p:growl id="msgs" for="destinoAviso" autoUpdate="true" showDetail="true" life="4000"/>
-                            <p:fieldset class="field" legend="Cadastro de usuário">
+                            <p:fieldset class="field" legend="Cadastro de usuário" style="margin-bottom:20px; background-color: beige">
                                 <h:panelGrid columns="2" id = "cham"  cellpadding="5">
 
                                     <p:outputLabel for="nome" value="Nome" />
@@ -68,7 +68,7 @@
                 <tr>
                     <td>
                         <h:form>
-                        <p:fieldset class="field" legend="Usuários cadastrados">
+                        <p:fieldset class="field" legend="Usuários cadastrados" style="margin-bottom:20px; background-color: beige">
                             <h:panelGrid columns="2" id = "sol"  cellpadding="5">
                                 <p:dataTable var="pessoa" value="#{pessoaMB.pessoas}"  rowKey="#{pessoa.id}" selection="#{pessoaMB.pessoaSelecionada}" selectionMode="single">
                                     <p:column>
@@ -95,10 +95,8 @@
                                         <f:facet name="header">Divisão</f:facet>
                                         <h:outputText value="#{pessoa.divisao}"/>
                                     </p:column>
-                                    <f:facet name="footer">
-                                        <h:commandButton styleClass="botaoTabela" value="Excluir" action="#{pessoaMB.excluiUsuario(pessoaMB.pessoaSelecionada.id)}"/>
-                                    </f:facet>
                                 </p:dataTable>
+                                <h:commandButton styleClass="botaoTabela" value="Excluir" action="#{pessoaMB.excluiUsuario(pessoaMB.pessoaSelecionada.id)}"/>
                             </h:panelGrid>
                         </p:fieldset>
                         </h:form>

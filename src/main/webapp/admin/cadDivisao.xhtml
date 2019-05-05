@@ -18,13 +18,13 @@
             <br/>
             <br/>
 
-            <table align="center">
+            <table align="center" width="80%">
                 <tr>
                     <h:form id="form1" class="formGeral">
                         <td>
                             <p:growl id="msgs" for="destinoAviso" autoUpdate="true" showDetail="true" life="4000"/>
 
-                            <p:fieldset class="field" legend="Cadastro de divisão">
+                            <p:fieldset class="field" legend="Cadastro de divisão" style="margin-bottom:20px; background-color: beige">
                                 <h:panelGrid columns="2" id = "sol"  cellpadding="5">
 
                                     <p:outputLabel for="nome" value="Nome da divisão" />
@@ -45,10 +45,9 @@
                 <tr>
                     <td>
                         <h:form>
-                        <p:fieldset class="field" legend="Divisões cadastradas">
+                        <p:fieldset class="field" legend="Divisões cadastradas" style="margin-bottom:20px; background-color: beige">
                             <h:panelGrid columns="2" id = "sol"  cellpadding="5">
                                 <p:dataTable id="lista" var="divisao" value="#{divisaoMB.divisoes}" rowKey="#{divisao.id}" selection="#{divisaoMB.divisaoSelecionada}" selectionMode="single">
-                                    <p:ajax event="rowSelect" update=":form1:msgs" />
                                     <p:column>
                                         <f:facet name="header">ID</f:facet>
                                         <h:outputText value="#{divisao.id}"/>
@@ -61,10 +60,8 @@
                                         <f:facet name="header">Número</f:facet>
                                         <h:outputText value="#{divisao.numero}"/>
                                     </p:column>
-                                    <f:facet name="footer">
-                                        <p:commandButton styleClass="botaoTabela" value="Excluir" action="#{divisaoMB.excluir(divisaoMB.divisaoSelecionada.id)}"/>
-                                    </f:facet>
                                 </p:dataTable>
+                                <h:commandButton styleClass="botaoTabela" value="Excluir" action="#{divisaoMB.excluir(divisaoMB.divisaoSelecionada.id)}"/>
                             </h:panelGrid>
                         </p:fieldset>
                         </h:form>

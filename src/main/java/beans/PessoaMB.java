@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
-import javax.enterprise.context.SessionScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 import modelo.Chamado;
 import modelo.Divisao;
@@ -14,7 +14,7 @@ import modelo.Pessoa;
 import servico.DivisaoServico;
 import servico.PessoaServico;
 
-@SessionScoped
+@RequestScoped
 @Named("pessoaMB")
 public class PessoaMB extends Artificial implements Serializable{
     

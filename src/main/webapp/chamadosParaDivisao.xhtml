@@ -14,7 +14,7 @@
 
         <ui:decorate template="/templates/masterDecorator.xhtml">
         
-        <table>
+        <table align="center" width="80%">
             <tr>
                 <td>
                     <h:form id="aviso">
@@ -24,7 +24,7 @@
                 </td>
                 <td>
                     <h:form enctype="multipart/form-data" id="form">
-                        <p:fieldset legend="Chamados para minha divisão" style="margin-bottom:20px">
+                        <p:fieldset legend="Chamados para minha divisão" style="margin-bottom:20px; background-color: beige">
                             <h:outputText value="Exibir chamados com status " />
                             <p:selectOneMenu value="#{chamadoMB.exibir}" >
                                 <f:selectItems value="#{chamadoMB.listaStatus()}" var="status" itemValue="#{status}"/>
@@ -67,72 +67,10 @@
                                     <f:facet name="header">Tempo de resolução (em horas)</f:facet>
                                     <h:outputText value="#{chamado.tempo_solucao}" />
                                 </p:column>
-                                <f:facet name="footer">
-                                    <p:commandButton process="detalhes" update=":form:chamadoDetail" icon="pi pi-search" value="Ver" oncomplete="PF('chamadoDialog').show()" />
-                                </f:facet>
                             </p:dataTable>
+                            <h:commandButton styleClass="botaoTabela" action="#{chamadoMB.exibeChamado(chamadoMB.chamadoSelecionado.id)}" value="Exibir" />
                         </p:fieldset>
-
-
-                        <p:dialog header="Atualizar chamado" id="chamadoDetail" widgetVar="chamadoDialog" modal="true" width="500">
-                                <h:panelGrid columns="2"  cellpadding="5">
-                                
-                                    <h:outputText value="ID"/>
-                                    <h:outputText value="#{chamadoMB.chamadoSelecionado.id}"/>
-                                    
-                                    <h:outputText value="Status"/>
-                                    <h:outputText value="#{chamadoMB.chamadoSelecionado.status}"/>
-                                    
-                                    <h:outputText value="Alterar para:"/>
-                                    <p:selectOneMenu value="#{chamadoMB.chamadoSelecionado.status}">
-                                        <f:selectItems value="#{chamadoMB.listaProxStatus(chamadoMB.chamadoSelecionado.status)}" var="status" itemValue="#{status}"/>
-                                    </p:selectOneMenu>
-                                    
-                                    <h:outputText value="Atribuído a"/>
-                                    <h:outputText value="#{chamadoMB.chamadoSelecionado.atribuido}" />
-                                    
-                                    <h:outputText value="Atribuir a:"/>
-                                    <p:selectOneMenu value="#{chamadoMB.chamadoSelecionado.atribuido}">
-                                        <f:selectItems value="#{pessoaMB.retornaPessoasDivisao(loginBean.divisao)}" var="divi" itemValue="#{divi}"/>
-                                    </p:selectOneMenu>
-                                    
-                                    <h:outputText value="Prioridade"/>
-                                    <h:outputText value="#{chamadoMB.chamadoSelecionado.prioridade}" />
-                                    
-                                    <h:outputText value="Alterar para:"/>
-                                    <p:selectOneMenu value="#{chamadoMB.chamadoSelecionado.prioridade}">
-                                        <f:selectItems value="#{chamadoMB.prioridades}" var="prior" itemValue="#{prior}"/>
-                                    </p:selectOneMenu>
-                                    
-                                    <h:outputText value="Solicitante"/>
-                                    <h:outputText value="#{chamadoMB.chamadoSelecionado.solicitante}"/>
-                                    
-                                    <h:outputText value="Título"/>
-                                    <h:outputText value="#{chamadoMB.chamadoSelecionado.titulo}"/>
-                                    
-                                    <h:outputText value="Data"/>
-                                    <h:outputText value="#{chamadoMB.chamadoSelecionado.data}"/>
-                                    
-                                    <h:outputText value="Descrição"/>
-                                    <p:textEditor widgetVar="editor2" value="#{chamadoMB.chamadoSelecionado.descricao}" height="200" >
-                                        <f:facet name="toolbar">
-                                            <span class="ql-formats">
-                                                <button class="ql-bold"></button>
-                                                <button class="ql-italic"></button>
-                                                <button class="ql-underline"></button>
-                                                <button class="ql-strike"></button>
-                                            </span>
-                                            <span class="ql-formats">
-                                                <select class="ql-size"></select>
-                                            </span>
-                                        </f:facet>
-                                    </p:textEditor>
-                                   
-                            
-                                     <h:commandButton styleClass="botaoTabela" value="Atualizar" action="#{chamadoMB.atualizaChamado('chamadosParaDivisao')}"/>
-
-                                </h:panelGrid>
-                        </p:dialog>
+                        
 
                     </h:form>
                 </td>

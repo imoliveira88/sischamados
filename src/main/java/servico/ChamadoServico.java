@@ -47,7 +47,7 @@ public class ChamadoServico extends DAOGenericoJPA<Long, Chamado>{
     }
 
     
-    public void atualizaSolicitado(Chamado c){
+    /*public void atualizaSolicitado(Chamado c){
         super.getEm().getTransaction().begin();
         Query query = super.getEm().createQuery("SELECT e.id FROM Chamado e WHERE e.data = :data AND e.titulo = :titulo");
         query.setParameter("data",c.getData());
@@ -75,7 +75,7 @@ public class ChamadoServico extends DAOGenericoJPA<Long, Chamado>{
         super.getEm().merge(cha);
         super.getEm().getTransaction().commit();
         super.getEm().close();
-    }
+    }*/
     
     // Retorna chamados entre duas datas distintas
     public List<Chamado> chamadosEntreDatas(Date dinicio, Date dfim){
@@ -88,7 +88,6 @@ public class ChamadoServico extends DAOGenericoJPA<Long, Chamado>{
         
         try{
             chamados = query.getResultList();
-            System.out.println("RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRresultado: " + chamados.toString());
             return chamados;
         }
         catch(NoResultException e){

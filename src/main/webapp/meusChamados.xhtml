@@ -34,7 +34,7 @@
                             <br/><br/>
                             
                             <p:dataTable id="detalhes" emptyMessage="Não há chamados criados por sua divisão com esse critério!"  var="chamado" value="#{chamadoMB.getChamadosPorDivisaoStatus(loginBean.retornaUsuario().divisao,chamadoMB.exibir)}" rowKey="#{chamado.id}" selection="#{chamadoMB.chamadoSelecionado}" selectionMode="single">
-                                                                
+                                                                           
                                 <p:column>
                                     <f:facet name="header">ID</f:facet>
                                     <h:outputText value="#{chamado.id}"/>
@@ -70,8 +70,7 @@
                         </p:fieldset>
 
 
-                        <p:dialog header="Atualizar chamado" widgetVar="chamadoDialog" modal="true" width="500">
-                            <p:outputPanel id="chamadoDetail" style="text-align:center;" >
+                        <p:dialog header="Atualizar chamado" id="chamadoDetail" widgetVar="chamadoDialog" modal="true" width="500">
                                 <h:panelGrid columns="2"  cellpadding="5">
                                 
                                     <h:outputText value="ID"/>
@@ -111,7 +110,6 @@
                                     
                                     <h:commandButton styleClass="botaoTabela" value="Atualizar" action="#{chamadoMB.atualizaChamado('meusChamados')}"/>
                                 </h:panelGrid>
-                            </p:outputPanel>
                         </p:dialog>
 
                     </h:form>

@@ -74,8 +74,7 @@
                         </p:fieldset>
 
 
-                        <p:dialog header="Atualizar chamado" widgetVar="chamadoDialog" modal="true" width="500">
-                            <p:outputPanel id="chamadoDetail" style="text-align:center;" >
+                        <p:dialog header="Atualizar chamado" id="chamadoDetail" widgetVar="chamadoDialog" modal="true" width="500">
                                 <h:panelGrid columns="2"  cellpadding="5">
                                 
                                     <h:outputText value="ID"/>
@@ -133,7 +132,6 @@
                                      <h:commandButton styleClass="botaoTabela" value="Atualizar" action="#{chamadoMB.atualizaChamado('chamadosParaDivisao')}"/>
 
                                 </h:panelGrid>
-                            </p:outputPanel>
                         </p:dialog>
 
                     </h:form>

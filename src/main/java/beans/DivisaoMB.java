@@ -12,10 +12,6 @@ import javax.inject.Named;
 import modelo.Divisao;
 import servico.DivisaoServico;
 
-/**
- *
- * @author usuario
- */
 @RequestScoped
 @Named("divisaoMB")
 public class DivisaoMB extends Artificial implements Serializable{
@@ -61,8 +57,6 @@ public class DivisaoMB extends Artificial implements Serializable{
     public void setNumero(int numero) {
         this.numero = numero;
     }
-    
-    
 
     public String salvar() {
         DivisaoServico pra = new DivisaoServico();

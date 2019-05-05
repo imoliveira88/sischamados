@@ -48,6 +48,10 @@
                                     <h:outputText value="#{chamado.solicitante.toString()}"/>
                                 </p:column>
                                 <p:column>
+                                    <f:facet name="header">Atribuído a</f:facet>
+                                    <h:outputText value="#{chamado.atribuido}"/>
+                                </p:column>
+                                <p:column>
                                     <f:facet name="header">Prioridade</f:facet>
                                     <h:outputText value="#{chamado.prioridade}"/>
                                 </p:column>
@@ -88,9 +92,17 @@
                                     <h:outputText value="Atribuído a"/>
                                     <h:outputText value="#{chamadoMB.chamadoSelecionado.atribuido}" />
                                     
-                                    <h:outputText value="Alterar para:"/>
+                                    <h:outputText value="Atribuir a:"/>
                                     <p:selectOneMenu value="#{chamadoMB.chamadoSelecionado.atribuido}">
                                         <f:selectItems value="#{pessoaMB.retornaPessoasDivisao(loginBean.divisao)}" var="divi" itemValue="#{divi}"/>
+                                    </p:selectOneMenu>
+                                    
+                                    <h:outputText value="Prioridade"/>
+                                    <h:outputText value="#{chamadoMB.chamadoSelecionado.prioridade}" />
+                                    
+                                    <h:outputText value="Alterar para:"/>
+                                    <p:selectOneMenu value="#{chamadoMB.chamadoSelecionado.prioridade}">
+                                        <f:selectItems value="#{chamadoMB.prioridades}" var="prior" itemValue="#{prior}"/>
                                     </p:selectOneMenu>
                                     
                                     <h:outputText value="Solicitante"/>
@@ -118,7 +130,8 @@
                                     </p:textEditor>
                                    
                             
-                                    <h:commandButton styleClass="botaoTabela" value="Atualizar" action="#{chamadoMB.atualizaChamadoF(chamadoMB.chamadoSelecionado.id,chamadoMB.chamadoSelecionado.status,chamadoMB.chamadoSelecionado.descricao,'chamadosParaDivisao',chamadoMB.chamadoSelecionado.atribuido)}"/>
+                                     <h:commandButton styleClass="botaoTabela" value="Atualizar" action="#{chamadoMB.atualizaChamado('chamadosParaDivisao')}"/>
+
                                 </h:panelGrid>
                             </p:outputPanel>
                         </p:dialog>

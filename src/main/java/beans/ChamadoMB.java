@@ -204,39 +204,16 @@ public class ChamadoMB extends Artificial implements Serializable{
         this.descricao = descricao;
     }
     
-    public String atualizaChamadoF(Long id, String status, String desc, String destino, String atr) throws Exception {
+    public String atualizaChamado(String destino) throws Exception {
         ChamadoServico pra = new ChamadoServico();
-        Chamado cha = pra.getById(id);
-        cha.setStatus(status);
-        cha.setDescricao(desc);
-        cha.setAtribuido(atr);
-        long diff = Calendar.getInstance().getTimeInMillis() - cha.getData().getTime();
+        Chamado cha = pra.getById(chamadoSelecionado.getId());
+        cha.setStatus(chamadoSelecionado.getStatus());
+        cha.setDescricao(chamadoSelecionado.getDescricao());
+        cha.setAtribuido(chamadoSelecionado.getAtribuido());
+        cha.setPrioridade(chamadoSelecionado.getPrioridade());
 
-        long diffSeconds = diff / 1000 % 60;
-        long diffMinutes = diff / (60 * 1000) % 60;
-        long diffHours = diff / (60 * 60 * 1000) % 24;
-        long diffDays = diff / (24 * 60 * 60 * 1000);
+        if (chamadoSelecionado.getStatus().equals("Finalizado")) {
 
-        if (status.equals("Finalizado")) cha.setTempo_solucao((int) diffHours);
-        if (pra.atualizaStatus(id, status)) {
-            if (status.equals("Finalizado")) {
-                adicionaMensagem("Chamado de número " + id + " finalizado!", "destinoAviso");
-            } else {
-                adicionaMensagem("Chamado de número " + id + " atualizado!", "destinoAviso");
-            }
-        } else {
-            adicionaMensagem("Status não pode ser alterado!", "destinoAviso");
-        }
-        return destino;
-    }
-    
-    public String atualizaChamado(Long id, String status, String desc, String destino) throws Exception {
-        ChamadoServico pra = new ChamadoServico();
-        Chamado cha = pra.getById(id);
-        cha.setStatus(status);
-        cha.setDescricao(desc);
-
-        if (status.equals("Finalizado")){
             long diff = Calendar.getInstance().getTimeInMillis() - cha.getData().getTime();
 
             long diffSeconds = diff / 1000 % 60;
@@ -245,16 +222,24 @@ public class ChamadoMB extends Artificial implements Serializable{
             long diffDays = diff / (24 * 60 * 60 * 1000);
             cha.setTempo_solucao((int) diffHours);
         }
-        if (pra.atualizaStatus(id, status)) {
-            if (status.equals("Finalizado")) {
-                adicionaMensagem("Chamado de número " + id + " finalizado!", "destinoAviso");
+        if (pra.atualizaChamado(cha)) {
+            if (chamadoSelecionado.getStatus().equals("Finalizado")) {
+                adicionaMensagem("Chamado de número " + cha.getId() + " finalizado!", "destinoAviso");
             } else {
-                adicionaMensagem("Chamado de número " + id + " atualizado!", "destinoAviso");
+                adicionaMensagem("Chamado de número " + cha.getId() + " atualizado!", "destinoAviso");
             }
         } else {
             adicionaMensagem("Status não pode ser alterado!", "destinoAviso");
         }
         return destino;
+    }
+    
+    public List<String> getPrioridades(){
+        List<String> prior = new ArrayList<>();
+        prior.add("Baixa");
+        prior.add("Média");
+        prior.add("Alta");
+        return prior;
     }
     
     public List<Chamado> getChamadosPorStatus(String status){

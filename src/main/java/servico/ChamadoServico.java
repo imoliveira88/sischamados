@@ -32,14 +32,12 @@ public class ChamadoServico extends DAOGenericoJPA<Long, Chamado>{
     
       //Solicitado, status, atribuído a: os três são Strings formatadas
     
-    public boolean atualizaStatus(Long id, String status) throws Exception{
+    //"chamado" já é um objeto recuperado
+    public boolean atualizaChamado(Chamado chamado) throws Exception{
         super.getEm().getTransaction().begin();        
         
-        Chamado cha = super.getEm().find(Chamado.class,id);
-        //cha.setStatus(cha.getStatus() + "," + c.getStatus());
-        cha.setStatus(status);
         try{
-            super.getEm().merge(cha);
+            super.getEm().merge(chamado);
             super.getEm().getTransaction().commit();
             super.getEm().close();
             return true;
@@ -47,6 +45,7 @@ public class ChamadoServico extends DAOGenericoJPA<Long, Chamado>{
             return false;
         }
     }
+
     
     public void atualizaSolicitado(Chamado c){
         super.getEm().getTransaction().begin();
@@ -266,7 +265,7 @@ public class ChamadoServico extends DAOGenericoJPA<Long, Chamado>{
     
     public List<Chamado> chamadosDivisao(Divisao d)throws NoResultException{
         Query query = super.getEm().createNamedQuery("Chamado.porDivisao");
-        query.setParameter("soicitante", d.getNome());
+        query.setParameter("solicitante", d.getNome());
         List<Chamado> chamados;
         
         try{

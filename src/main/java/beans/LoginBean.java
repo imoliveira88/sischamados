@@ -18,10 +18,12 @@ public class LoginBean implements Serializable{
     private String senha;
     private String nome;
     private Divisao divisao;
+    private Pessoa pessoaRetornada;
     
     public LoginBean(){
         divisao = new Divisao();
-    };
+        pessoaRetornada = new Pessoa();
+    }
 
     public String getNip() {
         return nip;
@@ -30,6 +32,16 @@ public class LoginBean implements Serializable{
     public void setNip(String nip) {
         this.nip = nip;
     }
+
+    public Pessoa getPessoaRetornada() {
+        return pessoaRetornada;
+    }
+
+    public void setPessoaRetornada(Pessoa pessoaRetornada) {
+        this.pessoaRetornada = pessoaRetornada;
+    }
+    
+    
 
     public String getSenha() {
         return senha;
@@ -62,10 +74,11 @@ public class LoginBean implements Serializable{
     public boolean validaUsuario()throws SQLException{
         PessoaServico ud = new PessoaServico();
         try {
-            String senhaRetornada = ud.retornaPessoa(this.nip).getSenha();
+            pessoaRetornada = ud.retornaPessoa(this.nip);
+            String senhaRetornada = pessoaRetornada.getSenha();
             return this.senha.equals(senhaRetornada);
-        } catch (Exception e) {
-            return false;
+        }  catch (Exception e) {
+             return  false;
         }
     }
     
@@ -79,37 +92,37 @@ public class LoginBean implements Serializable{
         }
     }
     
-    public String doLogin() throws FacesException,ExceptionInInitializerError,SQLException{
-        boolean valido;
-        char tipo;
-        Pessoa usu;
+    public  String  doLogin()  throws  FacesException,ExceptionInInitializerError,SQLException{
+         boolean valido;
+         char tipo;
+        Pessoa  usu;
         
-        try {
-            valido = this.validaUsuario();
+         try {
+            valido =  this.validaUsuario();
 
             if (!valido) {
-                adicionaMensagem("Login ou senha incorretos!", "destinoAviso");
-                return "login";
-            } else {
-                usu = this.retornaUsuario();
+                 adicionaMensagem("Login ou senha incorretos!", "destinoAviso");
+                 return "login";
+            }  else {
 
-                tipo = usu.getTipo();
+                tipo =  pessoaRetornada.getTipo();
                 
-                this.nome = usu.getNome();
-                adicionaMensagem("Bem vindo, " + this.nome + "!", "destinoAviso");
+                 this.nome =  pessoaRetornada.getNome();
+                 adicionaMensagem("Bem vindo, " +  this.nome + "!", "destinoAviso");
                 if (tipo == 'A') {
-                    return "cadPessoa";
-                } else {
-                    this.divisao = usu.getDivisao();
-                    return "chamadosParaDivisao";
+                     return "admin/cadPessoa.xhtml?faces-redirect=true";
+                }  else {
+                     this.divisao =  pessoaRetornada.getDivisao();
+                     return "chamadosParaDivisao";
                 }
             }
-        } catch (Exception e) {
-            adicionaMensagem("Login ou senha incorretos!", "destinoAviso");
-            return "login";
+        }  catch (Exception e) {
+             adicionaMensagem("Login ou senha incorretos!", "destinoAviso");
+             return "login";
         }
    
       }
+
     
     private void adicionaMensagem(String mensagem, String destino){
         FacesContext context = FacesContext.getCurrentInstance();

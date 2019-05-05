@@ -9,7 +9,6 @@
         <navigation-case>
             <from-outcome>chamados</from-outcome>
             <to-view-id>/chamados.xhtml</to-view-id>
-            <redirect/>   
         </navigation-case>  
     </navigation-rule>
     
@@ -18,7 +17,6 @@
         <navigation-case>
             <from-outcome>meusChamados</from-outcome>
             <to-view-id>/meusChamados.xhtml</to-view-id>
-            <redirect/>   
         </navigation-case>  
     </navigation-rule>
     
@@ -27,7 +25,6 @@
         <navigation-case>
             <from-outcome>relatorioUsuario</from-outcome>
             <to-view-id>/relatorioUsuario.xhtml</to-view-id>
-            <redirect/>   
         </navigation-case>  
     </navigation-rule>
     
@@ -36,7 +33,6 @@
         <navigation-case>
             <from-outcome>chamadosParaDivisao</from-outcome>
             <to-view-id>/chamadosParaDivisao.xhtml</to-view-id>
-            <redirect/>   
         </navigation-case>  
     </navigation-rule>
     
@@ -54,7 +50,6 @@
         <navigation-case>
             <from-outcome>criarChamado</from-outcome>
             <to-view-id>/criarChamado.xhtml</to-view-id>
-            <redirect/>   
         </navigation-case>  
     </navigation-rule>
     
@@ -63,7 +58,6 @@
         <navigation-case>
             <from-outcome>cadDivisao</from-outcome>
             <to-view-id>/admin/cadDivisao.xhtml</to-view-id>
-            <redirect/>   
         </navigation-case>  
     </navigation-rule>
     
@@ -72,7 +66,6 @@
         <navigation-case>
             <from-outcome>cadPessoa</from-outcome>
             <to-view-id>/admin/cadPessoa.xhtml</to-view-id>
-            <redirect/>   
         </navigation-case>  
     </navigation-rule>
     

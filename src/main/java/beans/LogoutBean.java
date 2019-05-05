@@ -27,6 +27,6 @@ public class LogoutBean extends Artificial implements Serializable {
         HttpServletRequest request = (HttpServletRequest) fc.getExternalContext().getRequest();        
         request.logout();
         this.adicionaMensagem("Sessão encerrada!", "destinoAviso");
-        return "login";
+        return "/login.xhtml?faces-redirect=true";
     }
 }

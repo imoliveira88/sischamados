@@ -85,6 +85,10 @@
                                     <h:outputText value="#{chamado.tempo_solucao}" />
                                 </p:column>
                             </p:dataTable>
+                                <h:commandLink>
+                                    <h:graphicImage library="images" name="pdf.png" width="50" />
+                                    <p:dataExporter type="pdf" target="detalhes" fileName="relatorioChamados" pageOnly="true"/>
+                                </h:commandLink>
                         </p:fieldset>
                         
                     </h:form>

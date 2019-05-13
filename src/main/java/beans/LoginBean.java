@@ -7,6 +7,7 @@ import javax.faces.application.FacesMessage;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
 import modelo.Divisao;
 import modelo.Pessoa;
 import servico.PessoaServico;
@@ -93,9 +94,11 @@ public class LoginBean implements Serializable{
     }
     
     public  String  doLogin()  throws  FacesException,ExceptionInInitializerError,SQLException{
-         boolean valido;
-         char tipo;
+        boolean valido;
+        char tipo;
         Pessoa  usu;
+        FacesContext fc = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
         
          try {
             valido =  this.validaUsuario();
@@ -109,11 +112,12 @@ public class LoginBean implements Serializable{
                 
                  this.nome =  pessoaRetornada.getNome();
                  adicionaMensagem("Bem vindo, " +  this.nome + "!", "destinoAviso");
+                 session.setAttribute("logado", "sim");
                 if (tipo == 'A') {
                      return "admin/cadPessoa.xhtml?faces-redirect=true";
                 }  else {
                      this.divisao =  pessoaRetornada.getDivisao();
-                     return "chamadosParaDivisao";
+                     return "logado/usuario/chamadosParaDivisao.xhtml?faces-redirect=true";
                 }
             }
         }  catch (Exception e) {

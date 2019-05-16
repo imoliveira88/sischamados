@@ -2,12 +2,18 @@
 package beans;
 
 import java.io.Serializable;
+import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
+import javax.persistence.Query;
 import modelo.Chamado;
 import modelo.Divisao;
 import modelo.Pessoa;
@@ -52,6 +58,8 @@ public class PessoaMB extends Artificial implements Serializable{
     public void setDivisao(String divisao) {
         this.divisao = divisao;
     }
+    
+    
 
     public Pessoa getPessoaSelecionada() {
         return pessoaSelecionada;
@@ -104,10 +112,39 @@ public class PessoaMB extends Artificial implements Serializable{
     public String getSenha() {
         return senha;
     }
+    
+    //Senha de no mínimo 6 e no máximo 15 caracteres, tendo pelo menos uma minúscula, uma maiúscula, um número e um caractere especial
+    public boolean validaSenha(String senha) {
+        boolean min, mai, num, car;
+        min = mai = num = car = false;
+        char atual;
+        if (senha.length() < 6 || senha.length() > 15) {
+            return false;
+        }
+        for (int i = 0; i < senha.length(); i++) {
+                atual = senha.charAt(i);
+                if (Character.isLowerCase(atual))min = true;
+                if (Character.isUpperCase(atual)) mai = true;
+                if (Character.isDigit(atual)) num = true;
+                if ((atual > 32 && atual < 48) || (atual > 57 && atual < 65) || (atual > 90 && atual < 97)) car = true;
+        }
+        return min && mai && num && car;
+    }
+    
+    //Implementação do salvamento do hash da senha, para futura comparação
+    public String hash(String texto) throws NoSuchAlgorithmException{
+        MessageDigest digest = MessageDigest.getInstance("SHA-256");
+        byte[] hash = digest.digest(texto.getBytes(StandardCharsets.UTF_8));
 
-    public void setSenha(String senha) {
+        String hex = String.format("%064x", new BigInteger(1, hash));
+        
+        return hex;
+    }
+
+    public void setSenha(String senha){
         this.senha = senha;
     }
+
 
     public String getNip() {
         return nip;
@@ -144,7 +181,11 @@ public class PessoaMB extends Artificial implements Serializable{
         Divisao div;
                 
         try {
-            Pessoa pes = new Pessoa(nome.toUpperCase(),senha,nip,militar,especialidade.toUpperCase(),posto.toUpperCase());
+            if(!this.validaSenha(this.senha)){
+                this.adicionaMensagem("A senha escolhida não atende os requisitos mínimos de segurança! A senha deve ter entre 6 e 15 caracteres, conter letras minúsculas, maiúsculas, números e caracteres especiais!","destinoAviso");
+                return "cadPessoa";
+            }
+            Pessoa pes = new Pessoa(nome.toUpperCase(),this.hash(senha),nip,militar,especialidade.toUpperCase(),posto.toUpperCase());
             pes.setTipo('U'); 
             pes.setEmail(email.toLowerCase());
             pes.setTelefone(telefone);

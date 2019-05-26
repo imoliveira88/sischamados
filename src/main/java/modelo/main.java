@@ -5,6 +5,7 @@
  */
 package modelo;
 
+import beans.ChamadoMB;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.Calendar;
@@ -17,7 +18,7 @@ Classe de teste
 public class main {
     
     public static void main(String[] args) throws SQLException, ParseException{
-        String teste = "Igor,Magalhaes,Oliveira";
+        /*String teste = "Igor,Magalhaes,Oliveira";
         Chamado c = new Chamado();
        
         
@@ -25,8 +26,9 @@ public class main {
         p.setTipo('A');
         //p.setDivisao((new DivisaoServico()).retornaDivisao(232));
         PessoaServico ps = new PessoaServico();
-        ps.salvar(p);
+        ps.salvar(p);*/
         
+        System.out.println((new ChamadoMB()).listaProxStatus("Iniciado").toString());
         
       
         

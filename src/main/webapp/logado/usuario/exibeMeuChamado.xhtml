@@ -29,46 +29,47 @@
                     <h:form enctype="multipart/form-data" id="form">
                         <p:fieldset legend="Chamado #{chamadoMB.chamadoSelecionado.id}" style="margin-bottom:20px; background-color: beige">
                             
-                            <h:panelGrid columns="4"  cellpadding="5">
-
-                                <h:outputText value="Status"/>
-                                <h:outputText value="#{chamadoMB.chamadoSelecionado.status}"/>
-
-                                <h:outputText value="Alterar para:"/>
-                                <p:selectOneMenu value="#{chamadoMB.chamadoSelecionado.status}">
-                                    <f:selectItems value="#{chamadoMB.listaProxStatus(chamadoMB.chamadoSelecionado.status)}" var="status" itemValue="#{status}"/>
-                                </p:selectOneMenu>
-
-                                <h:outputText value="Atribuído a"/>
-                                <h:outputText value="#{chamadoMB.chamadoSelecionado.atribuido}" />
-
-                                <h:outputText value="Atribuir a:"/>
-                                <p:selectOneMenu value="#{chamadoMB.chamadoSelecionado.atribuido}">
-                                    <f:selectItems value="#{pessoaMB.retornaPessoasDivisao(loginBean.divisao)}" var="divi" itemValue="#{divi}"/>
-                                </p:selectOneMenu>
-
-                                <h:outputText value="Prioridade"/>
-                                <h:outputText value="#{chamadoMB.chamadoSelecionado.prioridade}" />
-
-                                <h:outputText value="Alterar para:"/>
-                                <p:selectOneMenu value="#{chamadoMB.chamadoSelecionado.prioridade}">
-                                    <f:selectItems value="#{chamadoMB.prioridades}" var="prior" itemValue="#{prior}"/>
-                                </p:selectOneMenu>
-                            </h:panelGrid>
-                            
                             <h:panelGrid columns="2"  cellpadding="5">
-
-                                <h:outputText value="Solicitante"/>
-                                <h:outputText value="#{chamadoMB.chamadoSelecionado.solicitante}"/>
-
+                                
                                 <h:outputText value="Título"/>
                                 <h:outputText value="#{chamadoMB.chamadoSelecionado.titulo}"/>
 
                                 <h:outputText value="Data"/>
                                 <h:outputText value="#{chamadoMB.chamadoSelecionado.data}"/>
 
+                                <h:outputText value="Status"/>
+                                <h:outputText value="#{chamadoMB.chamadoSelecionado.status}"/>
+
+                                <h:outputText value="Atribuído a"/>
+                                <h:outputText value="#{chamadoMB.chamadoSelecionado.atribuido}" />
+
+                                <h:outputText value="Prioridade"/>
+                                <h:outputText value="#{chamadoMB.chamadoSelecionado.prioridade}" />                                
+
+                                <h:outputText value="Solicitante"/>
+                                <h:outputText value="#{chamadoMB.chamadoSelecionado.solicitante}" />
+                                
+                                </h:panelGrid>
+                            
+                                <h:panelGrid columns="4"  cellpadding="5">
+                                
                                 <h:outputText value="Descrição"/>
-                                <p:textEditor widgetVar="editor2" value="#{chamadoMB.chamadoSelecionado.descricao}" height="200"  >
+                                <p:textEditor value="#{chamadoMB.chamadoSelecionado.descricao}" height="200"   >
+                                    <f:facet name="toolbar">
+                                        <span class="ql-formats">
+                                            <button class="ql-bold"></button>
+                                            <button class="ql-italic"></button>
+                                            <button class="ql-underline"></button>
+                                            <button class="ql-strike"></button>
+                                        </span>
+                                        <span class="ql-formats">
+                                            <select class="ql-size"></select>
+                                        </span>
+                                    </f:facet>
+                                </p:textEditor>
+
+                                <h:outputText value="Acrescentar à descrição"/>
+                                <p:textEditor widgetVar="editor2" value="#{chamadoMB.texto}" height="100"   >
                                     <f:facet name="toolbar">
                                         <span class="ql-formats">
                                             <button class="ql-bold"></button>
@@ -83,8 +84,9 @@
                                 </p:textEditor>
 
                             </h:panelGrid>
-                            <h:panelGrid columns="1">
+                            <h:panelGrid columns="2">
                                 <h:commandButton styleClass="botaoTabela" value="Atualizar" action="#{chamadoMB.atualizaChamado('meusChamados')}"/>
+                                <h:commandButton styleClass="botaoTabela" value="Finalizar" action="#{chamadoMB.finalizaChamado('meusChamados')}"/>
                             </h:panelGrid>
                         </p:fieldset>
 

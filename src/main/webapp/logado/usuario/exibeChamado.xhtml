@@ -68,7 +68,22 @@
                                 <h:outputText value="#{chamadoMB.chamadoSelecionado.data}"/>
 
                                 <h:outputText value="Descrição"/>
-                                <p:textEditor widgetVar="editor2" value="#{chamadoMB.chamadoSelecionado.descricao}" height="200"  >
+                                <p:textEditor value="#{chamadoMB.chamadoSelecionado.descricao}" height="200"   >
+                                    <f:facet name="toolbar">
+                                        <span class="ql-formats">
+                                            <button class="ql-bold"></button>
+                                            <button class="ql-italic"></button>
+                                            <button class="ql-underline"></button>
+                                            <button class="ql-strike"></button>
+                                        </span>
+                                        <span class="ql-formats">
+                                            <select class="ql-size"></select>
+                                        </span>
+                                    </f:facet>
+                                </p:textEditor>
+
+                                <h:outputText value="Acrescentar à descrição"/>
+                                <p:textEditor widgetVar="editor2" value="#{chamadoMB.texto}" height="100"   >
                                     <f:facet name="toolbar">
                                         <span class="ql-formats">
                                             <button class="ql-bold"></button>

@@ -1,6 +1,8 @@
 
 package beans;
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -34,6 +36,7 @@ public class ChamadoMB extends Artificial implements Serializable{
     private List<Chamado> chamFiltradosDivisao;
     private int linhasExistentes;
     private String atribuido;
+    private String texto;
 
     public ChamadoMB() {
         chamado = new Chamado();
@@ -53,35 +56,45 @@ public class ChamadoMB extends Artificial implements Serializable{
     public List listaStatus(){
         List lista = new ArrayList<>();
         lista.add("Iniciado");
+        lista.add("Delineando");
+        lista.add("Aguardando material");
+        lista.add("Aguardando execução");
         lista.add("Executando");
         lista.add("Executado");
-        lista.add("Finalizado");
+        lista.add("Satisfeito");
         return lista;
     }
     
     public List listaProxStatus(String statusAtual){
         List lista = new ArrayList<>();
-        if(statusAtual.equals("Iniciado")){
-            lista.add("Iniciado");
-            lista.add("Executando");
-            lista.add("Executado");
-            lista.add("Finalizado");
-        }else if(statusAtual.equals("Executando")){
-            lista.add("Executando");
-            lista.add("Executado");
-            lista.add("Finalizado");
-        }else if(statusAtual.equals("Executado")){
-            lista.add("Executado");
-            lista.add("Finalizado");
-        } else lista.add("Finalizado");
+        lista.add("Iniciado");
+        lista.add("Delineando");
+        lista.add("Aguardando material");
+        lista.add("Aguardando execução");
+        lista.add("Executando");
+        lista.add("Executado");
+        lista.add("Satisfeito");
+        
+        int i = 0;
+        
+        do{
+            if(!lista.get(i).equals(statusAtual)) lista.remove(lista.get(i));
+            else return lista;
+        }while(i<lista.size());
         return lista;
+    }
+
+    public String getTexto() {
+        return texto;
+    }
+
+    public void setTexto(String texto) {
+        this.texto = texto;
     }
 
     public void setChamado(Chamado chamado) {
         this.chamado = chamado;
     }
-    
-    
 
     public List<Chamado> getChamFiltradosDivisao() {
         return chamFiltradosDivisao;
@@ -206,15 +219,29 @@ public class ChamadoMB extends Artificial implements Serializable{
         return "exibeChamado.xhtml?faces-redirect=true";
     }
     
-    public String atualizaChamado(String destino) throws Exception {
+    public String exibeMeuChamado(Long id){
+        chamadoSelecionado = (new ChamadoServico()).getById(id);
+        return "exibeMeuChamado.xhtml?faces-redirect=true";
+    }
+    
+    public String atualizaChamado(String destino) throws IllegalArgumentException, Exception {
+        try{
         ChamadoServico pra = new ChamadoServico();
         Chamado cha = pra.getById(chamadoSelecionado.getId());
         cha.setStatus(chamadoSelecionado.getStatus());
-        cha.setDescricao(chamadoSelecionado.getDescricao());
+        
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/aaaa HH:mm");
+	Date date = new Date();
+	System.out.println(dateFormat.format(date));
+        
+        String novaDesc;
+        novaDesc = chamadoSelecionado.getDescricao() + '\n';
+        novaDesc += dateFormat.format(date) + ": " + this.texto;
+        cha.setDescricao(novaDesc);
         cha.setAtribuido(chamadoSelecionado.getAtribuido());
         cha.setPrioridade(chamadoSelecionado.getPrioridade());
 
-        if (chamadoSelecionado.getStatus().equals("Finalizado")) {
+        if (chamadoSelecionado.getStatus().equals("Satisfeito")) {
 
             long diff = Calendar.getInstance().getTimeInMillis() - cha.getData().getTime();
 
@@ -225,13 +252,49 @@ public class ChamadoMB extends Artificial implements Serializable{
             cha.setTempo_solucao((int) diffHours);
         }
         if (pra.atualizaChamado(cha)) {
-            if (chamadoSelecionado.getStatus().equals("Finalizado")) {
+            if (chamadoSelecionado.getStatus().equals("Satisfeito")) {
                 adicionaMensagem("Chamado de número " + cha.getId() + " finalizado!", "destinoAviso");
             } else {
                 adicionaMensagem("Chamado de número " + cha.getId() + " atualizado!", "destinoAviso");
             }
         } else {
             adicionaMensagem("Status não pode ser alterado!", "destinoAviso");
+        }
+        return destino;
+        }catch(IllegalArgumentException e){
+            adicionaMensagem("Escolha um chamado!","destinoAviso");
+            return destino;
+        }
+    }
+    
+    public String finalizaChamado(String destino) throws Exception {
+        ChamadoServico pra = new ChamadoServico();
+        Chamado cha = pra.getById(chamadoSelecionado.getId());
+        cha.setStatus("Satisfeito");
+        
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/aaaa HH:mm");
+	Date date = new Date();
+	System.out.println(dateFormat.format(date));
+        
+        String novaDesc;
+        novaDesc = chamadoSelecionado.getDescricao() + '\n';
+        novaDesc += dateFormat.format(date) + ": " + this.texto;
+        cha.setDescricao(novaDesc);
+        cha.setAtribuido(chamadoSelecionado.getAtribuido());
+        cha.setPrioridade(chamadoSelecionado.getPrioridade());
+
+            long diff = Calendar.getInstance().getTimeInMillis() - cha.getData().getTime();
+
+            //long diffSeconds = diff / 1000 % 60;
+            //long diffMinutes = diff / (60 * 1000) % 60;
+            long diffHours = diff / (60 * 60 * 1000) % 24;
+            //long diffDays = diff / (24 * 60 * 60 * 1000);
+            cha.setTempo_solucao((int) diffHours);
+            
+        if (pra.atualizaChamado(cha)) {
+                adicionaMensagem("Chamado de número " + cha.getId() + " finalizado!", "destinoAviso");
+        } else {
+            adicionaMensagem("Status não pode ser finalizado!", "destinoAviso");
         }
         return destino;
     }

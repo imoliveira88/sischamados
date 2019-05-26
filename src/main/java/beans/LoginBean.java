@@ -26,7 +26,6 @@ public class LoginBean implements Serializable{
     private Divisao divisao;
     private Pessoa pessoaRetornada;
     private String senhaNova;
-    private static int contador = 0;
     
     public LoginBean(){
         divisao = new Divisao();
@@ -101,19 +100,7 @@ public class LoginBean implements Serializable{
         try {
             pessoaRetornada = ud.retornaPessoa(this.nip);
             String senhaRetornada = pessoaRetornada.getSenha();
-            if (!this.hash(this.senha).equals(senhaRetornada)) {
-                contador++;
-                if (contador == 5) //Mensagem informando que a conta foi bloqueada -> altera a senha para senha "blockedChamados"
-                {
-                    ud.getEm().getTransaction().begin();
-                    Query query = ud.getEm().createQuery("UPDATE Pessoa e SET e.senha = :senha WHERE e.id = :id");
-                    query.setParameter("senha","blockedChamados");
-                    query.setParameter("id", pessoaRetornada.getId());
-                    query.executeUpdate();
-                    return false;
-                }
-            }
-            return true;
+            return this.hash(this.senha).equals(senhaRetornada);
         } catch (Exception e) {
             return false;
         }
@@ -179,7 +166,7 @@ public class LoginBean implements Serializable{
 
             if (!valido) {
                  adicionaMensagem("Login ou senha incorretos!", "destinoAviso");
-                 return "login";
+                 return "login.xhtml";
             }  else {
                 if(this.senha.equals("aB123456@")){
                     adicionaMensagem("Primeiro acesso? Altere sua senha!", "destinoAviso");

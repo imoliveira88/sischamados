@@ -3,12 +3,12 @@ package beans;
 import java.io.Serializable;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
-import javax.inject.Named;
+import javax.faces.bean.ManagedBean;
 import modelo.Divisao;
 import servico.DivisaoServico;
 
 @RequestScoped
-@Named("divisaoMB")
+@ManagedBean(name = "divisaoMB")
 public class DivisaoMB extends Artificial implements Serializable{
     
     private Divisao divisao;

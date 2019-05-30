@@ -8,7 +8,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import javax.enterprise.context.SessionScoped;
-import javax.inject.Named;
+import javax.faces.bean.ManagedBean;
 import modelo.Chamado;
 import modelo.Divisao;
 import modelo.Pessoa;
@@ -16,10 +16,9 @@ import servico.ChamadoServico;
 import servico.PessoaServico;
 
 
-@Named("chamadoMB")
+@ManagedBean(name = "chamadoMB")
 @SessionScoped
 public class ChamadoMB extends Artificial implements Serializable{
-    
     private Chamado chamado;
     private String solicitado;
     private String titulo;

@@ -68,7 +68,7 @@
                                 <h:outputText value="#{chamadoMB.chamadoSelecionado.data}"/>
                                 
                                 <h:outputText value="Descrição"/>
-                                <h:outputText value="#{chamadoMB.chamadoSelecionado.descricao}" escape="false"  />
+                                <h:outputText value="#{chamadoMB.chamadoSelecionado.descricao}" escape="false" />
 
                                 <h:outputText value="Acrescentar à descrição"/>
                                 <p:textEditor widgetVar="editor2" value="#{chamadoMB.texto}" height="100"   >
@@ -92,6 +92,14 @@
                         </p:fieldset>
 
 
+                        <p:fieldset class="field" legend="Histórico" style="margin-bottom:20px; background-color: beige">
+                            <h:panelGrid columns="1" id = "sol"  cellpadding="5">
+
+                                <h:outputText value="#{chamadoMB.chamadoSelecionado.historico}" escape="false"/>
+
+                            </h:panelGrid>
+                        </p:fieldset>
+                        
                     </h:form>
                 </td>
             </tr>

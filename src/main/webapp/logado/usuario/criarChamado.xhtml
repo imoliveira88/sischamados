@@ -43,9 +43,7 @@
 
                                 <p:outputLabel for="prioridade" value="Prioridade" />
                                 <p:selectOneMenu id="prioridade" value="#{chamadoMB.prioridade}">
-                                    <f:selectItem itemLabel="Baixa" itemValue="Baixa" />
-                                    <f:selectItem itemLabel="Normal" itemValue="Normal" />
-                                    <f:selectItem itemLabel="Urgente" itemValue="Urgente" />
+                                    <f:selectItems value="#{chamadoMB.prioridades}" var="prior" itemValue="#{prior}"/>
                                 </p:selectOneMenu>
 
 
@@ -77,7 +75,7 @@
                     </td>
 
                     <td>
-                        <h:commandButton class="botao" value="Criar" action="#{chamadoMB.salvar(usuario.id)}"/>
+                        <h:commandButton styleClass="botaoTabela" value="Criar" action="#{chamadoMB.salvar(usuario.id)}"/>
                     </td>
                 </h:form>
             </tr>

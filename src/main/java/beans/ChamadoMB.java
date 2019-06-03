@@ -240,15 +240,23 @@ public class ChamadoMB extends Artificial implements Serializable{
             System.out.println(dateFormat.format(date));
 
             String novaDesc;
-            novaDesc = chamadoSelecionado.getDescricao() + '\n';
-            novaDesc += dateFormat.format(date) + ": " + this.texto;
+            if(this.texto.equals("")) novaDesc = chamadoSelecionado.getDescricao();
+            else{
+                novaDesc = chamadoSelecionado.getDescricao() + '\n';
+                novaDesc += dateFormat.format(date) + " " + this.texto;
+                this.texto = "";
+            }
             cha.setDescricao(novaDesc);
             cha.setAtribuido(chamadoSelecionado.getAtribuido());
             cha.setPrioridade(chamadoSelecionado.getPrioridade());
 
-            historico += "\n" + dateFormat.format(date) + " " + session.getAttribute("usuario").toString() + " alterou status para " + chamadoSelecionado.getStatus() + ", atribuído para " + chamadoSelecionado.getAtribuido() + " e prioridade para " + chamadoSelecionado.getPrioridade();
-
-            cha.setHistorico(historico);
+            if (semAlteracao(cha) == 1) {
+                historico += "<br/><b>" + dateFormat.format(date) + " " + session.getAttribute("usuario").toString() + "</b> alterou status para " + chamadoSelecionado.getStatus() + ", atribuído para " + chamadoSelecionado.getAtribuido() + " e prioridade para " + chamadoSelecionado.getPrioridade();
+                cha.setHistorico(historico);
+            } else if (semAlteracao(cha) == 2) {
+                historico += "<br/><b>" + dateFormat.format(date) + " " + session.getAttribute("usuario").toString() + "</b> atualizou a descrição";
+                cha.setHistorico(historico);
+            }
 
             if (chamadoSelecionado.getStatus().equals("Satisfeito")) {
 
@@ -271,6 +279,14 @@ public class ChamadoMB extends Artificial implements Serializable{
             return destino;
         }
     }
+    
+    public int semAlteracao(Chamado c){
+        if(c.getPrioridade().equals(chamadoSelecionado.getPrioridade()) && c.getStatus().equals(chamadoSelecionado.getStatus()) && c.getAtribuido().equals(chamadoSelecionado.getAtribuido())){
+            if(texto.equals("")) return 0;
+            else return 2;
+        }
+        return 1;
+    }
 
     public String finalizaChamado(String destino) throws Exception {
         ChamadoServico pra = new ChamadoServico();
@@ -286,8 +302,12 @@ public class ChamadoMB extends Artificial implements Serializable{
         System.out.println(dateFormat.format(date));
 
         String novaDesc;
-        novaDesc = chamadoSelecionado.getDescricao() + '\n';
-        novaDesc += dateFormat.format(date) + ": " + this.texto;
+        if(this.texto.equals("")) novaDesc = chamadoSelecionado.getDescricao();
+            else{
+                novaDesc = chamadoSelecionado.getDescricao() + '\n';
+                novaDesc += dateFormat.format(date) + " " + this.texto;
+                this.texto = "";
+            }
         cha.setDescricao(novaDesc);
         cha.setAtribuido(chamadoSelecionado.getAtribuido());
         cha.setPrioridade(chamadoSelecionado.getPrioridade());
@@ -296,9 +316,13 @@ public class ChamadoMB extends Artificial implements Serializable{
         long diffHours = diff / (60 * 60 * 1000);
         cha.setTempo_solucao((int) diffHours);
 
-        historico += "\n" + dateFormat.format(date) + " " + session.getAttribute("usuario").toString() + " alterou status para " + chamadoSelecionado.getStatus() + ", atribuído para " + chamadoSelecionado.getAtribuido() + " e prioridade para " + chamadoSelecionado.getPrioridade();
-
-        cha.setHistorico(historico);
+        if(semAlteracao(cha) == 1){
+                historico += "<br/><b>" + dateFormat.format(date) + " " + session.getAttribute("usuario").toString() + "</b> alterou status para " + chamadoSelecionado.getStatus() + ", atribuído para " + chamadoSelecionado.getAtribuido() + " e prioridade para " + chamadoSelecionado.getPrioridade();
+                cha.setHistorico(historico);
+        }else if(semAlteracao(cha) == 2){
+                historico += "<br/><b>" + dateFormat.format(date) + " " + session.getAttribute("usuario").toString() + "</b> atualizou a descrição";
+                cha.setHistorico(historico);
+        }
 
         if (pra.atualizaChamado(cha)) {
             adicionaMensagem("Chamado de número " + cha.getId() + " finalizado!", "destinoAviso");
@@ -382,10 +406,8 @@ public class ChamadoMB extends Artificial implements Serializable{
         chamado.setTitulo(titulo);
         chamado.setSolicitado(solicitado);
         chamado.setPrioridade(prioridade);
-        System.out.println("ID DO CARA: " + idsolicitante);
         chamado.setSolicitante((new PessoaServico()).getById(idsolicitante));
         chamado.setHistorico("");
-        System.out.println("ID DO CARA: " + idsolicitante);
         ChamadoServico chamadoDAO = new ChamadoServico();
         chamadoDAO.salvar(chamado);
         return "meusChamados";

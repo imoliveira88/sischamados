@@ -16,6 +16,7 @@ public class main {
     
     public static void main(String[] args) throws SQLException, ParseException{
         PessoaServico ps = new PessoaServico();
+        
         Pessoa p = new Pessoa("admin","admin","admin",true,"","");
         p.setTipo('A');
         ps.salvar(p); 

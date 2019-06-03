@@ -51,6 +51,7 @@ public class Chamado implements Serializable {
     @Column(name = "PRIORIDADE")
     private String prioridade; //Valores pré-definidos
     
+    @Size(max = 2000)
     @Column(name = "DESCRICAO")
     private String descricao;
     
@@ -70,6 +71,7 @@ public class Chamado implements Serializable {
     @Column(name = "TEMPO_SOLUCAO")
     private int tempo_solucao; //Tempo dado em dias. Quando o status for definido como "Executado", atualizar também esse campo
     
+    @Size(max = 2000)
     @Column(name = "HISTORICO")
     private String historico;
     

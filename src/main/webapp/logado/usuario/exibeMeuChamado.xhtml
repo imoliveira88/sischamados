@@ -73,6 +73,14 @@
                                 <h:commandButton styleClass="botaoTabela" value="Finalizar" action="#{chamadoMB.finalizaChamado('meusChamados')}"/>
                             </h:panelGrid>
                         </p:fieldset>
+                        
+                        <p:fieldset class="field" legend="Histórico" style="margin-bottom:20px; background-color: beige">
+                            <h:panelGrid columns="1" id = "sol"  cellpadding="5">
+
+                                <h:outputText value="#{chamadoMB.chamadoSelecionado.historico}" escape="false"/>
+
+                            </h:panelGrid>
+                        </p:fieldset>
 
 
                     </h:form>

@@ -229,7 +229,7 @@ public class ChamadoMB extends Artificial implements Serializable{
         Chamado cha = pra.getById(chamadoSelecionado.getId());
         cha.setStatus(chamadoSelecionado.getStatus());
         
-        DateFormat dateFormat = new SimpleDateFormat("dd/MM/aaaa HH:mm");
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 	Date date = new Date();
 	System.out.println(dateFormat.format(date));
         
@@ -243,11 +243,7 @@ public class ChamadoMB extends Artificial implements Serializable{
         if (chamadoSelecionado.getStatus().equals("Satisfeito")) {
 
             long diff = Calendar.getInstance().getTimeInMillis() - cha.getData().getTime();
-
-            //long diffSeconds = diff / 1000 % 60;
-            //long diffMinutes = diff / (60 * 1000) % 60;
-            long diffHours = diff / (60 * 60 * 1000) % 24;
-            //long diffDays = diff / (24 * 60 * 60 * 1000);
+            long diffHours = diff / (60 * 60 * 1000);
             cha.setTempo_solucao((int) diffHours);
         }
         if (pra.atualizaChamado(cha)) {
@@ -271,7 +267,7 @@ public class ChamadoMB extends Artificial implements Serializable{
         Chamado cha = pra.getById(chamadoSelecionado.getId());
         cha.setStatus("Satisfeito");
         
-        DateFormat dateFormat = new SimpleDateFormat("dd/MM/aaaa HH:mm");
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 	Date date = new Date();
 	System.out.println(dateFormat.format(date));
         
@@ -283,11 +279,7 @@ public class ChamadoMB extends Artificial implements Serializable{
         cha.setPrioridade(chamadoSelecionado.getPrioridade());
 
             long diff = Calendar.getInstance().getTimeInMillis() - cha.getData().getTime();
-
-            //long diffSeconds = diff / 1000 % 60;
-            //long diffMinutes = diff / (60 * 1000) % 60;
-            long diffHours = diff / (60 * 60 * 1000) % 24;
-            //long diffDays = diff / (24 * 60 * 60 * 1000);
+            long diffHours = diff / (60 * 60 * 1000);
             cha.setTempo_solucao((int) diffHours);
             
         if (pra.atualizaChamado(cha)) {
@@ -300,9 +292,9 @@ public class ChamadoMB extends Artificial implements Serializable{
     
     public List<String> getPrioridades(){
         List<String> prior = new ArrayList<>();
-        prior.add("Baixa");
-        prior.add("Média");
-        prior.add("Alta");
+        prior.add("Emergencial");
+        prior.add("Preferencial");
+        prior.add("Normal");
         return prior;
     }
     
@@ -373,7 +365,6 @@ public class ChamadoMB extends Artificial implements Serializable{
         chamado.setSolicitado(solicitado);
         chamado.setPrioridade(prioridade);
         chamado.setSolicitante((new PessoaServico()).getById(idsolicitante));
-        //chamado.setSolicitante((new PessoaServico()).getById(1));//Alterar após implementação da tela de login
         ChamadoServico chamadoDAO = new ChamadoServico();
         chamadoDAO.salvar(chamado);
         return "meusChamados";

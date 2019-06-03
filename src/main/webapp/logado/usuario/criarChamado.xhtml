@@ -28,10 +28,10 @@
                             <h:panelGrid columns="2" id = "sol"  cellpadding="5">
 
                                 <p:outputLabel for="nome" value="Solicitante" />
-                                <h:outputText id="nome" value="#{loginBean.retornaUsuario().toString()}" />
+                                <h:outputText id="nome" value="#{usuario.toString()}" />
 
                                 <p:outputLabel for="divisao" value="Divisão solicitante" />
-                                <h:outputText id="divisao" value="#{loginBean.retornaUsuario().divisao}"/>
+                                <h:outputText id="divisao" value="#{usuario.divisao}"/>
 
                             </h:panelGrid>
                         </p:fieldset>
@@ -77,7 +77,7 @@
                     </td>
 
                     <td>
-                        <h:commandButton class="botao" value="Criar" action="#{chamadoMB.salvar(loginBean.retornaUsuario().id)}"/>
+                        <h:commandButton class="botao" value="Criar" action="#{chamadoMB.salvar(usuario.id)}"/>
                     </td>
                 </h:form>
             </tr>

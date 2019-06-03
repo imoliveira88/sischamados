@@ -40,12 +40,10 @@ public class Chamado implements Serializable {
     @Column(name = "ID_CHAMADO")
     private Long id;
     
-    //@NotNull
     @ManyToOne
     @JoinColumn(name = "ID_PESSOA", referencedColumnName = "ID_PESSOA")
     private Pessoa solicitante;
     
-    @Size(min = 2, max = 40)
     @NotNull
     @Column(name = "TITULO")
     private String titulo;
@@ -53,7 +51,6 @@ public class Chamado implements Serializable {
     @Column(name = "PRIORIDADE")
     private String prioridade; //Valores pré-definidos
     
-    @Size(min = 2)
     @Column(name = "DESCRICAO")
     private String descricao;
     
@@ -72,6 +69,9 @@ public class Chamado implements Serializable {
     
     @Column(name = "TEMPO_SOLUCAO")
     private int tempo_solucao; //Tempo dado em dias. Quando o status for definido como "Executado", atualizar também esse campo
+    
+    @Column(name = "HISTORICO")
+    private String historico;
     
     public String ultimo(String s){
         String aux = "";
@@ -153,6 +153,14 @@ public class Chamado implements Serializable {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getHistorico() {
+        return historico;
+    }
+
+    public void setHistorico(String historico) {
+        this.historico = historico;
     }
 
     public String getAtribuido() {

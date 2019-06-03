@@ -176,8 +176,9 @@ public class LoginBean implements Serializable{
                 tipo =  pessoaRetornada.getTipo();
                 
                  this.nome =  pessoaRetornada.getNome();
-                 adicionaMensagem("Bem vindo, " +  this.nome + "!", "destinoAviso");
+                 adicionaMensagem("Bem vindo, " +  pessoaRetornada.toString() + "!", "destinoAviso");
                  session.setAttribute("logado", "sim");
+                 session.setAttribute("usuario",pessoaRetornada);
                 if (tipo == 'A') {
                      return "logado/admin/cadPessoa.xhtml";
                 }  else {

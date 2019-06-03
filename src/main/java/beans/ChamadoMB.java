@@ -7,8 +7,10 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import javax.enterprise.context.SessionScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ManagedBean;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
 import modelo.Chamado;
 import modelo.Divisao;
 import modelo.Pessoa;
@@ -224,53 +226,65 @@ public class ChamadoMB extends Artificial implements Serializable{
     }
     
     public String atualizaChamado(String destino) throws IllegalArgumentException, Exception {
-        try{
-        ChamadoServico pra = new ChamadoServico();
-        Chamado cha = pra.getById(chamadoSelecionado.getId());
-        cha.setStatus(chamadoSelecionado.getStatus());
-        
-        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-	Date date = new Date();
-	System.out.println(dateFormat.format(date));
-        
-        String novaDesc;
-        novaDesc = chamadoSelecionado.getDescricao() + '\n';
-        novaDesc += dateFormat.format(date) + ": " + this.texto;
-        cha.setDescricao(novaDesc);
-        cha.setAtribuido(chamadoSelecionado.getAtribuido());
-        cha.setPrioridade(chamadoSelecionado.getPrioridade());
+        try {
+            FacesContext fc = FacesContext.getCurrentInstance();
+            HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+            String historico;
+            ChamadoServico pra = new ChamadoServico();
+            Chamado cha = pra.getById(chamadoSelecionado.getId());
+            historico = cha.getHistorico();
+            cha.setStatus(chamadoSelecionado.getStatus());
 
-        if (chamadoSelecionado.getStatus().equals("Satisfeito")) {
+            DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+            Date date = new Date();
+            System.out.println(dateFormat.format(date));
 
-            long diff = Calendar.getInstance().getTimeInMillis() - cha.getData().getTime();
-            long diffHours = diff / (60 * 60 * 1000);
-            cha.setTempo_solucao((int) diffHours);
-        }
-        if (pra.atualizaChamado(cha)) {
+            String novaDesc;
+            novaDesc = chamadoSelecionado.getDescricao() + '\n';
+            novaDesc += dateFormat.format(date) + ": " + this.texto;
+            cha.setDescricao(novaDesc);
+            cha.setAtribuido(chamadoSelecionado.getAtribuido());
+            cha.setPrioridade(chamadoSelecionado.getPrioridade());
+
+            historico += "\n" + dateFormat.format(date) + " " + session.getAttribute("usuario").toString() + " alterou status para " + chamadoSelecionado.getStatus() + ", atribuído para " + chamadoSelecionado.getAtribuido() + " e prioridade para " + chamadoSelecionado.getPrioridade();
+
+            cha.setHistorico(historico);
+
             if (chamadoSelecionado.getStatus().equals("Satisfeito")) {
-                adicionaMensagem("Chamado de número " + cha.getId() + " finalizado!", "destinoAviso");
-            } else {
-                adicionaMensagem("Chamado de número " + cha.getId() + " atualizado!", "destinoAviso");
+
+                long diff = Calendar.getInstance().getTimeInMillis() - cha.getData().getTime();
+                long diffHours = diff / (60 * 60 * 1000);
+                cha.setTempo_solucao((int) diffHours);
             }
-        } else {
-            adicionaMensagem("Status não pode ser alterado!", "destinoAviso");
-        }
-        return destino;
-        }catch(IllegalArgumentException e){
-            adicionaMensagem("Escolha um chamado!","destinoAviso");
+            if (pra.atualizaChamado(cha)) {
+                if (chamadoSelecionado.getStatus().equals("Satisfeito")) {
+                    adicionaMensagem("Chamado de número " + cha.getId() + " finalizado!", "destinoAviso");
+                } else {
+                    adicionaMensagem("Chamado de número " + cha.getId() + " atualizado!", "destinoAviso");
+                }
+            } else {
+                adicionaMensagem("Status não pode ser alterado!", "destinoAviso");
+            }
+            return destino;
+        } catch (IllegalArgumentException e) {
+            adicionaMensagem("Escolha um chamado!", "destinoAviso");
             return destino;
         }
     }
-    
+
     public String finalizaChamado(String destino) throws Exception {
         ChamadoServico pra = new ChamadoServico();
         Chamado cha = pra.getById(chamadoSelecionado.getId());
         cha.setStatus("Satisfeito");
-        
+
+        FacesContext fc = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+        String historico = cha.getHistorico();;
+
         DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-	Date date = new Date();
-	System.out.println(dateFormat.format(date));
-        
+        Date date = new Date();
+        System.out.println(dateFormat.format(date));
+
         String novaDesc;
         novaDesc = chamadoSelecionado.getDescricao() + '\n';
         novaDesc += dateFormat.format(date) + ": " + this.texto;
@@ -278,12 +292,16 @@ public class ChamadoMB extends Artificial implements Serializable{
         cha.setAtribuido(chamadoSelecionado.getAtribuido());
         cha.setPrioridade(chamadoSelecionado.getPrioridade());
 
-            long diff = Calendar.getInstance().getTimeInMillis() - cha.getData().getTime();
-            long diffHours = diff / (60 * 60 * 1000);
-            cha.setTempo_solucao((int) diffHours);
-            
+        long diff = Calendar.getInstance().getTimeInMillis() - cha.getData().getTime();
+        long diffHours = diff / (60 * 60 * 1000);
+        cha.setTempo_solucao((int) diffHours);
+
+        historico += "\n" + dateFormat.format(date) + " " + session.getAttribute("usuario").toString() + " alterou status para " + chamadoSelecionado.getStatus() + ", atribuído para " + chamadoSelecionado.getAtribuido() + " e prioridade para " + chamadoSelecionado.getPrioridade();
+
+        cha.setHistorico(historico);
+
         if (pra.atualizaChamado(cha)) {
-                adicionaMensagem("Chamado de número " + cha.getId() + " finalizado!", "destinoAviso");
+            adicionaMensagem("Chamado de número " + cha.getId() + " finalizado!", "destinoAviso");
         } else {
             adicionaMensagem("Status não pode ser finalizado!", "destinoAviso");
         }
@@ -364,7 +382,10 @@ public class ChamadoMB extends Artificial implements Serializable{
         chamado.setTitulo(titulo);
         chamado.setSolicitado(solicitado);
         chamado.setPrioridade(prioridade);
+        System.out.println("ID DO CARA: " + idsolicitante);
         chamado.setSolicitante((new PessoaServico()).getById(idsolicitante));
+        chamado.setHistorico("");
+        System.out.println("ID DO CARA: " + idsolicitante);
         ChamadoServico chamadoDAO = new ChamadoServico();
         chamadoDAO.salvar(chamado);
         return "meusChamados";

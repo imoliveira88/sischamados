@@ -49,24 +49,8 @@
                                 <h:outputText value="Solicitante"/>
                                 <h:outputText value="#{chamadoMB.chamadoSelecionado.solicitante}" />
                                 
-                                </h:panelGrid>
-                            
-                                <h:panelGrid columns="4"  cellpadding="5">
-                                
                                 <h:outputText value="Descrição"/>
-                                <p:textEditor value="#{chamadoMB.chamadoSelecionado.descricao}" height="200"   >
-                                    <f:facet name="toolbar">
-                                        <span class="ql-formats">
-                                            <button class="ql-bold"></button>
-                                            <button class="ql-italic"></button>
-                                            <button class="ql-underline"></button>
-                                            <button class="ql-strike"></button>
-                                        </span>
-                                        <span class="ql-formats">
-                                            <select class="ql-size"></select>
-                                        </span>
-                                    </f:facet>
-                                </p:textEditor>
+                                <h:outputText value="#{chamadoMB.chamadoSelecionado.descricao}" escape="false"  />
 
                                 <h:outputText value="Acrescentar à descrição"/>
                                 <p:textEditor widgetVar="editor2" value="#{chamadoMB.texto}" height="100"   >

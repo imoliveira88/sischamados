@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
-import javax.enterprise.context.RequestScoped;
+import javax.faces.bean.RequestScoped;
 import javax.faces.bean.ManagedBean;
 import modelo.Chamado;
 import modelo.Divisao;

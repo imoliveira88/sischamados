@@ -45,37 +45,6 @@ public class ChamadoServico extends DAOGenericoJPA<Long, Chamado>{
             return false;
         }
     }
-
-    
-    /*public void atualizaSolicitado(Chamado c){
-        super.getEm().getTransaction().begin();
-        Query query = super.getEm().createQuery("SELECT e.id FROM Chamado e WHERE e.data = :data AND e.titulo = :titulo");
-        query.setParameter("data",c.getData());
-        query.setParameter("titulo",c.getTitulo());
-        
-        Long id = (Long) query.getSingleResult();
-        
-        Chamado cha = super.getEm().find(Chamado.class,id);
-        cha.setStatus(cha.getSolicitado() + "," + c.getSolicitado());
-        super.getEm().merge(cha);
-        super.getEm().getTransaction().commit();
-        super.getEm().close();
-    }
-    
-    public void atualizaAtribuido(Chamado c){
-        super.getEm().getTransaction().begin();
-        Query query = super.getEm().createQuery("Select e.id FROM Chamado e WHERE e.data = :data AND e.titulo = :titulo");
-        query.setParameter("data",c.getData());
-        query.setParameter("titulo",c.getTitulo());
-        
-        Long id = (Long) query.getSingleResult();
-        
-        Chamado cha = super.getEm().find(Chamado.class,id);
-        cha.setStatus(cha.getAtribuido() + "," + c.getAtribuido());
-        super.getEm().merge(cha);
-        super.getEm().getTransaction().commit();
-        super.getEm().close();
-    }*/
     
     // Retorna chamados entre duas datas distintas
     public List<Chamado> chamadosEntreDatas(Date dinicio, Date dfim){
@@ -165,6 +134,36 @@ public class ChamadoServico extends DAOGenericoJPA<Long, Chamado>{
         }
         catch(NoResultException e){
             return new ArrayList<>();
+        }
+    }
+    
+    //Método conta todos os chamados que se encontram no status pedido
+    public int chamadosStatusConta(String status)throws NoResultException{
+        super.getEm().getTransaction().begin();
+        Query query = super.getEm().createQuery("SELECT COUNT(e) FROM Chamado e WHERE e.status = :status");
+        
+        query.setParameter("status", status);
+        
+        try{
+            return query.executeUpdate();
+        }
+        catch(NoResultException e){
+            return 0;
+        }
+    }
+    
+    //Método dá a média de tempo de resolução de todos os chamados finalizados da divisao
+    public float chamadosMedia(String divisao)throws NoResultException{
+        super.getEm().getTransaction().begin();
+        Query query = super.getEm().createQuery("SELECT AVG(e.tempo_solucao) FROM Chamado e WHERE e.solicitado = :divisao AND e.status = 'Satisfeito'");
+        
+        query.setParameter("divisao", divisao);
+        
+        try{
+            return query.executeUpdate();
+        }
+        catch(NoResultException e){
+            return 0;
         }
     }
     

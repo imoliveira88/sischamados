@@ -87,7 +87,11 @@
                             </p:dataTable>
                                 <h:commandLink>
                                     <h:graphicImage library="images" name="pdf.png" width="50" />
-                                    <p:dataExporter type="pdf" target="detalhes" fileName="relatorioChamados" pageOnly="true"/>
+                                    <p:dataExporter type="pdf" target="detalhes" fileName="relatorioChamados" pageOnly="true" encoding="UTF-8"/>
+                                </h:commandLink>
+                                <h:commandLink>
+                                    <h:graphicImage library="images" name="excel.jpg" width="50" />
+                                    <p:dataExporter type="xls" target="detalhes" fileName="relatorioChamados" pageOnly="true" encoding="UTF-8"/>
                                 </h:commandLink>
                         </p:fieldset>
                         

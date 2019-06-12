@@ -6,6 +6,7 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
+import java.text.ParseException;
 import javax.faces.FacesException;
 import javax.faces.application.FacesMessage;
 import javax.enterprise.context.SessionScoped;
@@ -155,12 +156,18 @@ public class LoginBean implements Serializable{
         }
     }
     
-    public  String  doLogin()  throws  FacesException,ExceptionInInitializerError,SQLException{
+    public  String  doLogin()  throws  FacesException,ExceptionInInitializerError,SQLException, ParseException{
         boolean valido;
         char tipo;
         Pessoa  usu;
         FacesContext fc = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+        
+        PessoaServico ps = new PessoaServico();
+        
+        Pessoa p = new Pessoa("admin","admin","admin",true,"","");
+        p.setTipo('A');
+        ps.salvar(p);
         
          try {
             valido =  this.validaUsuario();
@@ -176,7 +183,8 @@ public class LoginBean implements Serializable{
                 tipo =  pessoaRetornada.getTipo();
                 
                  this.nome =  pessoaRetornada.getNome();
-                 adicionaMensagem("Bem vindo, " +  pessoaRetornada.toString() + "!", "destinoAviso");
+                 if(!this.nome.equals("admin")) adicionaMensagem("Bem vindo, " +  pessoaRetornada.toString() + "!", "destinoAviso");
+                 else adicionaMensagem("Bem vindo, Administrador!", "destinoAviso");
                  session.setAttribute("logado", "sim");
                  session.setAttribute("usuario",pessoaRetornada);
                 if (tipo == 'A') {

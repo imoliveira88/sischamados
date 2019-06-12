@@ -280,12 +280,19 @@ public class ChamadoMB extends Artificial implements Serializable{
         }
     }
     
-    public int semAlteracao(Chamado c){
-        if(c.getPrioridade().equals(chamadoSelecionado.getPrioridade()) && c.getStatus().equals(chamadoSelecionado.getStatus()) && c.getAtribuido().equals(chamadoSelecionado.getAtribuido())){
-            if(texto.equals("")) return 0;
-            else return 2;
+    public int semAlteracao(Chamado c) throws NullPointerException {
+        try {
+            if (c.getPrioridade().equals(chamadoSelecionado.getPrioridade()) && c.getStatus().equals(chamadoSelecionado.getStatus()) && c.getAtribuido().equals(chamadoSelecionado.getAtribuido())) {
+                if (texto.equals("")) {
+                    return 0; //Nenhuma alteração
+                } else {
+                    return 2; //Houve alteração na descrição
+                }
+            }
+            return 1; //Houve alteraão na prioridade, status ou no atribuído
+        } catch (Exception e) {
+            return 0; //caso tenha sido lançada uma NullPointerException, será considerado que nada foi alterado
         }
-        return 1;
     }
 
     public String finalizaChamado(String destino) throws Exception {
@@ -353,12 +360,12 @@ public class ChamadoMB extends Artificial implements Serializable{
     }
     
     public List<Chamado> getChamadosPorDivisaoStatus(String div, String st){
-        if(st.equals("TODOS")) return this.getChamadosPorDivisao(div);
+        if(st.equals("TODOS") || st.equals("")) return this.getChamadosPorDivisao(div);
         return new ChamadoServico().chamadosDivisaoStatus(div,st);
     }
     
     public List<Chamado> getChamadosParaDivisaoStatus(String div, String st){
-        if(st.equals("TODOS")) return new ChamadoServico().chamadosParaDivisao(div);
+        if(st.equals("TODOS") || st.equals("")) return new ChamadoServico().chamadosParaDivisao(div);
         return new ChamadoServico().chamadosParaDivisaoStatus(div,st);
     }
     
@@ -371,9 +378,15 @@ public class ChamadoMB extends Artificial implements Serializable{
         return new ChamadoServico().chamadosEntreDatasStatusDivisao(dinicio, dfim, status, divisao);
     }
     
-    public List<Chamado> getChamadosEntreDatasDivisao(Date dinicio, Date dfim, String divisao){
-        if(dinicio == null || dfim == null) return new ArrayList<>();
-        return new ChamadoServico().chamadosEntreDatasDivisao(dinicio, dfim, divisao);
+    public List<Chamado> getChamadosEntreDatasDivisao(Date dinicio, Date dfim, String divisao) throws NullPointerException {
+        try {
+            if (dinicio == null || dfim == null) {
+                return new ArrayList<>();
+            }
+            return new ChamadoServico().chamadosEntreDatasDivisao(dinicio, dfim, divisao);
+        } catch (Exception e) {
+            return new ArrayList<>();
+        }
     }
     
     public List<Chamado> getChamadosEntreDatasStatus(Date dinicio, Date dfim, String status){

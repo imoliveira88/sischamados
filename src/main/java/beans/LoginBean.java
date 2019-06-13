@@ -163,11 +163,11 @@ public class LoginBean implements Serializable{
         FacesContext fc = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
         
-        PessoaServico ps = new PessoaServico();
+        /*PessoaServico ps = new PessoaServico();
         
         Pessoa p = new Pessoa("admin","admin","admin",true,"","");
         p.setTipo('A');
-        ps.salvar(p);
+        ps.salvar(p);*/
         
          try {
             valido =  this.validaUsuario();

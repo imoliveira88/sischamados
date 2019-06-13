@@ -36,7 +36,7 @@
                             <p:calendar id="dataFinal" value="#{chamadoMB.dataFinal}" pattern="dd-MM-yyyy" mask="true">
                             </p:calendar>
                             
-                            <h:commandButton action="#{chamadoMB.filtrarListaDivisao(loginBean.retornaUsuario().divisao)}" value="Filtrar"/>
+                            <h:commandButton action="#{chamadoMB.filtrarListaDivisao(usuario.divisao)}" value="Filtrar"/>
                             
                             </h:panelGrid>
                         </p:fieldset>

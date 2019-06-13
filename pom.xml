@@ -69,14 +69,13 @@
         <dependency>
             <groupId>com.lowagie</groupId>
             <artifactId>itext</artifactId>
-            <version>4.2.2</version>
-            <scope>compile</scope>
+            <version>2.1.7</version>
         </dependency>
         <dependency>
-        <groupId>org.apache.poi</groupId>
-        <artifactId>poi</artifactId>
-        <version>4.1.0</version>
-      </dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi</artifactId>
+            <version>3.17</version>
+        </dependency>
     </dependencies>
 
     <build>

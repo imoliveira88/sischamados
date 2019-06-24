@@ -9,10 +9,10 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
 public class Artificial {
-    public void adicionaMensagem(String mensagem, String destino){
+    public void adicionaMensagem(String mensagem, String destino, String parecer){
         FacesContext context = FacesContext.getCurrentInstance();
         FacesMessage msg;
-        msg = new FacesMessage("SUCESSO!",mensagem);
+        msg = new FacesMessage(parecer,mensagem);
         context.addMessage(destino, msg);
         
     }

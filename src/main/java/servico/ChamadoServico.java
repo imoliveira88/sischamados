@@ -153,16 +153,16 @@ public class ChamadoServico extends DAOGenericoJPA<Long, Chamado>{
     }
     
     //Método dá a média de tempo de resolução de todos os chamados finalizados da divisao
-    public float chamadosMedia(String divisao)throws NoResultException{
+    public double chamadosMedia(String divisao)throws NoResultException, NullPointerException{
         super.getEm().getTransaction().begin();
         Query query = super.getEm().createQuery("SELECT AVG(e.tempo_solucao) FROM Chamado e WHERE e.solicitado = :divisao AND e.status = 'Satisfeito'");
         
         query.setParameter("divisao", divisao);
         
         try{
-            return query.executeUpdate();
+            return (double) query.getSingleResult();
         }
-        catch(NoResultException e){
+        catch(NoResultException | NullPointerException e){
             return 0;
         }
     }

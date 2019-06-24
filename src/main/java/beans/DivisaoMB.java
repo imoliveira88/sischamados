@@ -59,11 +59,11 @@ public class DivisaoMB extends Artificial implements Serializable{
         divisao.setNumero(numero);
         if(!pra.existeDivisao(this.divisao)){
             pra.salvar(divisao);
-            adicionaMensagem("Divisão cadastrada com sucesso!","destinoAviso");
+            adicionaMensagem("Divisão cadastrada com sucesso!","destinoAviso","SUCESSO!");
             return "cadDivisao";
         }
         else{
-            adicionaMensagem("Erro! A divisão já está cadastrada!","destinoAviso");
+            adicionaMensagem("A divisão já está cadastrada!","destinoAviso","ERRO!");
             return "cadDivisao";
         }
     }
@@ -79,12 +79,11 @@ public class DivisaoMB extends Artificial implements Serializable{
     public String excluir(Long id) throws Exception{
         DivisaoServico pra = new DivisaoServico();
         if(pra.deletarDivisao(id)){
-            adicionaMensagem("Divisão removida com sucesso!","destinoAviso");
+            adicionaMensagem("Divisão removida com sucesso!","destinoAviso", "SUCESSO!");
         }else{
-            adicionaMensagem("Divisão não pode ser removida, pois há colaboradores cadastrados nela! Caso queira excluí-la atualize primeiro as informações de seus colaboradores e, então, tente novamente!","destinoAviso");
+            adicionaMensagem("Divisão não pode ser removida, pois há colaboradores cadastrados nela! Caso queira excluí-la atualize primeiro as informações de seus colaboradores e, então, tente novamente!","destinoAviso", "ERRO!");
         }
         return "cadDivisao";
-    }
-    
+    }  
     
 }

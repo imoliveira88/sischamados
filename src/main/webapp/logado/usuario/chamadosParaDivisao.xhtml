@@ -13,71 +13,76 @@
 
 
         <ui:decorate template="/templates/masterDecorator.xhtml">
-        
-        <table align="center" width="80%">
-            <tr>
-                <td>
-                    <h:form id="aviso">
-                        <p:growl id="msgs" for="destinoAviso" autoUpdate="true" showDetail="true" life="4000"/>
-                    </h:form>
 
-                </td>
-                <td>
-                    <h:form enctype="multipart/form-data" id="form">
-                        <p:fieldset legend="Chamados para minha divisão" style="margin-bottom:20px; background-color: beige">
-                            <h:outputText value="Exibir chamados com status " />
-                            <p:selectOneMenu value="#{chamadoMB.exibir}" >
-                                <f:selectItems value="#{chamadoMB.listaStatus()}" var="status" itemValue="#{status}"/>
-                                <f:selectItem itemLabel="TODOS" itemValue="TODOS" noSelectionOption="true"/>
-                                <p:ajax event="itemSelect" update=":form:detalhes"/>
-                            </p:selectOneMenu>
-                            <br/><br/>
-                            
-                            <p:dataTable id="detalhes" var="chamado" emptyMessage="Não há chamados para sua divisão com esse critério!"  value="#{chamadoMB.getChamadosParaDivisaoStatus(usuario.divisao,chamadoMB.exibir)}" rowKey="#{chamado.id}" selection="#{chamadoMB.chamadoSelecionado}" selectionMode="single">
-                                                                
-                                <p:column>
-                                    <f:facet name="header">ID</f:facet>
-                                    <h:outputText value="#{chamado.id}"/>
-                                </p:column>
-                                <p:column>
-                                    <f:facet name="header">Status</f:facet>
-                                    <h:outputText value="#{chamado.status}"/>
-                                </p:column>
-                                <p:column>
-                                    <f:facet name="header">Solicitante</f:facet>
-                                    <h:outputText value="#{chamado.solicitante.toString()}"/>
-                                </p:column>
-                                <p:column>
-                                    <f:facet name="header">Atribuído a</f:facet>
-                                    <h:outputText value="#{chamado.atribuido}"/>
-                                </p:column>
-                                <p:column>
-                                    <f:facet name="header">Prioridade</f:facet>
-                                    <h:outputText value="#{chamado.prioridade}"/>
-                                </p:column>
-                                <p:column>
-                                    <f:facet name="header">Título</f:facet>
-                                    <h:outputText value="#{chamado.titulo}"/>
-                                </p:column>
-                                <p:column>
-                                    <f:facet name="header">Data</f:facet>
-                                    <h:outputText value="#{chamado.data}"/>
-                                </p:column>
-                                <p:column>
-                                    <f:facet name="header">Tempo de resolução (em horas)</f:facet>
-                                    <h:outputText value="#{chamado.tempo_solucao}" />
-                                </p:column>
-                            </p:dataTable>
-                            <h:commandButton styleClass="botaoTabela" action="#{chamadoMB.exibeChamado(chamadoMB.chamadoSelecionado.id)}" value="Exibir" />
-                        </p:fieldset>
-                        
+            <table align="center" width="80%">
+                <tr>
+                    <td>
+                        <h:form id="aviso">
+                            <p:growl id="msgs" for="destinoAviso" autoUpdate="true" showDetail="true" life="4000"/>
+                        </h:form>
 
-                    </h:form>
-                </td>
-            </tr>
-        </table>
-            
+                    </td>
+                    <td>
+                        <h:form enctype="multipart/form-data" id="form">
+                            <p:fieldset legend="Chamados para minha divisão" style="margin-bottom:20px; background-color: beige">
+                                <h:outputText value="Exibir chamados com status " />
+                                <p:selectOneMenu value="#{chamadoMB.exibir}" >
+                                    <f:selectItems value="#{chamadoMB.listaStatus()}" var="status" itemValue="#{status}"/>
+                                    <f:selectItem itemLabel="TODOS" itemValue="TODOS" noSelectionOption="true"/>
+                                    <p:ajax event="itemSelect" update=":form:detalhes"/>
+                                </p:selectOneMenu>
+                                <br/><br/>
+
+                                <p:dataTable id="detalhes" var="chamado" emptyMessage="Não há chamados para sua divisão com esse critério!"  value="#{chamadoMB.getChamadosParaDivisaoStatus(usuario.divisao,chamadoMB.exibir)}" rowKey="#{chamado.id}" selection="#{chamadoMB.chamadoSelecionado}" selectionMode="single">
+
+                                    <p:column>
+                                        <f:facet name="header">ID</f:facet>
+                                        <h:outputText value="#{chamado.id}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">Status</f:facet>
+                                        <h:outputText value="#{chamado.status}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">Solicitante</f:facet>
+                                        <h:outputText value="#{chamado.solicitante.toString()}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">Atribuído a</f:facet>
+                                        <h:outputText value="#{chamado.atribuido}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">Prioridade</f:facet>
+                                        <h:outputText value="#{chamado.prioridade}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">Título</f:facet>
+                                        <h:outputText value="#{chamado.titulo}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">Data</f:facet>
+                                        <h:outputText value="#{chamado.data}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">Tempo de resolução (em horas)</f:facet>
+                                        <h:outputText value="#{chamado.tempo_solucao}" />
+                                    </p:column>
+                                </p:dataTable>
+                                <h:commandButton styleClass="botaoTabela" action="#{chamadoMB.exibeChamado(chamadoMB.chamadoSelecionado.id)}" value="Exibir" />
+                            </p:fieldset>
+
+                            <p:fieldset legend="Estatísticas" style="margin-bottom:20px; background-color: beige">
+                                <h:outputText value="Média de tempo de resolução (em horas): "/>
+                                <h:outputText value="#{chamadoMB.mediaResolucao(usuario.divisao)}"/>
+                            </p:fieldset>
+
+
+                        </h:form>
+                    </td>
+                </tr>
+            </table>
+
         </ui:decorate>
-            
+
     </h:body>
 </html>

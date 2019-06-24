@@ -243,13 +243,12 @@ public class ChamadoMB extends Artificial implements Serializable{
             if(this.texto.equals("")) novaDesc = chamadoSelecionado.getDescricao();
             else{
                 novaDesc = chamadoSelecionado.getDescricao() + '\n';
-                novaDesc += dateFormat.format(date) + " " + this.texto;
-                this.texto = "";
+                novaDesc += dateFormat.format(date) + " " + session.getAttribute("usuario").toString() + "" + this.texto;
             }
             cha.setDescricao(novaDesc);
             cha.setAtribuido(chamadoSelecionado.getAtribuido());
             cha.setPrioridade(chamadoSelecionado.getPrioridade());
-
+            
             if (semAlteracao(cha) == 1) {
                 historico += "<br/><b>" + dateFormat.format(date) + " " + session.getAttribute("usuario").toString() + "</b> alterou status para " + chamadoSelecionado.getStatus() + ", atribuído para " + chamadoSelecionado.getAtribuido() + " e prioridade para " + chamadoSelecionado.getPrioridade();
                 cha.setHistorico(historico);
@@ -257,25 +256,27 @@ public class ChamadoMB extends Artificial implements Serializable{
                 historico += "<br/><b>" + dateFormat.format(date) + " " + session.getAttribute("usuario").toString() + "</b> atualizou a descrição";
                 cha.setHistorico(historico);
             }
+            
+            this.texto = "";
 
-            if (chamadoSelecionado.getStatus().equals("Satisfeito")) {
+            if (chamadoSelecionado.getStatus().equals("Satisfeito") && semAlteracao(cha)!=1) {
 
                 long diff = Calendar.getInstance().getTimeInMillis() - cha.getData().getTime();
                 long diffHours = diff / (60 * 60 * 1000);
                 cha.setTempo_solucao((int) diffHours);
             }
             if (pra.atualizaChamado(cha)) {
-                if (chamadoSelecionado.getStatus().equals("Satisfeito")) {
-                    adicionaMensagem("Chamado de número " + cha.getId() + " finalizado!", "destinoAviso");
+                if (chamadoSelecionado.getStatus().equals("Satisfeito") && semAlteracao(cha)!=1) {
+                    adicionaMensagem("Chamado de número " + cha.getId() + " finalizado!", "destinoAviso","SUCESSO!");
                 } else {
-                    adicionaMensagem("Chamado de número " + cha.getId() + " atualizado!", "destinoAviso");
+                    adicionaMensagem("Chamado de número " + cha.getId() + " atualizado!", "destinoAviso", "SUCESSO!");
                 }
             } else {
-                adicionaMensagem("Status não pode ser alterado!", "destinoAviso");
+                adicionaMensagem("Status não pode ser alterado!", "destinoAviso","ERRO!");
             }
             return destino;
         } catch (IllegalArgumentException e) {
-            adicionaMensagem("Escolha um chamado!", "destinoAviso");
+            adicionaMensagem("Escolha um chamado!", "destinoAviso", "ERRO!");
             return destino;
         }
     }
@@ -312,12 +313,13 @@ public class ChamadoMB extends Artificial implements Serializable{
         if(this.texto.equals("")) novaDesc = chamadoSelecionado.getDescricao();
             else{
                 novaDesc = chamadoSelecionado.getDescricao() + '\n';
-                novaDesc += dateFormat.format(date) + " " + this.texto;
-                this.texto = "";
+                novaDesc += dateFormat.format(date) + " " + session.getAttribute("usuario").toString() + "" + this.texto;
             }
         cha.setDescricao(novaDesc);
         cha.setAtribuido(chamadoSelecionado.getAtribuido());
         cha.setPrioridade(chamadoSelecionado.getPrioridade());
+        
+        this.texto = "";
 
         long diff = Calendar.getInstance().getTimeInMillis() - cha.getData().getTime();
         long diffHours = diff / (60 * 60 * 1000);
@@ -332,9 +334,9 @@ public class ChamadoMB extends Artificial implements Serializable{
         }
 
         if (pra.atualizaChamado(cha)) {
-            adicionaMensagem("Chamado de número " + cha.getId() + " finalizado!", "destinoAviso");
+            adicionaMensagem("Chamado de número " + cha.getId() + " finalizado!", "destinoAviso", "SUCESSO!");
         } else {
-            adicionaMensagem("Status não pode ser finalizado!", "destinoAviso");
+            adicionaMensagem("Status não pode ser finalizado!", "destinoAviso", "ERRO!");
         }
         return destino;
     }
@@ -404,6 +406,10 @@ public class ChamadoMB extends Artificial implements Serializable{
     public String filtrarLista(){
         chamFiltrados = this.getChamadosEntreDatas(dataInicial, dataFinal);
         return "relatorioUsuario";
+    }
+    
+    public double mediaResolucao(String div){
+	return (new ChamadoServico()).chamadosMedia(div);
     }
     
     public String filtrarListaDivisao(Divisao div){

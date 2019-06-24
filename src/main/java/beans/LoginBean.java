@@ -18,9 +18,13 @@ import modelo.Divisao;
 import modelo.Pessoa;
 import servico.PessoaServico;
 
+/**
+ *
+ * @author magalhaes
+ */
 @SessionScoped
 @ManagedBean(name = "loginBean")
-public class LoginBean implements Serializable{
+public class LoginBean extends Artificial implements Serializable{
     private String nip;
     private String senha;
     private String nome;
@@ -128,11 +132,11 @@ public class LoginBean implements Serializable{
     
     public String alterarSenha() throws NoSuchAlgorithmException {
         if (!this.hash(this.senha).equals(pessoaRetornada.getSenha())){
-            this.adicionaMensagem("A senha digitada não corresponde à senha gravada no banco de dados!", "destinoAviso");
+            this.adicionaMensagem("A senha digitada não corresponde à senha gravada no banco de dados!", "destinoAviso", "ERRO!");
             return "novaSenha.xhtml";
         }
         if (!this.validaSenha(this.senhaNova)) {
-            this.adicionaMensagem("A senha escolhida não atende os requisitos mínimos de segurança! A senha deve ter entre 6 e 15 caractere, conter letras minúsculas, maiúsculas, números e caracteres especiais!", "destinoAviso");
+            this.adicionaMensagem("A senha escolhida não atende os requisitos mínimos de segurança! A senha deve ter entre 6 e 15 caractere, conter letras minúsculas, maiúsculas, números e caracteres especiais!", "destinoAviso", "ATENÇÃO!");
             return "novaSenha.xhtml";
         }
         PessoaServico ps = new PessoaServico();
@@ -142,7 +146,7 @@ public class LoginBean implements Serializable{
         ps.getEm().getTransaction().begin();
         query.executeUpdate();
         ps.getEm().getTransaction().commit();
-        this.adicionaMensagem("Senha alterada com sucesso! Faça login novamente!", "destinoAviso");
+        this.adicionaMensagem("Senha alterada com sucesso! Faça login novamente!", "destinoAviso", "SUCESSO!");
         return "login";
     }
     
@@ -173,18 +177,18 @@ public class LoginBean implements Serializable{
             valido =  this.validaUsuario();
 
             if (!valido) {
-                 adicionaMensagem("Login ou senha incorretos!", "destinoAviso");
+                 adicionaMensagem("Login ou senha incorretos!", "destinoAviso", "ERRO!");
                  return "login.xhtml";
             }  else {
                 if(this.senha.equals("aB123456@")){
-                    adicionaMensagem("Primeiro acesso? Altere sua senha!", "destinoAviso");
+                    adicionaMensagem("Primeiro acesso? Altere sua senha!", "destinoAviso", "ATENÇÃO!");
                     return "novaSenha.xhtml";
                 }
                 tipo =  pessoaRetornada.getTipo();
                 
                  this.nome =  pessoaRetornada.getNome();
-                 if(!this.nome.equals("admin")) adicionaMensagem("Bem vindo, " +  pessoaRetornada.toString() + "!", "destinoAviso");
-                 else adicionaMensagem("Bem vindo, Administrador!", "destinoAviso");
+                 if(!this.nome.equals("admin")) adicionaMensagem("Bem vindo, " +  pessoaRetornada.toString() + "!", "destinoAviso", "BEM VINDO!");
+                 else adicionaMensagem("Bem vindo, Administrador!", "destinoAviso", "SUCESSO!");
                  session.setAttribute("logado", "sim");
                  session.setAttribute("usuario",pessoaRetornada);
                 if (tipo == 'A') {
@@ -195,19 +199,11 @@ public class LoginBean implements Serializable{
                 }
             }
         }  catch (Exception e) {
-             adicionaMensagem("Login ou senha incorretos!", "destinoAviso");
+             adicionaMensagem("Login ou senha incorretos!", "destinoAviso", "ERRO!");
              return "login";
         }
    
       }
-
-    
-    private void adicionaMensagem(String mensagem, String destino){
-        FacesContext context = FacesContext.getCurrentInstance();
-        FacesMessage msg;
-        msg = new FacesMessage("",mensagem);
-        context.addMessage(destino, msg);
-    }
 
 }
 

@@ -180,7 +180,7 @@ public class PessoaMB extends Artificial implements Serializable{
                 
         try {
             if(!this.validaSenha(this.senha)){
-                this.adicionaMensagem("A senha escolhida não atende os requisitos mínimos de segurança! A senha deve ter entre 6 e 15 caracteres, conter letras minúsculas, maiúsculas, números e caracteres especiais!","destinoAviso");
+                this.adicionaMensagem("A senha escolhida não atende os requisitos mínimos de segurança! A senha deve ter entre 6 e 15 caracteres, conter letras minúsculas, maiúsculas, números e caracteres especiais!","destinoAviso","ATENÇÃO!");
                 return "cadPessoa";
             }
             Pessoa pes = new Pessoa(nome.toUpperCase(),this.hash(senha),nip,militar,especialidade.toUpperCase(),posto.toUpperCase());
@@ -192,14 +192,14 @@ public class PessoaMB extends Artificial implements Serializable{
             pes.setDivisao(div);
           
             if (cli.salvar(pes)) {
-                this.adicionaMensagem("Cadastro feito com sucesso!","destinoAviso");
+                this.adicionaMensagem("Cadastro feito com sucesso!","destinoAviso","SUCESSO!");
                 return "cadPessoa";
             } else {
-                this.adicionaMensagem("Já existe um usuário com este nip!","destinoAviso");
+                this.adicionaMensagem("Já existe um usuário com este nip!","destinoAviso","ATENÇÃO!");
                 return "cadPessoa";
             }
         } catch (Exception e) {
-            this.adicionaMensagem("Houve um erro no cadastro! Tente novamente!","destinoAviso");
+            this.adicionaMensagem("Houve um erro no cadastro! Tente novamente!","destinoAviso","ERRO!");
             return "cadPessoa";
         }  
     }
@@ -213,10 +213,10 @@ public class PessoaMB extends Artificial implements Serializable{
         
         try {
             cli.excluir(id);
-            this.adicionaMensagem("Usuário removido!","destinoAviso");
+            this.adicionaMensagem("Usuário removido!","destinoAviso","SUCESSO!");
             return "cadPessoa";
         } catch (Exception e) {
-            this.adicionaMensagem("Houve um erro no cadastro! Tente novamente!","destinoAviso");
+            this.adicionaMensagem("Houve um erro no cadastro! Tente novamente!","destinoAviso","ERRO!");
             return "cadPessoa";
         }  
     }

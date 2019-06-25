@@ -48,12 +48,16 @@
 
                                 <h:outputText value="Solicitante"/>
                                 <h:outputText value="#{chamadoMB.chamadoSelecionado.solicitante}" />
+                            </h:panelGrid>
+                        </p:fieldset>
+                        
+                        <p:fieldset legend="Descrição" style="margin-bottom:20px; background-color: beige">
                                 
-                                <h:outputText value="Descrição"/>
-                                <h:outputText value="#{chamadoMB.chamadoSelecionado.descricao}" escape="false"  />
-
-                                <h:outputText value="Acrescentar à descrição"/>
-                                <p:textEditor widgetVar="editor2" value="#{chamadoMB.texto}" height="100"   >
+                                <h:outputText value="#{chamadoMB.chamadoSelecionado.descricao}" escape="false" styleClass="descricao"/>
+                        </p:fieldset>
+                        
+                        <p:fieldset legend="Acrescentar à descrição" style="margin-bottom:20px; background-color: beige">
+                                <p:textEditor widgetVar="editor2" value="#{chamadoMB.texto}" height="100"  style="width: 400px"  >
                                     <f:facet name="toolbar">
                                         <span class="ql-formats">
                                             <button class="ql-bold"></button>
@@ -67,7 +71,6 @@
                                     </f:facet>
                                 </p:textEditor>
 
-                            </h:panelGrid>
                             <h:panelGrid columns="2">
                                 <h:commandButton styleClass="botaoTabela" value="Atualizar" action="#{chamadoMB.atualizaChamado('meusChamados')}"/>
                                 <h:commandButton styleClass="botaoTabela" value="Finalizar" action="#{chamadoMB.finalizaChamado('meusChamados')}"/>

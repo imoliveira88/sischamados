@@ -242,8 +242,8 @@ public class ChamadoMB extends Artificial implements Serializable{
             String novaDesc;
             if(this.texto.equals("")) novaDesc = chamadoSelecionado.getDescricao();
             else{
-                novaDesc = chamadoSelecionado.getDescricao() + '\n';
-                novaDesc += dateFormat.format(date) + " " + session.getAttribute("usuario").toString() + "" + this.texto;
+                novaDesc = chamadoSelecionado.getDescricao();
+                novaDesc += "<br/><b>" + dateFormat.format(date) + " " + session.getAttribute("usuario").toString() + "</b> " +  this.texto;
             }
             cha.setDescricao(novaDesc);
             cha.setAtribuido(chamadoSelecionado.getAtribuido());
@@ -312,8 +312,8 @@ public class ChamadoMB extends Artificial implements Serializable{
         String novaDesc;
         if(this.texto.equals("")) novaDesc = chamadoSelecionado.getDescricao();
             else{
-                novaDesc = chamadoSelecionado.getDescricao() + '\n';
-                novaDesc += dateFormat.format(date) + " " + session.getAttribute("usuario").toString() + "" + this.texto;
+                novaDesc = chamadoSelecionado.getDescricao();
+                novaDesc += "<br/><b>" + dateFormat.format(date) + " " + session.getAttribute("usuario").toString() + "</b> " +  this.texto;
             }
         cha.setDescricao(novaDesc);
         cha.setAtribuido(chamadoSelecionado.getAtribuido());

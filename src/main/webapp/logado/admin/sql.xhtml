@@ -31,7 +31,7 @@
                                     <p:outputLabel value="Comando SQL (apenas INSERT)" />
                                     <h:inputText value="#{artificialMB.sql}" style="width: 800px"/>
 
-                                    <h:commandButton class="botaoTabela" value="Executar" action="#{artificialMB.insertWithQuery()}"/>
+                                    <h:commandButton class="botaoTabela" value="Executar" action="#{artificialMB.variosInserts(artificialMB.sql)}"/>
 
                                 </h:panelGrid>
                             </p:fieldset>

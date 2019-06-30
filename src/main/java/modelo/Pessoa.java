@@ -183,7 +183,8 @@ public class Pessoa implements Serializable {
         String s = "";
         
         if(this.militar){
-            s += this.posto + "(" + this.especialidade + ") " + this.nome;
+            if(this.especialidade.equals("")) s += this.posto + " " + this.nome;
+            else s += this.posto + "(" + this.especialidade + ") " + this.nome;
         }else{
             s += this.especialidade + " " + this.nome;
         }

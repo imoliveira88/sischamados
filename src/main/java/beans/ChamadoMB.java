@@ -189,7 +189,6 @@ public class ChamadoMB extends Artificial implements Serializable{
         this.status = status;
     }
     
-    
 
     public String getPrioridade() {
         return prioridade;
@@ -248,7 +247,7 @@ public class ChamadoMB extends Artificial implements Serializable{
             cha.setDescricao(novaDesc);
             cha.setAtribuido(chamadoSelecionado.getAtribuido());
             cha.setPrioridade(chamadoSelecionado.getPrioridade());
-            
+                        
             if (semAlteracao(cha) == 1) {
                 historico += "<br/><b>" + dateFormat.format(date) + " " + session.getAttribute("usuario").toString() + "</b> alterou status para " + chamadoSelecionado.getStatus() + ", atribuído para " + chamadoSelecionado.getAtribuido() + " e prioridade para " + chamadoSelecionado.getPrioridade();
                 cha.setHistorico(historico);
@@ -290,8 +289,12 @@ public class ChamadoMB extends Artificial implements Serializable{
                     return 2; //Houve alteração na descrição
                 }
             }
-            return 1; //Houve alteraão na prioridade, status ou no atribuído
+            return 1; //Houve alteração na prioridade, status ou no atribuído
         } catch (Exception e) {
+            if(c.getAtribuido() == null){
+                if(texto.equals("")) return 0;
+                else return 2;
+            }
             return 0; //caso tenha sido lançada uma NullPointerException, será considerado que nada foi alterado
         }
     }

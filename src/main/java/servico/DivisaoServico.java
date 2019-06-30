@@ -97,4 +97,9 @@ public class DivisaoServico extends DAOGenericoJPA<Long, Divisao>{
         TypedQuery<Divisao> query = super.getEm().createNamedQuery("Divisao.TODAS", Divisao.class);
         return query.getResultList();
     }
+
+    public List<Divisao> divisoesPrestadoras() {
+        Query query = super.getEm().createQuery("SELECT e FROM Divisao e WHERE e.nome LIKE '%APOIO%' OR e.nome = 'PREFEITURA' OR e.nome LIKE '%ELETR%'");
+        return query.getResultList();
+    }
 }

@@ -76,6 +76,10 @@ public class DivisaoMB extends Artificial implements Serializable{
         return new DivisaoServico().todasDivisoes();
     }
     
+    public List<Divisao> getPrestadores(){
+        return new DivisaoServico().divisoesPrestadoras();
+    }
+    
     public String excluir(Long id) throws Exception{
         DivisaoServico pra = new DivisaoServico();
         if(pra.deletarDivisao(id)){

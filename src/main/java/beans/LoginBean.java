@@ -104,7 +104,7 @@ public class LoginBean extends Artificial implements Serializable{
         
         try {
             pessoaRetornada = ud.retornaPessoa(this.nip);
-            if(this.nip.equals("admin")) return true;
+            if(this.nip.equals("admin") && this.senha.equals("admincmasm")) return true;
             if(pessoaRetornada.getSenha().equals("aB123456@")) return true;
             String senhaRetornada = pessoaRetornada.getSenha();
             return this.hash(this.senha).equals(senhaRetornada);
@@ -132,7 +132,7 @@ public class LoginBean extends Artificial implements Serializable{
     }
     
     public String alterarSenha() throws NoSuchAlgorithmException {
-        if (!this.hash(this.senha).equals(pessoaRetornada.getSenha())){
+        if (!this.hash(this.senha).equals(pessoaRetornada.getSenha()) && !pessoaRetornada.getSenha().equals("aB123456@")){
             this.adicionaMensagem("A senha digitada não corresponde à senha gravada no banco de dados!", "destinoAviso", "ERRO!");
             return "novaSenha.xhtml";
         }

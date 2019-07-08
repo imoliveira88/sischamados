@@ -44,7 +44,7 @@
                         <br/>
 
                             <p:fieldset legend="Chamados" style="margin-bottom:20px">
-                                <p:dataTable  id="detalhes" rowIndexVar="indice" var="chamado" value="#{chamadoMB.chamFiltradosDivisao}" widgetVar="selecaoCham" emptyMessage="Não há chamados que atendam esses critérios!">
+                                <p:dataTable  id="detalhes" paginator="true" rowIndexVar="indice" var="chamado" value="#{chamadoMB.chamFiltradosDivisao}" widgetVar="selecaoCham" emptyMessage="Não há chamados que atendam esses critérios!">
 
                                 <p:column>
                                     <f:facet name="header">ID</f:facet>

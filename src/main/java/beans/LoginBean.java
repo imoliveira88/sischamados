@@ -8,7 +8,6 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.text.ParseException;
 import javax.faces.FacesException;
-import javax.faces.application.FacesMessage;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;

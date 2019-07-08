@@ -36,6 +36,8 @@
                                     <h:commandButton class="botao" value="Salvar" action="#{divisaoMB.salvar()}"/>
 
                                 </h:panelGrid>
+                                
+                                <p:outputLabel value="Obs: Em caso de divisões com números iniciando em zero, substitua o zero inicial por nove." />
                             </p:fieldset>
                         </td>
 
@@ -47,7 +49,7 @@
                         <h:form>
                         <p:fieldset class="field" legend="Divisões cadastradas" style="margin-bottom:20px; background-color: beige">
                             <h:panelGrid columns="2" id = "sol"  cellpadding="5">
-                                <p:dataTable id="lista" var="divisao" value="#{divisaoMB.divisoes}" rowKey="#{divisao.id}" selection="#{divisaoMB.divisaoSelecionada}" selectionMode="single">
+                                <p:dataTable id="lista" paginator="true" var="divisao" value="#{divisaoMB.divisoes}" rowKey="#{divisao.id}" selection="#{divisaoMB.divisaoSelecionada}" selectionMode="single">
                                     <p:column>
                                         <f:facet name="header">ID</f:facet>
                                         <h:outputText value="#{divisao.id}"/>
@@ -58,7 +60,7 @@
                                     </p:column>
                                     <p:column>
                                         <f:facet name="header">Número</f:facet>
-                                        <h:outputText value="#{divisao.numero}"/>
+                                        <h:outputText value="#{divisao.numeroString()}"/>
                                     </p:column>
                                 </p:dataTable>
                                 <h:commandButton styleClass="botaoTabela" value="Excluir" action="#{divisaoMB.excluir(divisaoMB.divisaoSelecionada.id)}"/>

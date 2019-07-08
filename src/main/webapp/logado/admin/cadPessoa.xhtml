@@ -70,7 +70,7 @@
                         <h:form>
                         <p:fieldset class="field" legend="Usuários cadastrados" style="margin-bottom:20px; background-color: beige">
                             <h:panelGrid columns="2" id = "sol"  cellpadding="5">
-                                <p:dataTable var="pessoa" value="#{pessoaMB.pessoas}"  rowKey="#{pessoa.id}" selection="#{pessoaMB.pessoaSelecionada}" selectionMode="single">
+                                <p:dataTable var="pessoa" paginator="true" value="#{pessoaMB.pessoas}"  rowKey="#{pessoa.id}" selection="#{pessoaMB.pessoaSelecionada}" selectionMode="single">
                                     <p:column>
                                         <f:facet name="header">ID</f:facet>
                                         <h:outputText value="#{pessoa.id}"/>

@@ -216,7 +216,7 @@ public class PessoaMB extends Artificial implements Serializable{
             this.adicionaMensagem("Usuário removido!","destinoAviso","SUCESSO!");
             return "cadPessoa";
         } catch (Exception e) {
-            this.adicionaMensagem("Houve um erro no cadastro! Tente novamente!","destinoAviso","ERRO!");
+            this.adicionaMensagem("Um usuário precisa ser selecionado, antes de clicar em excluir! Tente novamente!","destinoAviso","ERRO!");
             return "cadPessoa";
         }  
     }

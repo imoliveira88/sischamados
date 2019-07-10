@@ -33,7 +33,7 @@
                                 </p:selectOneMenu>
                                 <br/><br/>
 
-                                <p:dataTable id="detalhes" paginator="true" var="chamado" emptyMessage="Não há chamados para sua divisão com esse critério!"  value="#{chamadoMB.getChamadosParaDivisaoStatus(usuario.divisao,chamadoMB.exibir)}" rowKey="#{chamado.id}" selection="#{chamadoMB.chamadoSelecionado}" selectionMode="single">
+                                <p:dataTable id="detalhes" rows="10" rowsPerPageTemplate="5,10,15" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" paginator="true" var="chamado" emptyMessage="Não há chamados para sua divisão com esse critério!"  value="#{chamadoMB.getChamadosParaDivisaoStatus(usuario.divisao,chamadoMB.exibir)}" rowKey="#{chamado.id}" selection="#{chamadoMB.chamadoSelecionado}" selectionMode="single">
 
                                     <p:column>
                                         <f:facet name="header">ID</f:facet>

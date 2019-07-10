@@ -80,14 +80,19 @@ public class DivisaoMB extends Artificial implements Serializable{
         return new DivisaoServico().divisoesPrestadoras();
     }
     
-    public String excluir(Long id) throws Exception{
+    public String excluir(Long id) throws Exception {
         DivisaoServico pra = new DivisaoServico();
-        if(pra.deletarDivisao(id)){
-            adicionaMensagem("Divisão removida com sucesso!","destinoAviso", "SUCESSO!");
-        }else{
-            adicionaMensagem("Divisão não pode ser removida, pois há colaboradores cadastrados nela! Caso queira excluí-la atualize primeiro as informações de seus colaboradores e, então, tente novamente!","destinoAviso", "ERRO!");
+        try {
+            if (pra.deletarDivisao(id)) {
+                adicionaMensagem("Divisão removida com sucesso!", "destinoAviso", "SUCESSO!");
+            } else {
+                adicionaMensagem("Divisão não pode ser removida, pois há colaboradores cadastrados nela! Caso queira excluí-la atualize primeiro as informações de seus colaboradores e, então, tente novamente!", "destinoAviso", "ERRO!");
+            }
+            return "cadDivisao";
+        } catch (Exception e) {
+            adicionaMensagem("Uma divisão precisa ser selecionada, antes de clicar em excluir!", "destinoAviso", "ERRO!");
+            return "cadDivisao";
         }
-        return "cadDivisao";
-    }  
+    }
     
 }

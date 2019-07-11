@@ -44,7 +44,7 @@
                         <br/>
 
                             <p:fieldset legend="Chamados" style="margin-bottom:20px">
-                                <p:dataTable id="detalhes" paginator="true" rowIndexVar="indice" var="chamado" value="#{chamadoMB.chamFiltrados}" widgetVar="selecaoCham" emptyMessage="Não há chamados que atendam esses critérios!">
+                                <p:dataTable id="detalhes" paginator="true" rowIndexVar="indice" var="chamado" value="#{chamadoMB.chamFiltrados}" rowKey="#{chamado.id}" selection="#{chamadoMB.chamadoSelecionado}" selectionMode="single" widgetVar="selecaoCham" emptyMessage="Não há chamados que atendam esses critérios!">
 
                                 <p:column>
                                     <f:facet name="header">ID</f:facet>
@@ -89,6 +89,7 @@
                                     <h:outputText value="#{chamado.tempo_solucao}" />
                                 </p:column>
                             </p:dataTable>
+                                <h:commandButton styleClass="botaoTabela" value="Exibir" action="#{chamadoMB.exibeChamado(chamadoMB.chamadoSelecionado.id)}" />
                                 <h:commandLink>
                                     <h:graphicImage library="images" name="pdf.png" width="50" />
                                     <p:dataExporter type="pdf" target="detalhes" fileName="relatorioChamados" pageOnly="true" encoding="UTF-8"/>

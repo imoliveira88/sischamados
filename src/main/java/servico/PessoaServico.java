@@ -35,6 +35,19 @@ public class PessoaServico extends DAOGenericoJPA<Long, Pessoa>{
         }
     }
     
+    public long numeroPessoasDivisao(Divisao div){
+        Query query = super.getEm().createNamedQuery("Pessoa.retornaQtdPessoasDivisao");
+        
+        query.setParameter("divisao", div);
+        
+        try{
+            return (long) query.getSingleResult();
+        }
+        catch(NoResultException e){
+            return 0;
+        }
+    }
+    
     public Pessoa retornaPessoaNome(String nome){
         super.getEm().getTransaction().begin();
         Query query = super.getEm().createQuery("Select e FROM Pessoa e WHERE e.nome = :nome");

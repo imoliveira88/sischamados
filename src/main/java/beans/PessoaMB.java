@@ -168,7 +168,9 @@ public class PessoaMB extends Artificial implements Serializable{
         this.telefone = telefone;
     }
     
-    
+    public long qtdPessoasDiv(Divisao divisao){
+        return (new PessoaServico()).numeroPessoasDivisao(divisao);
+    }
     
     public List<Pessoa> getPessoas(){
         return (new PessoaServico()).pessoas();

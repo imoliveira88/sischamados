@@ -12,7 +12,8 @@ import org.hibernate.validator.constraints.NotBlank;
 @NamedQueries(value = 
          {@NamedQuery(name = "Pessoa.retornaPessoa", query= " SELECT u FROM Pessoa u WHERE u.nip = :nip"),
           @NamedQuery(name = "Pessoa.TODOS", query= " SELECT u FROM Pessoa u ORDER BY u.nome"),
-          @NamedQuery(name = "Pessoa.retornaPessoasDivisao", query= " SELECT u FROM Pessoa u WHERE u.divisao = :divisao")})
+          @NamedQuery(name = "Pessoa.retornaPessoasDivisao", query= " SELECT u FROM Pessoa u WHERE u.divisao = :divisao"),
+          @NamedQuery(name = "Pessoa.retornaQtdPessoasDivisao", query= " SELECT COUNT(u) FROM Pessoa u WHERE u.divisao = :divisao")})
 @Table(name = "TB_PESSOA")
 public class Pessoa implements Serializable {
     private static final long serialVersionUID = 1L;

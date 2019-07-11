@@ -62,6 +62,10 @@
                                         <f:facet name="header">Número</f:facet>
                                         <h:outputText value="#{divisao.numeroString()}"/>
                                     </p:column>
+                                    <p:column>
+                                        <f:facet name="header">Quantidade de militares</f:facet>
+                                        <h:outputText value="#{pessoaMB.qtdPessoasDiv(divisao)}"/>
+                                    </p:column>
                                 </p:dataTable>
                                 <h:commandButton styleClass="botaoTabela" value="Excluir" action="#{divisaoMB.excluir(divisaoMB.divisaoSelecionada.id)}"/>
                             </h:panelGrid>

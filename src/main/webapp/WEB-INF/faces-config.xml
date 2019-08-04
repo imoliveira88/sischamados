@@ -21,6 +21,14 @@
     </navigation-rule>
     
     <navigation-rule>
+        <from-view-id>/logado/admin/relatorios.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>relatorios</from-outcome>
+            <to-view-id>/logado/admin/relatorios.xhtml</to-view-id>
+        </navigation-case>  
+    </navigation-rule>
+    
+    <navigation-rule>
         <from-view-id>/logado/usuario/chamadosParaDivisao.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>chamadosParaDivisao</from-outcome>

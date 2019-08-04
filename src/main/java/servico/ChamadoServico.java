@@ -24,6 +24,23 @@ public class ChamadoServico extends DAOGenericoJPA<Long, Chamado>{
         return super.getById(pk);
     }
     
+    public boolean excluir(Long id){
+        super.getEm().getTransaction().begin();
+        
+        Chamado d1 = super.getEm().find(Chamado.class,id);
+        
+        try{
+            super.getEm().remove(d1);
+            super.getEm().getTransaction().commit();
+            super.getEm().close();
+            return true;
+        }catch(Exception e){
+            super.getEm().close();
+            return false;
+        }
+   
+    }
+    
     public void salvar(Chamado b) {
             super.getEm().getTransaction().begin();
             super.getEm().persist(b);

@@ -223,4 +223,17 @@ public class PessoaMB extends Artificial implements Serializable{
         }  
     }
     
+    public String resetaSenha(Long id) throws ParseException{
+        PessoaServico cli = new PessoaServico();
+        
+        try {
+            cli.resetaSenha(id);
+            this.adicionaMensagem("Senha resetada com sucesso!","destinoAviso","SUCESSO!");
+            return "cadPessoa";
+        } catch (Exception e) {
+            this.adicionaMensagem("Um usuário precisa ser selecionado, antes de resetar sua senha! Tente novamente!","destinoAviso","ERRO!");
+            return "cadPessoa";
+        }  
+    }
+    
 }

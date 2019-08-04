@@ -7,8 +7,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 import modelo.Chamado;
@@ -75,6 +75,24 @@ public class ChamadoMB extends Artificial implements Serializable{
         lista.add("Executando");
         lista.add("Executado");
         lista.add("Satisfeito");
+        
+        int i = 0;
+        
+        do{
+            if(!lista.get(i).equals(statusAtual)) lista.remove(lista.get(i));
+            else return lista;
+        }while(i<lista.size());
+        return lista;
+    }
+    
+    public List listaProxStatusPrestador(String statusAtual){
+        List lista = new ArrayList<>();
+        lista.add("Iniciado");
+        lista.add("Delineando");
+        lista.add("Aguardando material");
+        lista.add("Aguardando execução");
+        lista.add("Executando");
+        lista.add("Executado");
         
         int i = 0;
         
@@ -219,6 +237,11 @@ public class ChamadoMB extends Artificial implements Serializable{
         return "exibeChamado.xhtml?faces-redirect=true";
     }
     
+    public String exibeChamadoPrestador(Long id){
+        chamadoSelecionado = (new ChamadoServico()).getById(id);
+        return "exibeChamadoPrestador.xhtml?faces-redirect=true";
+    }
+    
     public String exibeMeuChamado(Long id){
         chamadoSelecionado = (new ChamadoServico()).getById(id);
         return "exibeMeuChamado.xhtml?faces-redirect=true";
@@ -273,6 +296,7 @@ public class ChamadoMB extends Artificial implements Serializable{
             } else {
                 adicionaMensagem("Status não pode ser alterado!", "destinoAviso","ERRO!");
             }
+            chamFiltrados = this.getChamadosEntreDatas(dataInicial, dataFinal);
             return destino;
         } catch (IllegalArgumentException e) {
             adicionaMensagem("Escolha um chamado!", "destinoAviso", "ERRO!");
@@ -420,8 +444,36 @@ public class ChamadoMB extends Artificial implements Serializable{
         return "relatorioUsuario";
     }
     
+    public String excluir(Long id) throws Exception {
+        ChamadoServico pra = new ChamadoServico();
+        try {
+            if (pra.excluir(id)) {
+                adicionaMensagem("Chamado removido com sucesso!", "destinoAviso", "SUCESSO!");
+            } else {
+                adicionaMensagem("Chamado não pode ser removido!", "destinoAviso", "ERRO!");
+            }
+            chamFiltrados = this.getChamadosEntreDatas(dataInicial, dataFinal);
+            return "relatorios";
+        } catch (Exception e) {
+            adicionaMensagem("Um chamado precisa ser selecionado, antes de clicar em excluir!", "destinoAviso", "ERRO!");
+            return "relatorios";
+        }
+    }
     
-    public String salvar(Long idsolicitante){        
+    
+    public String salvar(Long idsolicitante){
+        chamado = new Chamado();
+        chamadoSelecionado = new Chamado();
+        solicitante = new Pessoa();
+        chamFiltrados = this.getChamados();
+        chamFiltradosDivisao = new ArrayList<>();
+        dataInicial = null;
+        dataFinal = null;
+        titulo = "";
+        texto = "";
+        descricao = "";
+        
+        
         chamado.setData(Calendar.getInstance().getTime());
         chamado.setStatus("Iniciado");
         chamado.setDescricao(descricao);

@@ -57,7 +57,7 @@
                                         <f:selectItems value="#{divisaoMB.divisoes}" var="divi" itemValue="#{divi.nome}" />
                                     </p:selectOneMenu>
 
-                                    <h:commandButton class="botao" value="Salvar" action="#{pessoaMB.cadastraUsuario()}"/>
+                                    <h:commandButton class="botaoTabela" value="Salvar" action="#{pessoaMB.cadastraUsuario()}"/>
 
                                 </h:panelGrid>
                             </p:fieldset>
@@ -96,6 +96,9 @@
                                         <h:outputText value="#{pessoa.divisao}"/>
                                     </p:column>
                                 </p:dataTable>
+                            </h:panelGrid>
+                            <h:panelGrid columns="2" cellpadding="5">
+                                <h:commandButton styleClass="botaoTabela" value="Resetar senha" action="#{pessoaMB.resetaSenha(pessoaMB.pessoaSelecionada.id)}"/>
                                 <h:commandButton styleClass="botaoTabela" value="Excluir" action="#{pessoaMB.excluiUsuario(pessoaMB.pessoaSelecionada.id)}"/>
                             </h:panelGrid>
                         </p:fieldset>

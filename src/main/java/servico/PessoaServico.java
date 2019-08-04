@@ -5,6 +5,8 @@
  */
 package servico;
 
+import beans.PessoaMB;
+import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -83,6 +85,16 @@ public class PessoaServico extends DAOGenericoJPA<Long, Pessoa>{
         pes.setMilitar(p.getMilitar());
         pes.setPosto(p.getPosto());
         pes.setSenha(p.getSenha());
+        super.getEm().merge(pes);
+        super.getEm().getTransaction().commit();
+        super.getEm().close();
+    }
+    
+    public void resetaSenha(Long id) throws NoSuchAlgorithmException{
+        super.getEm().getTransaction().begin();
+        
+        Pessoa pes = super.getEm().find(Pessoa.class,id);
+        pes.setSenha((new PessoaMB()).hash("aB123456@"));
         super.getEm().merge(pes);
         super.getEm().getTransaction().commit();
         super.getEm().close();

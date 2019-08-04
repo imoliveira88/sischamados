@@ -44,7 +44,7 @@ h1{
 
 table#menu{
         box-shadow: 10px 10px 5px #888888;
-	width: 45%;
+	width: 60%;
         background-color: #ccccff;
 	text-align: center;
 	height: 50px;
@@ -65,7 +65,7 @@ table#menu td:hover{
 
 table#menuLeft{
         box-shadow: 10px 10px 5px #888888;
-	width: 40%;
+	width: 55%;
         background-color: #ccccff;
 	text-align: center;
 	height: 30px;
@@ -144,7 +144,7 @@ body {
 }
 
 .botaoTabela{
-    width: 110px;
+    width: 130px;
     height: 40px;
     background-color: transparent;
     font-size: 14px;

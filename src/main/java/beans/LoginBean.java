@@ -102,9 +102,11 @@ public class LoginBean extends Artificial implements Serializable{
         PessoaServico ud = new PessoaServico();
         
         try {
+            
             pessoaRetornada = ud.retornaPessoa(this.nip);
-            if(this.nip.equals("admin") && this.senha.equals("admincmasm")) return true;
-            if(pessoaRetornada.getSenha().equals("aB123456@")) return true;
+            System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA " + pessoaRetornada.getNip() + pessoaRetornada.getSenha());
+            if(this.nip.equals("admin") && this.senha.equals("admincmasm")) return true; //caso do admin
+            if(pessoaRetornada.getSenha().equals("aB123456@") && "aB123456@".equals(senha)) return true; //caso pessoa - primeiro acesso
             String senhaRetornada = pessoaRetornada.getSenha();
             return this.hash(this.senha).equals(senhaRetornada);
         } catch (Exception e) {
@@ -160,7 +162,7 @@ public class LoginBean extends Artificial implements Serializable{
         }
     }
     
-    public  String  doLogin()  throws  FacesException,ExceptionInInitializerError,SQLException, ParseException{
+    public String doLogin()  throws  FacesException,ExceptionInInitializerError,SQLException, ParseException{
         boolean valido;
         char tipo;
         Pessoa  usu;
@@ -169,12 +171,12 @@ public class LoginBean extends Artificial implements Serializable{
         
          try {
             valido =  this.validaUsuario();
-
+            
             if (!valido) {
                  adicionaMensagem("Login ou senha incorretos!", "destinoAviso", "ERRO!");
                  return "login.xhtml";
             }  else {
-                if(this.senha.equals("aB123456@")){
+                if(this.senha.equals("aB123456@") || this.senha.equals(this.hash("aB123456@"))){
                     adicionaMensagem("Primeiro acesso? Altere sua senha!", "destinoAviso", "ATENÇÃO!");
                     return "novaSenha.xhtml";
                 }

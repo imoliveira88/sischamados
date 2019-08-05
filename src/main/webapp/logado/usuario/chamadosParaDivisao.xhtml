@@ -72,6 +72,9 @@
                             </p:fieldset>
 
                             <p:fieldset legend="Estatísticas" style="margin-bottom:20px; background-color: beige">
+                                <p:chart type="bar" model="#{chamadoMB.barModel}" style="height:300px"/>
+                                <br /><br />
+                                
                                 <h:outputText value="Média de tempo de resolução (em horas): "/>
                                 <h:outputText value="#{chamadoMB.mediaResolucao(usuario.divisao)}"/>
                             </p:fieldset>

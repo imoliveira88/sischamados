@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
@@ -14,6 +15,10 @@ import javax.servlet.http.HttpSession;
 import modelo.Chamado;
 import modelo.Divisao;
 import modelo.Pessoa;
+import org.primefaces.model.chart.Axis;
+import org.primefaces.model.chart.AxisType;
+import org.primefaces.model.chart.BarChartModel;
+import org.primefaces.model.chart.ChartSeries;
 import servico.ChamadoServico;
 import servico.PessoaServico;
 
@@ -38,6 +43,8 @@ public class ChamadoMB extends Artificial implements Serializable{
     private int linhasExistentes;
     private String atribuido;
     private String texto;
+    private BarChartModel barModel;
+    private int maior;
 
     public ChamadoMB() {
         chamado = new Chamado();
@@ -47,6 +54,11 @@ public class ChamadoMB extends Artificial implements Serializable{
         chamFiltradosDivisao = new ArrayList<>();
         dataInicial = null;
         dataFinal = null;
+    }
+    
+    @PostConstruct
+    public void init() {
+        createBarModels();
     }
 
     public Chamado getChamado() {
@@ -109,6 +121,15 @@ public class ChamadoMB extends Artificial implements Serializable{
 
     public void setTexto(String texto) {
         this.texto = texto;
+    }
+
+    public BarChartModel getBarModel() {
+        this.createBarModel();
+        return barModel;
+    }
+
+    public void setBarModel(BarChartModel barModel) {
+        this.barModel = barModel;
     }
 
     public void setChamado(Chamado chamado) {
@@ -392,6 +413,49 @@ public class ChamadoMB extends Artificial implements Serializable{
         if(st.equals("TODOS") || st.equals("")) return this.getChamadosPorDivisao(div);
         return new ChamadoServico().chamadosDivisaoStatus(div,st);
     }
+    
+    private BarChartModel initBarModel() {
+        BarChartModel model = new BarChartModel();
+        List<ChartSeries> lista = new ArrayList<>();
+        maior = 0;
+        int aux;
+        
+        FacesContext fc = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+                
+        for(int i=0; i<listaStatus().size(); i++){
+            lista.add(new ChartSeries());
+            lista.get(i).setLabel(listaStatus().get(i).toString());
+            aux = this.getChamadosParaDivisaoStatus(((Pessoa)session.getAttribute("usuario")).getDivisao().toString(),listaStatus().get(i).toString()).size();
+            if(aux > maior) maior = aux;
+            lista.get(i).set("", aux);
+            model.addSeries(lista.get(i));
+        }
+ 
+        return model;
+    }
+ 
+    private void createBarModels() {
+        createBarModel();
+    }
+ 
+    private void createBarModel() {
+        barModel = initBarModel();
+ 
+        barModel.setTitle("Quantidade de chamados por status");
+        barModel.setLegendPosition("ne");
+        barModel.setBarWidth(20);
+ 
+        Axis xAxis = barModel.getAxis(AxisType.X);
+        xAxis.setLabel("");
+ 
+        Axis yAxis = barModel.getAxis(AxisType.Y);
+        yAxis.setLabel("Quantidade");
+        
+        yAxis.setMin(0);
+        yAxis.setMax(maior);
+    }
+ 
     
     public List<Chamado> getChamadosParaDivisaoStatus(String div, String st){
         if(st.equals("TODOS") || st.equals("")) return new ChamadoServico().chamadosParaDivisao(div);

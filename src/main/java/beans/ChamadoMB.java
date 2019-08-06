@@ -418,15 +418,19 @@ public class ChamadoMB extends Artificial implements Serializable{
         BarChartModel model = new BarChartModel();
         List<ChartSeries> lista = new ArrayList<>();
         maior = 0;
+        
         int aux;
         
         FacesContext fc = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+        
+        Divisao div = ((Pessoa)session.getAttribute("usuario")).getDivisao();
                 
         for(int i=0; i<listaStatus().size(); i++){
             lista.add(new ChartSeries());
             lista.get(i).setLabel(listaStatus().get(i).toString());
-            aux = this.getChamadosParaDivisaoStatus(((Pessoa)session.getAttribute("usuario")).getDivisao().toString(),listaStatus().get(i).toString()).size();
+            if(div != null) aux = this.getChamadosParaDivisaoStatus(div.toString(),listaStatus().get(i).toString()).size();
+            else aux = 0;
             if(aux > maior) maior = aux;
             lista.get(i).set("", aux);
             model.addSeries(lista.get(i));

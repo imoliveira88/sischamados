@@ -3,7 +3,9 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:h="http://java.sun.com/jsf/html">
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <h:head>
         <title>IGNORED</title>        
@@ -30,6 +32,44 @@
                         <td onclick="location.href='/sischamados/faces/logado/admin/relatorios.xhtml'">Relatorios</td>
                     </tr>
                 </table>
+                
+                <br/>
+                <br/>
+                
+                
+                
+                <table width="80%" align="center">
+            <tr>
+                <td>
+                   <h:form>
+                    <h:outputLabel value="Número de sessões ativas: #{loginBean.getNumeroSessoes()}" />
+                </h:form>
+                </td>
+            </tr>
+                    <tr>
+                <td>
+                    <h:form enctype="multipart/form-data">
+
+                            <p:fieldset legend="Sessões ativas" style="margin-bottom:20px">
+                                <p:dataTable id="detalhes" paginator="true" rows="10" rowsPerPageTemplate="5,10,15" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" var="sessao" value="#{loginBean.listaSessoes()}" emptyMessage="Não há sessões ativas!">
+
+                                <p:column>
+                                    <f:facet name="header">Usuário</f:facet>
+                                    <h:outputText value="#{sessao.getAttribute('usuario').toString()}"/>
+                                </p:column>
+                                <p:column>
+                                    <f:facet name="header">IP da máquina</f:facet>
+                                    <h:outputText value="#{sessao.getAttribute('ip')}"/>
+                                </p:column>
+                                
+                            </p:dataTable>
+                                
+                        </p:fieldset>
+                        
+                    </h:form>
+                </td>
+            </tr>
+        </table>
                 
             <ui:insert/>
             </div>

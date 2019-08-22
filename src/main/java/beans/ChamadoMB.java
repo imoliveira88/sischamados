@@ -45,21 +45,41 @@ public class ChamadoMB extends Artificial implements Serializable{
     private String texto;
     private BarChartModel barModel;
     private int maior;
+    
+    private List<Integer> chamadosPara;
+    private List<Integer> chamadosDe;
 
     public ChamadoMB() {
         chamado = new Chamado();
-        chamadoSelecionado = new Chamado();
+        //chamadoSelecionado = new Chamado();
         solicitante = new Pessoa();
         chamFiltrados = this.getChamados();
         chamFiltradosDivisao = new ArrayList<>();
         dataInicial = null;
         dataFinal = null;
+        //iniciaDePara();
     }
+    
     
     @PostConstruct
     public void init() {
         createBarModels();
     }
+    
+    /*private void iniciaDePara(){
+        FacesContext fc = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+        
+        chamadosDe = new ArrayList<>();
+        chamadosPara = new ArrayList<>();
+        
+        Divisao div = ((Pessoa)session.getAttribute("usuario")).getDivisao();
+        
+        for(int i=0; i<listaStatus().size(); i++){
+            chamadosDe.add(this.getChamadosParaDivisaoStatus(div.toString(),listaStatus().get(i).toString()).size());
+            chamadosPara.add(this.getChamadosPorDivisaoStatus(div.toString(),listaStatus().get(i).toString()).size());
+        }
+    }*/
 
     public Chamado getChamado() {
         return chamado;
@@ -112,6 +132,7 @@ public class ChamadoMB extends Artificial implements Serializable{
             if(!lista.get(i).equals(statusAtual)) lista.remove(lista.get(i));
             else return lista;
         }while(i<lista.size());
+        System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" + statusAtual + lista);
         return lista;
     }
 
@@ -276,7 +297,6 @@ public class ChamadoMB extends Artificial implements Serializable{
             ChamadoServico pra = new ChamadoServico();
             Chamado cha = pra.getById(chamadoSelecionado.getId());
             historico = cha.getHistorico();
-            cha.setStatus(chamadoSelecionado.getStatus());
 
             DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
             Date date = new Date();
@@ -288,12 +308,10 @@ public class ChamadoMB extends Artificial implements Serializable{
                 novaDesc = chamadoSelecionado.getDescricao();
                 novaDesc += "<br/><b>" + dateFormat.format(date) + " " + session.getAttribute("usuario").toString() + "</b> " +  this.texto;
             }
-            cha.setDescricao(novaDesc);
-            cha.setAtribuido(chamadoSelecionado.getAtribuido());
-            cha.setPrioridade(chamadoSelecionado.getPrioridade());
-                        
+            
+                                    
             if (semAlteracao(cha) == 1) {
-                historico += "<br/><b>" + dateFormat.format(date) + " " + session.getAttribute("usuario").toString() + "</b> alterou status para " + chamadoSelecionado.getStatus() + ", atribuído para " + chamadoSelecionado.getAtribuido() + " e prioridade para " + chamadoSelecionado.getPrioridade();
+                historico += "<br/><b>" + dateFormat.format(date) + " " + session.getAttribute("usuario").toString() + "</b> alterou status para " + status + ", atribuído para " + atribuido + " e prioridade para " + prioridade;
                 cha.setHistorico(historico);
             } else if (semAlteracao(cha) == 2) {
                 historico += "<br/><b>" + dateFormat.format(date) + " " + session.getAttribute("usuario").toString() + "</b> atualizou a descrição";
@@ -301,13 +319,19 @@ public class ChamadoMB extends Artificial implements Serializable{
             }
             
             this.texto = "";
-
-            if (chamadoSelecionado.getStatus().equals("Satisfeito") && semAlteracao(cha)!=1) {
+                        
+            if (status.equals("Satisfeito") && semAlteracao(cha)!=1) {
 
                 long diff = Calendar.getInstance().getTimeInMillis() - cha.getData().getTime();
                 long diffHours = diff / (60 * 60 * 1000);
                 cha.setTempo_solucao((int) diffHours);
             }
+            
+            cha.setDescricao(novaDesc);
+            cha.setAtribuido(atribuido);
+            cha.setPrioridade(prioridade);
+            cha.setStatus(status);
+            
             if (pra.atualizaChamado(cha)) {
                 if (chamadoSelecionado.getStatus().equals("Satisfeito") && semAlteracao(cha)!=1) {
                     adicionaMensagem("Chamado de número " + cha.getId() + " finalizado!", "destinoAviso","SUCESSO!");
@@ -327,18 +351,34 @@ public class ChamadoMB extends Artificial implements Serializable{
     
     public int semAlteracao(Chamado c) throws NullPointerException {
         try {
-            if (c.getPrioridade().equals(chamadoSelecionado.getPrioridade()) && c.getStatus().equals(chamadoSelecionado.getStatus()) && c.getAtribuido().equals(chamadoSelecionado.getAtribuido())) {
-                if (texto.equals("")) {
-                    return 0; //Nenhuma alteração
-                } else {
-                    return 2; //Houve alteração na descrição
+           
+            if (chamadoSelecionado.getAtribuido() == null) {
+                if (c.getPrioridade().equals(prioridade) && c.getStatus().equals(status) && c.getAtribuido() == null) {
+                    if (texto.equals("")) {
+                        return 0; //Nenhuma alteração
+                    } else {
+                        return 2; //Houve alteração na descrição
+                    }
                 }
+                return 1; //Houve alteração na prioridade, status ou no atribuído
+            } else {
+                if (c.getPrioridade().equals(prioridade) && c.getStatus().equals(status) && c.getAtribuido().equals(atribuido)) {
+                    if (texto.equals("")) {
+                        return 0; //Nenhuma alteração
+                    } else {
+                        return 2; //Houve alteração na descrição
+                    }
+                }
+                return 1; //Houve alteração na prioridade, status ou no atribuído
             }
-            return 1; //Houve alteração na prioridade, status ou no atribuído
         } catch (Exception e) {
-            if(c.getAtribuido() == null){
-                if(texto.equals("")) return 0;
-                else return 2;
+            e.printStackTrace();
+            if (c.getAtribuido() == null) {
+                if (texto.equals("")) {
+                    return 0;
+                } else {
+                    return 2;
+                }
             }
             return 0; //caso tenha sido lançada uma NullPointerException, será considerado que nada foi alterado
         }
@@ -532,16 +572,10 @@ public class ChamadoMB extends Artificial implements Serializable{
     public String salvar(Long idsolicitante){
         chamado = new Chamado();
         chamadoSelecionado = new Chamado();
-        solicitante = new Pessoa();
+        /*solicitante = new Pessoa();
         chamFiltrados = this.getChamados();
-        chamFiltradosDivisao = new ArrayList<>();
-        dataInicial = null;
-        dataFinal = null;
-        titulo = "";
-        texto = "";
-        descricao = "";
-        
-        
+        chamFiltradosDivisao = new ArrayList<>();*/
+             
         chamado.setData(Calendar.getInstance().getTime());
         chamado.setStatus("Iniciado");
         chamado.setDescricao(descricao);
@@ -552,6 +586,9 @@ public class ChamadoMB extends Artificial implements Serializable{
         chamado.setHistorico("");
         ChamadoServico chamadoDAO = new ChamadoServico();
         chamadoDAO.salvar(chamado);
+        
+        titulo = "";
+        descricao = "";
         return "meusChamados";
     }
     

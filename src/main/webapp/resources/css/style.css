@@ -163,6 +163,21 @@ body {
     cursor:pointer;
 }
 
+.botaoTabelaVermelho{
+    width: 130px;
+    height: 40px;
+    color: red;
+    background-color: transparent;
+    font-size: 14px;
+    border: 0;
+}
+
+.botaoTabelaVermelho:hover{
+    background-color: transparent;
+    font-size: 24px;
+    cursor:pointer;
+}
+
 h2{
     text-align: center;
 }

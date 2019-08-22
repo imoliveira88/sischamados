@@ -2,11 +2,14 @@ package beans;
 
 import java.io.Serializable;
 import java.math.BigInteger;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.util.List;
 import javax.faces.FacesException;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.bean.ManagedBean;
@@ -24,14 +27,15 @@ import servico.PessoaServico;
 @SessionScoped
 @ManagedBean(name = "loginBean")
 public class LoginBean extends Artificial implements Serializable{
+
     private String nip;
     private String senha;
     private String nome;
     private Divisao divisao;
     private Pessoa pessoaRetornada;
     private String senhaNova;
-    
-    public LoginBean(){
+
+    public LoginBean() {
         divisao = new Divisao();
         pessoaRetornada = new Pessoa();
     }
@@ -52,7 +56,9 @@ public class LoginBean extends Artificial implements Serializable{
         this.pessoaRetornada = pessoaRetornada;
     }
     
-    
+    public int getNumeroSessoes(){
+        return SessionListener.getActiveSessionCount();
+    }
 
     public String getSenha() {
         return senha;
@@ -104,7 +110,6 @@ public class LoginBean extends Artificial implements Serializable{
         try {
             
             pessoaRetornada = ud.retornaPessoa(this.nip);
-            System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA " + pessoaRetornada.getNip() + pessoaRetornada.getSenha());
             if(this.nip.equals("admin") && this.senha.equals("admincmasm")) return true; //caso do admin
             if(pessoaRetornada.getSenha().equals("aB123456@") && "aB123456@".equals(senha)) return true; //caso pessoa - primeiro acesso
             String senhaRetornada = pessoaRetornada.getSenha();
@@ -162,7 +167,11 @@ public class LoginBean extends Artificial implements Serializable{
         }
     }
     
-    public String doLogin()  throws  FacesException,ExceptionInInitializerError,SQLException, ParseException{
+    public List<HttpSession> listaSessoes(){
+        return SessionListener.sessoes;
+    }
+    
+    public String doLogin()  throws  FacesException,ExceptionInInitializerError,SQLException, ParseException, UnknownHostException{
         boolean valido;
         char tipo;
         Pessoa  usu;
@@ -176,6 +185,7 @@ public class LoginBean extends Artificial implements Serializable{
                  adicionaMensagem("Login ou senha incorretos!", "destinoAviso", "ERRO!");
                  return "login.xhtml";
             }  else {
+                InetAddress numeroIP = InetAddress.getLocalHost();
                 if(this.senha.equals("aB123456@") || this.senha.equals(this.hash("aB123456@"))){
                     adicionaMensagem("Primeiro acesso? Altere sua senha!", "destinoAviso", "ATENÇÃO!");
                     return "novaSenha.xhtml";
@@ -187,6 +197,7 @@ public class LoginBean extends Artificial implements Serializable{
                  else adicionaMensagem("Bem vindo, Administrador!", "destinoAviso", "SUCESSO!");
                  session.setAttribute("logado", "sim");
                  session.setAttribute("usuario",pessoaRetornada);
+                 session.setAttribute("ip",numeroIP);
                 if (tipo == 'A') {
                      return "logado/admin/cadPessoa.xhtml";
                 }  else {

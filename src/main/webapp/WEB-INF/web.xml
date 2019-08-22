@@ -19,7 +19,7 @@
     </servlet-mapping>
     <session-config>
         <session-timeout>
-            30
+            10
         </session-timeout>
     </session-config>
     
@@ -32,6 +32,10 @@
         <filter-name>PageFilter</filter-name>
         <url-pattern>/faces/logado/*</url-pattern>
     </filter-mapping>
+    
+    <listener>
+        <listener-class>beans.SessionListener</listener-class>
+    </listener>
     
     <welcome-file-list>
         <welcome-file>faces/login.xhtml</welcome-file>

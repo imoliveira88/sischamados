@@ -12,6 +12,9 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.faces.bean.RequestScoped;
 import javax.faces.bean.ManagedBean;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import modelo.Chamado;
 import modelo.Divisao;
 import modelo.Pessoa;
@@ -168,11 +171,11 @@ public class PessoaMB extends Artificial implements Serializable{
         this.telefone = telefone;
     }
     
-    public long qtdPessoasDiv(Divisao divisao){
+    public long qtdPessoasDiv(Divisao divisao) throws Exception{
         return (new PessoaServico()).numeroPessoasDivisao(divisao);
     }
     
-    public List<Pessoa> getPessoas(){
+    public List<Pessoa> getPessoas() throws Exception{
         return (new PessoaServico()).pessoas();
     }
     
@@ -206,7 +209,7 @@ public class PessoaMB extends Artificial implements Serializable{
         }  
     }
     
-    public List<Pessoa> retornaPessoasDivisao(Divisao d){
+    public List<Pessoa> retornaPessoasDivisao(Divisao d) throws Exception{
         return (new PessoaServico()).pessoasDivisao(d);
     }
     

@@ -7,6 +7,7 @@ import javax.faces.context.FacesContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import servico.DAOGenericoJPA;
 
 @ManagedBean(name = "logoutBean")
 @ViewScoped
@@ -17,6 +18,7 @@ public class LogoutBean extends Artificial implements Serializable {
         HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
         if (session != null) {
             session.invalidate();
+            (new DAOGenericoJPA()).fecharFabrica();
         }
         
         HttpServletRequest request = (HttpServletRequest) fc.getExternalContext().getRequest();        

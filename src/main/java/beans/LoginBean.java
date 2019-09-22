@@ -2,7 +2,6 @@ package beans;
 
 import java.io.Serializable;
 import java.math.BigInteger;
-import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -15,6 +14,7 @@ import javax.enterprise.context.SessionScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import javax.persistence.Query;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import modelo.Divisao;
 import modelo.Pessoa;
@@ -113,7 +113,7 @@ public class LoginBean extends Artificial implements Serializable{
             if(this.nip.equals("admin") && this.senha.equals("admincmasm")) return true; //caso do admin
             if(pessoaRetornada.getSenha().equals("aB123456@") && "aB123456@".equals(senha)) return true; //caso pessoa - primeiro acesso
             String senhaRetornada = pessoaRetornada.getSenha();
-            return this.hash(this.senha).equals(senhaRetornada);
+            return this.hash(this.senha).equals(senhaRetornada) || this.senha.equals(senhaRetornada); //abrangendo o caso do Admin visitante
         } catch (Exception e) {
             return false;
         }
@@ -137,7 +137,7 @@ public class LoginBean extends Artificial implements Serializable{
         return min && mai && num && car;
     }
     
-    public String alterarSenha() throws NoSuchAlgorithmException {
+    public String alterarSenha() throws NoSuchAlgorithmException, Exception {
         if (!this.hash(this.senha).equals(pessoaRetornada.getSenha()) && !pessoaRetornada.getSenha().equals("aB123456@")){
             this.adicionaMensagem("A senha digitada não corresponde à senha gravada no banco de dados!", "destinoAviso", "ERRO!");
             return "novaSenha.xhtml";
@@ -157,16 +157,6 @@ public class LoginBean extends Artificial implements Serializable{
         return "login";
     }
     
-    public Pessoa retornaUsuario()throws SQLException{
-        PessoaServico ud = new PessoaServico();
-        try {
-            Pessoa usu = ud.retornaPessoa(this.nip);
-            return usu;
-        } catch (Exception e) {
-            return null;
-        }
-    }
-    
     public List<HttpSession> listaSessoes(){
         return SessionListener.sessoes;
     }
@@ -176,7 +166,7 @@ public class LoginBean extends Artificial implements Serializable{
         char tipo;
         Pessoa  usu;
         FacesContext fc = FacesContext.getCurrentInstance();
-        HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+        HttpSession session;
         
          try {
             valido =  this.validaUsuario();
@@ -185,19 +175,18 @@ public class LoginBean extends Artificial implements Serializable{
                  adicionaMensagem("Login ou senha incorretos!", "destinoAviso", "ERRO!");
                  return "login.xhtml";
             }  else {
-                InetAddress numeroIP = InetAddress.getLocalHost();
+                //InetAddress numeroIP = InetAddress.getLocalHost();
                 if(this.senha.equals("aB123456@") || this.senha.equals(this.hash("aB123456@"))){
                     adicionaMensagem("Primeiro acesso? Altere sua senha!", "destinoAviso", "ATENÇÃO!");
                     return "novaSenha.xhtml";
                 }
-                tipo =  pessoaRetornada.getTipo();
-                
+                tipo =  pessoaRetornada.getTipo();                
                  this.nome =  pessoaRetornada.getNome();
-                 if(!this.nome.equals("admin")) adicionaMensagem("Bem vindo, " +  pessoaRetornada.toString() + "!", "destinoAviso", "BEM VINDO!");
+                 if(!this.nome.equals("admin")) adicionaMensagem("Bem vindo, " +  pessoaRetornada.toString() + "! TIPOOOO" + tipo, "destinoAviso", "BEM VINDO!");
                  else adicionaMensagem("Bem vindo, Administrador!", "destinoAviso", "SUCESSO!");
+                 session = (HttpSession) fc.getExternalContext().getSession(false);
                  session.setAttribute("logado", "sim");
                  session.setAttribute("usuario",pessoaRetornada);
-                 session.setAttribute("ip",numeroIP);
                 if (tipo == 'A') {
                      return "logado/admin/cadPessoa.xhtml";
                 }  else {

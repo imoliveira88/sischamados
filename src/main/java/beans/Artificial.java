@@ -48,7 +48,8 @@ public class Artificial {
         } catch (Exception e) {
             return 0;
         }
-    }
+    }    
+    
     
     public List<String> separaQueries(String queries){
         List<String> lista = new ArrayList<>();

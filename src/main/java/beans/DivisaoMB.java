@@ -53,7 +53,7 @@ public class DivisaoMB extends Artificial implements Serializable{
         this.numero = numero;
     }
 
-    public String salvar() {
+    public String salvar() throws Exception {
         DivisaoServico pra = new DivisaoServico();
         divisao.setNome(nome.toUpperCase());
         divisao.setNumero(numero);
@@ -68,15 +68,15 @@ public class DivisaoMB extends Artificial implements Serializable{
         }
     }
     
-    public Divisao retornaDivisao(String div){
+    public Divisao retornaDivisao(String div) throws Exception{
         return (new DivisaoServico()).retornaDivisao(div);
     }
     
-    public List<Divisao> getDivisoes(){
+    public List<Divisao> getDivisoes() throws Exception{
         return new DivisaoServico().todasDivisoes();
     }
     
-    public List<Divisao> getPrestadores(){
+    public List<Divisao> getPrestadores() throws Exception{
         return new DivisaoServico().divisoesPrestadoras();
     }
     

@@ -21,17 +21,31 @@
             <version>4.3.2.Final</version>
             <type>jar</type>
         </dependency>
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-entitymanager</artifactId>
-            <version>4.3.11.Final</version>
-        </dependency>
+
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <version>42.2.5</version>
         </dependency>
+        
+        <dependency>
+    <groupId>org.hibernate</groupId>
+    <artifactId>hibernate-c3p0</artifactId>
+    <version>5.4.5.Final</version>
+    <exclusions>
+        <exclusion>
+            <artifactId>jboss-logging</artifactId>
+            <groupId>org.jboss.logging</groupId>
+        </exclusion>
+    </exclusions>
+    
+</dependency>
 
+<dependency>
+    <artifactId>jboss-logging</artifactId>
+    <groupId>org.jboss.logging</groupId>
+    <version>3.2.0.Final</version>
+</dependency>
         
         <dependency>
             <groupId>org.primefaces</groupId>

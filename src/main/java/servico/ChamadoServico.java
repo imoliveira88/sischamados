@@ -24,7 +24,7 @@ public class ChamadoServico extends DAOGenericoJPA<Long, Chamado>{
         return super.getById(pk);
     }
     
-    public boolean excluir(Long id){
+    public boolean excluir(Long id) throws Exception{
         super.getEm().getTransaction().begin();
         
         Chamado d1 = super.getEm().find(Chamado.class,id);
@@ -41,10 +41,11 @@ public class ChamadoServico extends DAOGenericoJPA<Long, Chamado>{
    
     }
     
-    public void salvar(Chamado b) {
+    public void salvar(Chamado b) throws Exception {
             super.getEm().getTransaction().begin();
             super.getEm().persist(b);
             super.getEm().getTransaction().commit();
+            super.getEm().close();
     }
     
       //Solicitado, status, atribuído a: os três são Strings formatadas
@@ -64,7 +65,7 @@ public class ChamadoServico extends DAOGenericoJPA<Long, Chamado>{
     }
     
     // Retorna chamados entre duas datas distintas
-    public List<Chamado> chamadosEntreDatas(Date dinicio, Date dfim){
+    public List<Chamado> chamadosEntreDatas(Date dinicio, Date dfim) throws Exception{
         super.getEm().getTransaction().begin();
         Query query = super.getEm().createQuery("Select e FROM Chamado e WHERE e.data BETWEEN :data1 AND :data2 ORDER BY e.data DESC, e.status, e.solicitado");
         query.setParameter("data1",dinicio);
@@ -74,6 +75,7 @@ public class ChamadoServico extends DAOGenericoJPA<Long, Chamado>{
         
         try{
             chamados = query.getResultList();
+            super.getEm().close();
             return chamados;
         }
         catch(NoResultException e){
@@ -82,7 +84,7 @@ public class ChamadoServico extends DAOGenericoJPA<Long, Chamado>{
      }
     
     // Retorna chamados de certo status entre duas datas distintas
-    public List<Chamado> chamadosEntreDatasStatus(Date dinicio, Date dfim, String status){
+    public List<Chamado> chamadosEntreDatasStatus(Date dinicio, Date dfim, String status) throws Exception{
         super.getEm().getTransaction().begin();
         Query query = super.getEm().createQuery("Select e FROM Chamado e WHERE (e.data BETWEEN :data1 AND :data2) AND e.status = :status ORDER BY e.data DESC, e.status, e.solicitado");
         query.setParameter("data1",dinicio);
@@ -93,6 +95,7 @@ public class ChamadoServico extends DAOGenericoJPA<Long, Chamado>{
         
         try{
             chamados = query.getResultList();
+            super.getEm().close();
             return chamados;
         }
         catch(NoResultException e){
@@ -101,7 +104,7 @@ public class ChamadoServico extends DAOGenericoJPA<Long, Chamado>{
      }
     
     // Retorna chamados de certo status e divisão entre duas datas distintas
-    public List<Chamado> chamadosEntreDatasStatusDivisao(Date dinicio, Date dfim, String status, String divisao){
+    public List<Chamado> chamadosEntreDatasStatusDivisao(Date dinicio, Date dfim, String status, String divisao) throws Exception{
         super.getEm().getTransaction().begin();
         Query query = super.getEm().createQuery("Select e FROM Chamado e WHERE (e.data BETWEEN :data1 AND :data2) AND e.status = :status AND e.solicitado = :divisao ORDER BY e.data DESC, e.status");
         query.setParameter("data1",dinicio);
@@ -113,6 +116,7 @@ public class ChamadoServico extends DAOGenericoJPA<Long, Chamado>{
         
         try{
             chamados = query.getResultList();
+            super.getEm().close();
             return chamados;
         }
         catch(NoResultException e){
@@ -120,7 +124,7 @@ public class ChamadoServico extends DAOGenericoJPA<Long, Chamado>{
         }
      }
     
-    public List<Chamado> chamadosEntreDatasDivisao(Date dinicio, Date dfim, String divisao){
+    public List<Chamado> chamadosEntreDatasDivisao(Date dinicio, Date dfim, String divisao) throws Exception{
         super.getEm().getTransaction().begin();
         Query query = super.getEm().createQuery("Select e FROM Chamado e WHERE (e.data BETWEEN :data1 AND :data2) AND e.solicitado = :divisao ORDER BY e.data DESC, e.status");
         query.setParameter("data1",dinicio);
@@ -131,6 +135,7 @@ public class ChamadoServico extends DAOGenericoJPA<Long, Chamado>{
         
         try{
             chamados = query.getResultList();
+            super.getEm().close();
             return chamados;
         }
         catch(NoResultException e){
@@ -140,13 +145,14 @@ public class ChamadoServico extends DAOGenericoJPA<Long, Chamado>{
     
     
     //Método lista todos os chamados que se encontram no status pedido
-    public List<Chamado> chamadosStatus(String status)throws NoResultException{
+    public List<Chamado> chamadosStatus(String status)throws NoResultException, Exception{
         Query query = super.getEm().createNamedQuery("Chamado.porStatus");
         query.setParameter("status", status);
         List<Chamado> chamados;
         
         try{
             chamados = query.getResultList();
+            super.getEm().close();
             return chamados;
         }
         catch(NoResultException e){
@@ -155,7 +161,7 @@ public class ChamadoServico extends DAOGenericoJPA<Long, Chamado>{
     }
     
     //Método conta todos os chamados que se encontram no status pedido
-    public int chamadosStatusConta(String status)throws NoResultException{
+    public int chamadosStatusConta(String status)throws NoResultException, Exception{
         super.getEm().getTransaction().begin();
         Query query = super.getEm().createQuery("SELECT COUNT(e) FROM Chamado e WHERE e.status = :status");
         
@@ -170,7 +176,7 @@ public class ChamadoServico extends DAOGenericoJPA<Long, Chamado>{
     }
     
     //Método dá a média de tempo de resolução de todos os chamados finalizados da divisao
-    public double chamadosMedia(String divisao)throws NoResultException, NullPointerException{
+    public double chamadosMedia(String divisao)throws NoResultException, NullPointerException, Exception{
         super.getEm().getTransaction().begin();
         Query query = super.getEm().createQuery("SELECT AVG(e.tempo_solucao) FROM Chamado e WHERE e.solicitado = :divisao AND e.status = 'Satisfeito'");
         
@@ -184,7 +190,7 @@ public class ChamadoServico extends DAOGenericoJPA<Long, Chamado>{
         }
     }
     
-    public List<Chamado> chamadosDivisao(String divisao)throws NoResultException, NullPointerException{
+    public List<Chamado> chamadosDivisao(String divisao)throws NoResultException, NullPointerException, Exception{
         super.getEm().getTransaction().begin();
         Query query = super.getEm().createQuery("SELECT e FROM Chamado e ORDER BY e.data DESC, e.status, e.solicitado");
         List<Chamado> chamados;
@@ -199,6 +205,7 @@ public class ChamadoServico extends DAOGenericoJPA<Long, Chamado>{
                     }
                 }
             }
+            super.getEm().close();
             return resultado;
         }
         catch(NoResultException | NullPointerException e){
@@ -207,7 +214,8 @@ public class ChamadoServico extends DAOGenericoJPA<Long, Chamado>{
     }
     
     //Lista todos os chamados que têm "divisao" como solicitada
-    public List<Chamado> chamadosParaDivisao(String divisao)throws NoResultException, NullPointerException{
+    public List<Chamado> chamadosParaDivisao(String divisao)throws NoResultException, NullPointerException, Exception{
+        super.fecharFabrica();
         super.getEm().getTransaction().begin();
         Query query = super.getEm().createQuery("SELECT e FROM Chamado e WHERE e.solicitado = :divisao ORDER BY e.data DESC, e.status, e.solicitado");
         query.setParameter("divisao",divisao);
@@ -218,6 +226,7 @@ public class ChamadoServico extends DAOGenericoJPA<Long, Chamado>{
         
         try{
             resultado = query.getResultList();
+            super.getEm().close();
             return resultado;
         }
         catch(NoResultException | NullPointerException e){
@@ -225,7 +234,7 @@ public class ChamadoServico extends DAOGenericoJPA<Long, Chamado>{
         }
     }
     
-    public List<Chamado> chamadosDivisaoStatus(String divisao, String status)throws NoResultException, NullPointerException{
+    public List<Chamado> chamadosDivisaoStatus(String divisao, String status)throws NoResultException, NullPointerException, Exception{
         super.getEm().getTransaction().begin();
         Query query = super.getEm().createQuery("SELECT e FROM Chamado e WHERE e.status = :status ORDER BY e.data DESC, e.status, e.solicitado");
         List<Chamado> chamados;
@@ -241,6 +250,7 @@ public class ChamadoServico extends DAOGenericoJPA<Long, Chamado>{
                     }
                 }
             }
+            super.getEm().close();
             return resultado;
         }
         catch(NoResultException | NullPointerException e){
@@ -248,7 +258,7 @@ public class ChamadoServico extends DAOGenericoJPA<Long, Chamado>{
         }
     }
     
-    public List<Chamado> chamadosParaDivisaoStatus(String divisao, String status)throws NoResultException, NullPointerException{
+    public List<Chamado> chamadosParaDivisaoStatus(String divisao, String status)throws NoResultException, NullPointerException, Exception{
         super.getEm().getTransaction().begin();
         Query query = super.getEm().createQuery("SELECT e FROM Chamado e WHERE e.solicitado = :solicitado AND e.status = :status ORDER BY e.data DESC, e.status, e.solicitado");
         List<Chamado> resultado = new ArrayList<>();
@@ -258,6 +268,7 @@ public class ChamadoServico extends DAOGenericoJPA<Long, Chamado>{
         
         try{
             resultado = query.getResultList();
+            super.getEm().close();
             return resultado;
         }
         catch(NoResultException | NullPointerException e){
@@ -265,12 +276,13 @@ public class ChamadoServico extends DAOGenericoJPA<Long, Chamado>{
         }
     }
     
-    public List<Chamado> todosChamados()throws NoResultException{
+    public List<Chamado> todosChamados()throws NoResultException, Exception{
         Query query = super.getEm().createNamedQuery("Chamado.TODOS");
         List<Chamado> chamados;
         
         try{
             chamados = query.getResultList();
+            super.getEm().close();
             return chamados;
         }
         catch(NoResultException e){
@@ -278,13 +290,14 @@ public class ChamadoServico extends DAOGenericoJPA<Long, Chamado>{
         }
     }
     
-    public List<Chamado> chamadosDivisao(Divisao d)throws NoResultException{
+    public List<Chamado> chamadosDivisao(Divisao d)throws NoResultException, Exception{
         Query query = super.getEm().createNamedQuery("Chamado.porDivisao");
         query.setParameter("solicitante", d.getNome());
         List<Chamado> chamados;
         
         try{
             chamados = query.getResultList();
+            super.getEm().close();
             return chamados;
         }
         catch(NoResultException e){
@@ -293,13 +306,14 @@ public class ChamadoServico extends DAOGenericoJPA<Long, Chamado>{
     }
 
 
-    public List<Chamado> chamadosSolicitante(Pessoa sol)throws NoResultException{
+    public List<Chamado> chamadosSolicitante(Pessoa sol)throws NoResultException, Exception{
         Query query = super.getEm().createNamedQuery("Chamado.porSolicitante");
         query.setParameter("solicitante", sol);
         List<Chamado> chamados;
         
         try{
             chamados = query.getResultList();
+            super.getEm().close();
             return chamados;
         }
         catch(NoResultException e){

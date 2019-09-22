@@ -22,7 +22,7 @@ public class PessoaServico extends DAOGenericoJPA<Long, Pessoa>{
         super();
     }
     
-    public Pessoa retornaPessoa(String nip){
+    public Pessoa retornaPessoa(String nip) throws Exception{
         Query query = super.getEm().createNamedQuery("Pessoa.retornaPessoa");
         
         query.setParameter("nip", nip);
@@ -30,6 +30,7 @@ public class PessoaServico extends DAOGenericoJPA<Long, Pessoa>{
         
         try{
             usu = (Pessoa) query.getSingleResult();
+            super.getEm().close();
             return usu;
         }
         catch(NoResultException e){
@@ -37,7 +38,7 @@ public class PessoaServico extends DAOGenericoJPA<Long, Pessoa>{
         }
     }
     
-    public long numeroPessoasDivisao(Divisao div){
+    public long numeroPessoasDivisao(Divisao div) throws Exception{
         Query query = super.getEm().createNamedQuery("Pessoa.retornaQtdPessoasDivisao");
         
         query.setParameter("divisao", div);
@@ -50,7 +51,7 @@ public class PessoaServico extends DAOGenericoJPA<Long, Pessoa>{
         }
     }
     
-    public Pessoa retornaPessoaNome(String nome){
+    public Pessoa retornaPessoaNome(String nome) throws Exception{
         super.getEm().getTransaction().begin();
         Query query = super.getEm().createQuery("Select e FROM Pessoa e WHERE e.nome = :nome");
         query.setParameter("nome",nome);
@@ -60,6 +61,7 @@ public class PessoaServico extends DAOGenericoJPA<Long, Pessoa>{
         
         try{
             usu = (Pessoa) query.getSingleResult();
+            super.getEm().close();
             return usu;
         }
         catch(NoResultException e){
@@ -68,7 +70,7 @@ public class PessoaServico extends DAOGenericoJPA<Long, Pessoa>{
     }
     
     
-    public void atualizar(Pessoa p){
+    public void atualizar(Pessoa p) throws Exception{
         super.getEm().getTransaction().begin();
         Query query = super.getEm().createQuery("Select e.id FROM Pessoa e WHERE e.nip = :nip");
         query.setParameter("nip",p.getNip());
@@ -90,7 +92,7 @@ public class PessoaServico extends DAOGenericoJPA<Long, Pessoa>{
         super.getEm().close();
     }
     
-    public void resetaSenha(Long id) throws NoSuchAlgorithmException{
+    public void resetaSenha(Long id) throws NoSuchAlgorithmException, Exception{
         super.getEm().getTransaction().begin();
         
         Pessoa pes = super.getEm().find(Pessoa.class,id);
@@ -100,7 +102,7 @@ public class PessoaServico extends DAOGenericoJPA<Long, Pessoa>{
         super.getEm().close();
     }
     
-    public void excluir(Long id){
+    public void excluir(Long id) throws Exception{
         super.getEm().getTransaction().begin();
         
         Pessoa pes = super.getEm().find(Pessoa.class,id);
@@ -109,12 +111,13 @@ public class PessoaServico extends DAOGenericoJPA<Long, Pessoa>{
         super.getEm().close();
     }
     
-    public boolean existePessoa(Pessoa usu) throws NoResultException, IndexOutOfBoundsException{
+    public boolean existePessoa(Pessoa usu) throws NoResultException, IndexOutOfBoundsException, Exception{
         Query query = super.getEm().createQuery("SELECT count(e) FROM Pessoa e WHERE e.nip = :nip");
         query.setParameter("nip", usu.getNip());
        
         try{
             int quantidade = Integer.parseInt(query.getResultList().get(0).toString());
+            super.getEm().close();
             System.out.println("NO existePessoa, quantidade na busca = " + quantidade);
             if(quantidade > 0) return true;
         }
@@ -138,7 +141,7 @@ public class PessoaServico extends DAOGenericoJPA<Long, Pessoa>{
         }
     }
     
-    public List<Pessoa> pessoasDivisao(Divisao d)throws NoResultException{
+    public List<Pessoa> pessoasDivisao(Divisao d)throws NoResultException, Exception{
         Query query = super.getEm().createNamedQuery("Pessoa.retornaPessoasDivisao");
         query.setParameter("divisao", d);
         List<Pessoa> pessoas;
@@ -152,7 +155,7 @@ public class PessoaServico extends DAOGenericoJPA<Long, Pessoa>{
         }
     }
     
-    public List<Pessoa> pessoas()throws NoResultException{
+    public List<Pessoa> pessoas()throws NoResultException, Exception{
         Query query = super.getEm().createNamedQuery("Pessoa.TODOS");
         List<Pessoa> pessoas;
         

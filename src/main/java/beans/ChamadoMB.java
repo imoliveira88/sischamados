@@ -49,7 +49,7 @@ public class ChamadoMB extends Artificial implements Serializable{
     private List<Integer> chamadosPara;
     private List<Integer> chamadosDe;
 
-    public ChamadoMB() {
+    public ChamadoMB() throws Exception {
         chamado = new Chamado();
         //chamadoSelecionado = new Chamado();
         solicitante = new Pessoa();
@@ -60,11 +60,11 @@ public class ChamadoMB extends Artificial implements Serializable{
         //iniciaDePara();
     }
     
-    
-    @PostConstruct
+
+    /*@PostConstruct
     public void init() {
         createBarModels();
-    }
+    }*/
     
     /*private void iniciaDePara(){
         FacesContext fc = FacesContext.getCurrentInstance();
@@ -144,7 +144,7 @@ public class ChamadoMB extends Artificial implements Serializable{
         this.texto = texto;
     }
 
-    public BarChartModel getBarModel() {
+    public BarChartModel getBarModel() throws Exception {
         this.createBarModel();
         return barModel;
     }
@@ -437,24 +437,24 @@ public class ChamadoMB extends Artificial implements Serializable{
         return prior;
     }
     
-    public List<Chamado> getChamadosPorStatus(String status){
+    public List<Chamado> getChamadosPorStatus(String status) throws Exception{
         return new ChamadoServico().chamadosStatus(status);
     }
     
-    public List<Chamado> getChamadosPorDivisao(String div){
+    public List<Chamado> getChamadosPorDivisao(String div) throws NullPointerException, Exception{
         return new ChamadoServico().chamadosDivisao(div);
     }
     
-    public List<Chamado> getChamadosParaDivisao(String div){
+    public List<Chamado> getChamadosParaDivisao(String div) throws NullPointerException, Exception{
         return new ChamadoServico().chamadosParaDivisao(div);
     }
     
-    public List<Chamado> getChamadosPorDivisaoStatus(String div, String st){
+    public List<Chamado> getChamadosPorDivisaoStatus(String div, String st) throws NullPointerException, Exception{
         if(st.equals("TODOS") || st.equals("")) return this.getChamadosPorDivisao(div);
         return new ChamadoServico().chamadosDivisaoStatus(div,st);
     }
     
-    private BarChartModel initBarModel() {
+    private BarChartModel initBarModel() throws Exception {
         BarChartModel model = new BarChartModel();
         List<ChartSeries> lista = new ArrayList<>();
         maior = 0;
@@ -479,11 +479,11 @@ public class ChamadoMB extends Artificial implements Serializable{
         return model;
     }
  
-    private void createBarModels() {
+    private void createBarModels() throws Exception {
         createBarModel();
     }
  
-    private void createBarModel() {
+    private void createBarModel() throws Exception {
         barModel = initBarModel();
  
         barModel.setTitle("Quantidade de chamados por status");
@@ -501,17 +501,17 @@ public class ChamadoMB extends Artificial implements Serializable{
     }
  
     
-    public List<Chamado> getChamadosParaDivisaoStatus(String div, String st){
+    public List<Chamado> getChamadosParaDivisaoStatus(String div, String st) throws NullPointerException, Exception{
         if(st.equals("TODOS") || st.equals("")) return new ChamadoServico().chamadosParaDivisao(div);
         return new ChamadoServico().chamadosParaDivisaoStatus(div,st);
     }
     
-    public List<Chamado> getChamadosEntreDatas(Date dinicio, Date dfim){
+    public List<Chamado> getChamadosEntreDatas(Date dinicio, Date dfim) throws Exception{
         if(dinicio == null || dfim == null) return this.getChamados();
         return new ChamadoServico().chamadosEntreDatas(dinicio, dfim);
     }
 
-    public List<Chamado> getChamadosEntreDatasStatusDivisao(Date dinicio, Date dfim, String status, String divisao){
+    public List<Chamado> getChamadosEntreDatasStatusDivisao(Date dinicio, Date dfim, String status, String divisao) throws Exception{
         return new ChamadoServico().chamadosEntreDatasStatusDivisao(dinicio, dfim, status, divisao);
     }
     
@@ -526,11 +526,11 @@ public class ChamadoMB extends Artificial implements Serializable{
         }
     }
     
-    public List<Chamado> getChamadosEntreDatasStatus(Date dinicio, Date dfim, String status){
+    public List<Chamado> getChamadosEntreDatasStatus(Date dinicio, Date dfim, String status) throws Exception{
         return new ChamadoServico().chamadosEntreDatasStatus(dinicio, dfim, status);
     }
     
-    public List<Chamado> getChamados(){
+    public List<Chamado> getChamados() throws Exception{
         return new ChamadoServico().todosChamados();
     }
     
@@ -538,12 +538,12 @@ public class ChamadoMB extends Artificial implements Serializable{
         return "meusChamados";
     }
     
-    public String filtrarLista(){
+    public String filtrarLista() throws Exception{
         chamFiltrados = this.getChamadosEntreDatas(dataInicial, dataFinal);
         return "relatorioUsuario";
     }
     
-    public double mediaResolucao(String div){
+    public double mediaResolucao(String div) throws NullPointerException, Exception{
 	return (new ChamadoServico()).chamadosMedia(div);
     }
     
@@ -569,7 +569,7 @@ public class ChamadoMB extends Artificial implements Serializable{
     }
     
     
-    public String salvar(Long idsolicitante){
+    public String salvar(Long idsolicitante) throws Exception{
         chamado = new Chamado();
         chamadoSelecionado = new Chamado();
         /*solicitante = new Pessoa();

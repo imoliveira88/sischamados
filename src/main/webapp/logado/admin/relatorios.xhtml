@@ -44,7 +44,7 @@
                         <br/>
 
                             <p:fieldset legend="Chamados" style="margin-bottom:20px">
-                                <p:dataTable id="detalhes" paginator="true" rows="10" rowsPerPageTemplate="5,10,15" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowIndexVar="indice" var="chamado" value="#{chamadoMB.chamFiltrados}" rowKey="#{chamado.id}" selection="#{chamadoMB.chamadoSelecionado}" selectionMode="single" widgetVar="selecaoCham" emptyMessage="Não há chamados que atendam esses critérios!">
+                                <p:dataTable id="detalhes" rowIndexVar="indice" var="chamado" value="#{chamadoMB.chamFiltrados}" rowKey="#{chamado.id}" selection="#{chamadoMB.chamadoSelecionado}" selectionMode="single" widgetVar="selecaoCham" emptyMessage="Não há chamados que atendam esses critérios!">
 
                                 <p:column>
                                     <f:facet name="header">ID</f:facet>

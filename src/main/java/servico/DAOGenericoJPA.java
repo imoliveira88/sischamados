@@ -36,8 +36,8 @@ public class DAOGenericoJPA<PK, T> {
     }
     
     public static void fecharFabrica(){
-        em.close();
-        factory.close();
+        if(em.isOpen()) em.close();
+        if(factory.isOpen())factory.close();
     }
  
     public T getById(PK pk) {

@@ -182,7 +182,7 @@ public class LoginBean extends Artificial implements Serializable{
                 }
                 tipo =  pessoaRetornada.getTipo();                
                  this.nome =  pessoaRetornada.getNome();
-                 if(!this.nome.equals("admin")) adicionaMensagem("Bem vindo, " +  pessoaRetornada.toString() + "! TIPOOOO" + tipo, "destinoAviso", "BEM VINDO!");
+                 if(!this.nome.equals("admin")) adicionaMensagem("Bem vindo, " +  pessoaRetornada.toString() + "!", "destinoAviso", "BEM VINDO!");
                  else adicionaMensagem("Bem vindo, Administrador!", "destinoAviso", "SUCESSO!");
                  session = (HttpSession) fc.getExternalContext().getSession(false);
                  session.setAttribute("logado", "sim");

@@ -22,7 +22,7 @@ public class DivisaoServico extends DAOGenericoJPA<Long, Divisao>{
     }
     
     public boolean deletarDivisao(Long id) throws Exception{
-        super.getEm().getTransaction().begin();
+        if(!super.getEm().getTransaction().isActive()) super.getEm().getTransaction().begin();
         
         Divisao d1 = super.getEm().find(Divisao.class,id);
         
@@ -40,7 +40,7 @@ public class DivisaoServico extends DAOGenericoJPA<Long, Divisao>{
     
     public boolean salvar(Divisao b) throws Exception {
         if(!existeDivisao(b)){
-            super.getEm().getTransaction().begin();
+            if(!super.getEm().getTransaction().isActive()) super.getEm().getTransaction().begin();
             super.getEm().persist(b);
             super.getEm().getTransaction().commit();
             super.getEm().close();
@@ -50,7 +50,7 @@ public class DivisaoServico extends DAOGenericoJPA<Long, Divisao>{
     }
     
     public void atualizar(Divisao div) throws Exception{
-        super.getEm().getTransaction().begin();
+        if(!super.getEm().getTransaction().isActive()) super.getEm().getTransaction().begin();
         Query query = super.getEm().createQuery("Select e.id FROM Divisao e WHERE e.numero = :num");
         query.setParameter("num",div.getNumero());
         

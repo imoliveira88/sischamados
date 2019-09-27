@@ -18,7 +18,7 @@ public class LogoutBean extends Artificial implements Serializable {
         HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
         if (session != null) {
             session.invalidate();
-            (new DAOGenericoJPA()).fecharFabrica();
+            DAOGenericoJPA.fecharFabrica();
         }
         
         HttpServletRequest request = (HttpServletRequest) fc.getExternalContext().getRequest();        

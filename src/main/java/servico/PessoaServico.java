@@ -52,7 +52,7 @@ public class PessoaServico extends DAOGenericoJPA<Long, Pessoa>{
     }
     
     public Pessoa retornaPessoaNome(String nome) throws Exception{
-        super.getEm().getTransaction().begin();
+        if(!super.getEm().getTransaction().isActive()) super.getEm().getTransaction().begin();
         Query query = super.getEm().createQuery("Select e FROM Pessoa e WHERE e.nome = :nome");
         query.setParameter("nome",nome);
         
@@ -71,7 +71,7 @@ public class PessoaServico extends DAOGenericoJPA<Long, Pessoa>{
     
     
     public void atualizar(Pessoa p) throws Exception{
-        super.getEm().getTransaction().begin();
+        if(!super.getEm().getTransaction().isActive()) super.getEm().getTransaction().begin();
         Query query = super.getEm().createQuery("Select e.id FROM Pessoa e WHERE e.nip = :nip");
         query.setParameter("nip",p.getNip());
         
@@ -93,7 +93,7 @@ public class PessoaServico extends DAOGenericoJPA<Long, Pessoa>{
     }
     
     public void resetaSenha(Long id) throws NoSuchAlgorithmException, Exception{
-        super.getEm().getTransaction().begin();
+        if(!super.getEm().getTransaction().isActive()) super.getEm().getTransaction().begin();
         
         Pessoa pes = super.getEm().find(Pessoa.class,id);
         pes.setSenha((new PessoaMB()).hash("aB123456@"));
@@ -103,7 +103,7 @@ public class PessoaServico extends DAOGenericoJPA<Long, Pessoa>{
     }
     
     public void excluir(Long id) throws Exception{
-        super.getEm().getTransaction().begin();
+        if(!super.getEm().getTransaction().isActive()) super.getEm().getTransaction().begin();
         
         Pessoa pes = super.getEm().find(Pessoa.class,id);
         super.getEm().remove(pes);
@@ -130,7 +130,7 @@ public class PessoaServico extends DAOGenericoJPA<Long, Pessoa>{
     public boolean salvar(Pessoa b) throws SQLException, ParseException {
         try{
         if(!existePessoa(b)){
-            super.getEm().getTransaction().begin();
+            if(!super.getEm().getTransaction().isActive()) super.getEm().getTransaction().begin();
             super.getEm().persist(b);
             super.getEm().getTransaction().commit();
             return true;

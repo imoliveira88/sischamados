@@ -10,7 +10,7 @@ import javax.persistence.Persistence;
 public class DAOGenericoJPA<PK, T> {
     private static final String PERSISTENCE_UNIT_NAME = "sischamados";
     private static EntityManagerFactory factory; 
-    private EntityManager em;
+    private static EntityManager em;
  
     public DAOGenericoJPA() {
         this.geraFactory();
@@ -35,7 +35,7 @@ public class DAOGenericoJPA<PK, T> {
         return this.em;
     }
     
-    public void fecharFabrica(){
+    public static void fecharFabrica(){
         em.close();
         factory.close();
     }

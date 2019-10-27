@@ -1,5 +1,5 @@
-
 package beans;
+
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -56,7 +56,6 @@ public class ChamadoMB extends Artificial implements Serializable{
         chamFiltradosDivisao = new ArrayList<>();
         dataInicial = null;
         dataFinal = null;
-        //iniciaDePara();
     }
 
     public Chamado getChamado() {
@@ -149,8 +148,6 @@ public class ChamadoMB extends Artificial implements Serializable{
     public void setAtribuido(String atribuido) {
         this.atribuido = atribuido;
     }
-    
-    
 
     public List<Chamado> getChamFiltrados() {
         return chamFiltrados;
@@ -298,17 +295,11 @@ public class ChamadoMB extends Artificial implements Serializable{
             this.texto = "";
                         
             if (status.equals("Satisfeito") && semAlteracao(cha)!=1) {
-                
-                //System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAtual: " + Calendar.getInstance().getTimeInMillis());
-                //System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAInicial: " + cha.getData().getTime());
 
                 long diff = Calendar.getInstance().getTimeInMillis() - cha.getData().getTime();
-                //System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAADiferença: " + diff);
                 long diffHours = diff / (60 * 60 * 1000);
-                
-                //System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAADiffHours: " + diffHours);
-                
-                if(diffHours < 24) cha.setTempo_solucao(0);
+                                
+                if(diffHours < 12) cha.setTempo_solucao(0);
                 else cha.setTempo_solucao((int) diffHours - 12); //aproxima o tempo de resolução, uma vez que chamados finalizados no mesmo dia apresentarão distorção no tempo de resolução, pois a hora inicial é salva no formato "data"
             }
             
@@ -357,7 +348,6 @@ public class ChamadoMB extends Artificial implements Serializable{
                 return 1; //Houve alteração na prioridade, status ou no atribuído
             }
         } catch (Exception e) {
-            e.printStackTrace();
             if (c.getAtribuido() == null) {
                 if (texto.equals("")) {
                     return 0;
@@ -376,7 +366,7 @@ public class ChamadoMB extends Artificial implements Serializable{
 
         FacesContext fc = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
-        String historico = cha.getHistorico();;
+        String historico = cha.getHistorico();
 
         DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
         Date date = new Date();
@@ -397,7 +387,7 @@ public class ChamadoMB extends Artificial implements Serializable{
         long diff = Calendar.getInstance().getTimeInMillis() - cha.getData().getTime();
         long diffHours = diff / (60 * 60 * 1000);
                 
-        if(diffHours < 24) cha.setTempo_solucao(0);
+        if(diffHours < 12) cha.setTempo_solucao(0);
         else cha.setTempo_solucao((int) diffHours - 12);
 
         if(semAlteracao(cha) == 1){
@@ -441,6 +431,16 @@ public class ChamadoMB extends Artificial implements Serializable{
         return new ChamadoServico().chamadosDivisaoStatus("da",div,st);
     }
     
+    private List<Chamado> extraiChamadosStatus(List<Chamado> lista, String status){
+        List<Chamado> aux = new ArrayList<>();
+        if(lista.isEmpty()) return aux;
+        for(int i=0; i<lista.size(); i++){
+            if(lista.get(i).getStatus().equals(status)) aux.add(lista.get(i));
+        }
+        
+        return aux;
+    }
+    
     private BarChartModel initBarModel() throws Exception {
         BarChartModel model = new BarChartModel();
         List<ChartSeries> lista = new ArrayList<>();
@@ -452,16 +452,19 @@ public class ChamadoMB extends Artificial implements Serializable{
         HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
         
         Divisao div = ((Pessoa)session.getAttribute("usuario")).getDivisao();
+        
+        List<Chamado> chamadosBar = this.getChamadosParaDivisao(div.toString()); //Receberá todos os chamados para a Divisão
                 
         for(int i=0; i<listaStatus().size(); i++){
             lista.add(new ChartSeries());
             lista.get(i).setLabel(listaStatus().get(i).toString());
-            if(div != null) aux = this.getChamadosParaDivisaoStatus(div.toString(),listaStatus().get(i).toString()).size();
+            if(div != null) aux = this.extraiChamadosStatus(chamadosBar,listaStatus().get(i).toString()).size(); //Filtra por cada status
             else aux = 0;
             if(aux > maior) maior = aux;
             lista.get(i).set("", aux);
             model.addSeries(lista.get(i));
         }
+        
  
         return model;
     }
@@ -476,6 +479,7 @@ public class ChamadoMB extends Artificial implements Serializable{
         barModel.setTitle("Quantidade de chamados por status");
         barModel.setLegendPosition("ne");
         barModel.setBarWidth(20);
+        barModel.setShowPointLabels(true);
  
         Axis xAxis = barModel.getAxis(AxisType.X);
         xAxis.setLabel("");
@@ -531,8 +535,16 @@ public class ChamadoMB extends Artificial implements Serializable{
         return "relatorioUsuario";
     }
     
-    public double mediaResolucao(String div) throws NullPointerException, Exception{
-	return (new ChamadoServico()).chamadosMedia(div);
+    public String mediaResolucao(String div) throws NullPointerException, Exception{
+        String resposta = "";
+        double media = (new ChamadoServico()).chamadosMedia(div);
+        double parteInteira = Math.floor(media);
+        resposta += (int) parteInteira;
+        resposta += " horas e ";
+        double aux = media - parteInteira;
+        int aux2 = (int) Math.floor(aux*60);
+        
+	return resposta + aux2 + " minutos";
     }
     
     public String filtrarListaDivisao(Divisao div){
@@ -557,9 +569,6 @@ public class ChamadoMB extends Artificial implements Serializable{
     public String salvar(Long idsolicitante) throws Exception{
         chamado = new Chamado();
         chamadoSelecionado = new Chamado();
-        /*solicitante = new Pessoa();
-        chamFiltrados = this.getChamados();
-        chamFiltradosDivisao = new ArrayList<>();*/
              
         chamado.setData(Calendar.getInstance().getTime());
         chamado.setStatus("Iniciado");

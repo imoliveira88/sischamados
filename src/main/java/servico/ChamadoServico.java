@@ -18,6 +18,7 @@ public class ChamadoServico extends DAOGenericoJPA<Long, Chamado>{
             super.getEm().persist(b);
             super.getEm().getTransaction().commit();
             super.getEm().close();
+            this.queryMataConexoes();
     }
     
     //"chamado" já é um objeto recuperado
@@ -29,6 +30,7 @@ public class ChamadoServico extends DAOGenericoJPA<Long, Chamado>{
             super.getEm().merge(chamado);
             super.getEm().getTransaction().commit();
             super.getEm().close();
+            this.queryMataConexoes();
             return true;
         }catch(Exception e){
             super.getEm().close();
@@ -49,6 +51,7 @@ public class ChamadoServico extends DAOGenericoJPA<Long, Chamado>{
         try{
             chamados = query.getResultList();
             super.getEm().close();
+            this.queryMataConexoes();
             return chamados;
         }
         catch(Exception e){
@@ -71,6 +74,7 @@ public class ChamadoServico extends DAOGenericoJPA<Long, Chamado>{
         try{
             chamados = query.getResultList();
             super.getEm().close();
+            this.queryMataConexoes();
             return chamados;
         }
         catch(Exception e){
@@ -94,6 +98,7 @@ public class ChamadoServico extends DAOGenericoJPA<Long, Chamado>{
         try{
             chamados = query.getResultList();
             super.getEm().close();
+            this.queryMataConexoes();
             return chamados;
         }
         catch(Exception e){
@@ -115,6 +120,7 @@ public class ChamadoServico extends DAOGenericoJPA<Long, Chamado>{
         try{
             chamados = query.getResultList();
             super.getEm().close();
+            this.queryMataConexoes();
             return chamados;
         }
         catch(Exception e){
@@ -134,6 +140,7 @@ public class ChamadoServico extends DAOGenericoJPA<Long, Chamado>{
         try{
             chamados = query.getResultList();
             super.getEm().close();
+            this.queryMataConexoes();
             return chamados;
         }
         catch(Exception e){
@@ -190,6 +197,7 @@ public class ChamadoServico extends DAOGenericoJPA<Long, Chamado>{
         try{
             resultado = query.getResultList();
             super.getEm().close();
+            this.queryMataConexoes();
             return resultado;
         }
         catch(Exception e){

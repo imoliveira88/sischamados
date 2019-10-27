@@ -26,7 +26,7 @@
                     <h:form enctype="multipart/form-data" id="form">
                         <p:fieldset legend="Meus chamados" style="margin-bottom:20px; background-color: beige">
                             
-                            <p:dataTable id="detalhes" paginator="true" rows="10" rowsPerPageTemplate="5,10,15" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" emptyMessage="Não há chamados criados por sua divisão com esse critério!"  var="chamado" value="#{chamadoMB.getChamadosPorDivisaoStatus(usuario.divisao,'Executado')}" rowKey="#{chamado.id}" selection="#{chamadoMB.chamadoSelecionado}" selectionMode="single">
+                            <p:dataTable id="detalhes" paginator="true" rows="10" rowsPerPageTemplate="5,10,15" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" emptyMessage="Não há chamados criados por sua divisão com status 'Executado'!"  var="chamado" value="#{chamadoMB.getChamadosPorDivisaoStatus(usuario.divisao,'Executado')}" rowKey="#{chamado.id}" selection="#{chamadoMB.chamadoSelecionado}" selectionMode="single">
                                 <p:column>
                                     <f:facet name="header">ID</f:facet>
                                     <h:outputText value="#{chamado.id}"/>

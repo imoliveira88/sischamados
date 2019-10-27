@@ -20,9 +20,17 @@
                 </ui:insert>
             </div>
             
+            <h:outputScript library="js" name="teste.js"/>
+            
             <div id="content">
                 
             <ui:insert/>
+            </div>
+            
+            <div id="rodape">
+                <ui:insert name="footer">
+                    <ui:include src="/templates/footer.xhtml"/>
+                </ui:insert>
             </div>
         </ui:composition>
     </h:body>

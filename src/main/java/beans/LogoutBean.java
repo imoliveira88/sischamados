@@ -13,12 +13,12 @@ import servico.DAOGenericoJPA;
 @ViewScoped
 public class LogoutBean extends Artificial implements Serializable {
 
-    public String logout() throws ServletException {
+    public String logout() throws ServletException, Exception {
         FacesContext fc = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
         if (session != null) {
             session.invalidate();
-            DAOGenericoJPA.fecharFabrica();
+            (new DAOGenericoJPA()).queryMataConexoes();
         }
         
         HttpServletRequest request = (HttpServletRequest) fc.getExternalContext().getRequest();        

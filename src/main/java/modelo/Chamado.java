@@ -28,10 +28,7 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "TB_CHAMADO")
 @NamedQueries(value = 
-        {@NamedQuery(name = "Chamado.porStatus", query= " SELECT u FROM Chamado u WHERE u.status = :status  ORDER BY u.data DESC"),
-         @NamedQuery(name = "Chamado.TODOS", query= " SELECT u FROM Chamado u ORDER BY u.data DESC"),
-         @NamedQuery(name = "Chamado.porDivisao", query= " SELECT u FROM Chamado u WHERE u.solicitado = :solicitado ORDER BY u.data DESC"),
-         @NamedQuery(name = "Chamado.porSolicitante", query= " SELECT u FROM Chamado u WHERE u.solicitante = :solicitante ORDER BY u.data DESC")})
+        {@NamedQuery(name = "Chamado.porStatus", query= " SELECT u FROM Chamado u WHERE u.status = :status  ORDER BY u.data DESC")})
 public class Chamado implements Serializable {
 
     private static final long serialVersionUID = 1L;

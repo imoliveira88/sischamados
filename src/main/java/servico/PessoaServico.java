@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package servico;
 
 import beans.PessoaMB;
@@ -22,23 +17,8 @@ public class PessoaServico extends DAOGenericoJPA<Long, Pessoa>{
         super();
     }
     
-    public Pessoa retornaPessoa(String nip) throws Exception{
-        Query query = super.getEm().createNamedQuery("Pessoa.retornaPessoa");
-        
-        query.setParameter("nip", nip);
-        Pessoa usu;
-        
-        try{
-            usu = (Pessoa) query.getSingleResult();
-            super.getEm().close();
-            return usu;
-        }
-        catch(NoResultException e){
-            return null;
-        }
-    }
-    
     public long numeroPessoasDivisao(Divisao div) throws Exception{
+        this.queryMataConexoes();
         Query query = super.getEm().createNamedQuery("Pessoa.retornaQtdPessoasDivisao");
         
         query.setParameter("divisao", div);
@@ -51,10 +31,14 @@ public class PessoaServico extends DAOGenericoJPA<Long, Pessoa>{
         }
     }
     
-    public Pessoa retornaPessoaNome(String nome) throws Exception{
+    public Pessoa retornaPessoa(String tipo, String parametro) throws Exception{//Tipo pode ser nome ou nip
+        Query query;
+        this.queryMataConexoes();
         if(!super.getEm().getTransaction().isActive()) super.getEm().getTransaction().begin();
-        Query query = super.getEm().createQuery("Select e FROM Pessoa e WHERE e.nome = :nome");
-        query.setParameter("nome",nome);
+        if(tipo.equals("nome")) query = super.getEm().createQuery("Select e FROM Pessoa e WHERE e.nome = :parametro");
+        else query = super.getEm().createQuery("Select e FROM Pessoa e WHERE e.nip = :parametro");
+        
+        query.setParameter("parametro", parametro);
         
         Pessoa usu;
         
@@ -65,12 +49,14 @@ public class PessoaServico extends DAOGenericoJPA<Long, Pessoa>{
             return usu;
         }
         catch(NoResultException e){
+            super.getEm().close();
             return null;
         }
     }
     
     
     public void atualizar(Pessoa p) throws Exception{
+        this.queryMataConexoes();
         if(!super.getEm().getTransaction().isActive()) super.getEm().getTransaction().begin();
         Query query = super.getEm().createQuery("Select e.id FROM Pessoa e WHERE e.nip = :nip");
         query.setParameter("nip",p.getNip());
@@ -93,6 +79,7 @@ public class PessoaServico extends DAOGenericoJPA<Long, Pessoa>{
     }
     
     public void resetaSenha(Long id) throws NoSuchAlgorithmException, Exception{
+        this.queryMataConexoes();
         if(!super.getEm().getTransaction().isActive()) super.getEm().getTransaction().begin();
         
         Pessoa pes = super.getEm().find(Pessoa.class,id);
@@ -102,23 +89,15 @@ public class PessoaServico extends DAOGenericoJPA<Long, Pessoa>{
         super.getEm().close();
     }
     
-    public void excluir(Long id) throws Exception{
-        if(!super.getEm().getTransaction().isActive()) super.getEm().getTransaction().begin();
-        
-        Pessoa pes = super.getEm().find(Pessoa.class,id);
-        super.getEm().remove(pes);
-        super.getEm().getTransaction().commit();
-        super.getEm().close();
-    }
-    
     public boolean existePessoa(Pessoa usu) throws NoResultException, IndexOutOfBoundsException, Exception{
         Query query = super.getEm().createQuery("SELECT count(e) FROM Pessoa e WHERE e.nip = :nip");
         query.setParameter("nip", usu.getNip());
+        
+        this.queryMataConexoes();
        
         try{
             int quantidade = Integer.parseInt(query.getResultList().get(0).toString());
             super.getEm().close();
-            System.out.println("NO existePessoa, quantidade na busca = " + quantidade);
             if(quantidade > 0) return true;
         }
         catch(NoResultException e){
@@ -128,20 +107,24 @@ public class PessoaServico extends DAOGenericoJPA<Long, Pessoa>{
     }
     
     public boolean salvar(Pessoa b) throws SQLException, ParseException {
-        try{
-        if(!existePessoa(b)){
-            if(!super.getEm().getTransaction().isActive()) super.getEm().getTransaction().begin();
-            super.getEm().persist(b);
-            super.getEm().getTransaction().commit();
-            return true;
-        }
-        return false;
-        }catch(Exception e){
+        try {
+            this.queryMataConexoes();
+            if (!existePessoa(b)) {
+                if (!super.getEm().getTransaction().isActive()) {
+                    super.getEm().getTransaction().begin();
+                }
+                super.getEm().persist(b);
+                super.getEm().getTransaction().commit();
+                return true;
+            }
+            return false;
+        } catch (Exception e) {
             return false;
         }
     }
     
     public List<Pessoa> pessoasDivisao(Divisao d)throws NoResultException, Exception{
+        this.queryMataConexoes();
         Query query = super.getEm().createNamedQuery("Pessoa.retornaPessoasDivisao");
         query.setParameter("divisao", d);
         List<Pessoa> pessoas;
@@ -153,24 +136,6 @@ public class PessoaServico extends DAOGenericoJPA<Long, Pessoa>{
         catch(NoResultException e){
             return new ArrayList<>();
         }
-    }
-    
-    public List<Pessoa> pessoas()throws NoResultException, Exception{
-        Query query = super.getEm().createNamedQuery("Pessoa.TODOS");
-        List<Pessoa> pessoas;
-        
-        try{
-            pessoas = query.getResultList();
-            return pessoas;
-        }
-        catch(NoResultException e){
-            return new ArrayList<>();
-        }
-    }
-
-    
-    public Pessoa getById(long pk) {
-        return super.getById(pk);
     }
     
 }

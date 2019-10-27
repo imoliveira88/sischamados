@@ -11,6 +11,18 @@
         <h:outputStylesheet library="css" name="style.css" />
     </h:head>
     <h:body>
+        
+        <h:outputScript target="body">
+
+            function mostraAlerta(){
+            alert("O usuário selecionado será excluído!);
+            }
+
+            var botao = documento.querySelector("#excluiPessoa");
+
+            botao.onclick = mostraAlerta;
+
+        </h:outputScript>
 
 
         <ui:decorate template="/templates/decoratorAdmin.xhtml">
@@ -99,7 +111,7 @@
                             </h:panelGrid>
                             <h:panelGrid columns="2" cellpadding="5">
                                 <h:commandButton styleClass="botaoTabela" value="Resetar senha" action="#{pessoaMB.resetaSenha(pessoaMB.pessoaSelecionada.id)}"/>
-                                <h:commandButton styleClass="botaoTabela" value="Excluir" action="#{pessoaMB.excluiUsuario(pessoaMB.pessoaSelecionada.id)}"/>
+                                <h:commandButton id="excluiPessoa" styleClass="botaoTabela" value="Excluir" action="#{pessoaMB.excluiUsuario(pessoaMB.pessoaSelecionada.id)}"/>
                             </h:panelGrid>
                         </p:fieldset>
                         </h:form>

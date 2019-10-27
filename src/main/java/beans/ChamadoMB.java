@@ -58,27 +58,6 @@ public class ChamadoMB extends Artificial implements Serializable{
         dataFinal = null;
         //iniciaDePara();
     }
-    
-
-    /*@PostConstruct
-    public void init() {
-        createBarModels();
-    }*/
-    
-    /*private void iniciaDePara(){
-        FacesContext fc = FacesContext.getCurrentInstance();
-        HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
-        
-        chamadosDe = new ArrayList<>();
-        chamadosPara = new ArrayList<>();
-        
-        Divisao div = ((Pessoa)session.getAttribute("usuario")).getDivisao();
-        
-        for(int i=0; i<listaStatus().size(); i++){
-            chamadosDe.add(this.getChamadosParaDivisaoStatus(div.toString(),listaStatus().get(i).toString()).size());
-            chamadosPara.add(this.getChamadosPorDivisaoStatus(div.toString(),listaStatus().get(i).toString()).size());
-        }
-    }*/
 
     public Chamado getChamado() {
         return chamado;
@@ -131,7 +110,6 @@ public class ChamadoMB extends Artificial implements Serializable{
             if(!lista.get(i).equals(statusAtual)) lista.remove(lista.get(i));
             else return lista;
         }while(i<lista.size());
-        System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" + statusAtual + lista);
         return lista;
     }
 
@@ -320,10 +298,18 @@ public class ChamadoMB extends Artificial implements Serializable{
             this.texto = "";
                         
             if (status.equals("Satisfeito") && semAlteracao(cha)!=1) {
+                
+                //System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAtual: " + Calendar.getInstance().getTimeInMillis());
+                //System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAInicial: " + cha.getData().getTime());
 
                 long diff = Calendar.getInstance().getTimeInMillis() - cha.getData().getTime();
+                //System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAADiferença: " + diff);
                 long diffHours = diff / (60 * 60 * 1000);
-                cha.setTempo_solucao((int) diffHours);
+                
+                //System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAADiffHours: " + diffHours);
+                
+                if(diffHours < 24) cha.setTempo_solucao(0);
+                else cha.setTempo_solucao((int) diffHours - 12); //aproxima o tempo de resolução, uma vez que chamados finalizados no mesmo dia apresentarão distorção no tempo de resolução, pois a hora inicial é salva no formato "data"
             }
             
             cha.setDescricao(novaDesc);
@@ -410,7 +396,9 @@ public class ChamadoMB extends Artificial implements Serializable{
 
         long diff = Calendar.getInstance().getTimeInMillis() - cha.getData().getTime();
         long diffHours = diff / (60 * 60 * 1000);
-        cha.setTempo_solucao((int) diffHours);
+                
+        if(diffHours < 24) cha.setTempo_solucao(0);
+        else cha.setTempo_solucao((int) diffHours - 12);
 
         if(semAlteracao(cha) == 1){
                 historico += "<br/><b>" + dateFormat.format(date) + " " + session.getAttribute("usuario").toString() + "</b> alterou status para " + chamadoSelecionado.getStatus() + ", atribuído para " + chamadoSelecionado.getAtribuido() + " e prioridade para " + chamadoSelecionado.getPrioridade();
@@ -441,16 +429,16 @@ public class ChamadoMB extends Artificial implements Serializable{
     }
     
     public List<Chamado> getChamadosPorDivisao(String div) throws NullPointerException, Exception{
-        return new ChamadoServico().chamadosDivisao(div);
+        return new ChamadoServico().chamadosDivisao("da",div);
     }
     
     public List<Chamado> getChamadosParaDivisao(String div) throws NullPointerException, Exception{
-        return new ChamadoServico().chamadosParaDivisao(div);
+        return new ChamadoServico().chamadosDivisao("para",div);
     }
     
     public List<Chamado> getChamadosPorDivisaoStatus(String div, String st) throws NullPointerException, Exception{
         if(st.equals("TODOS") || st.equals("")) return this.getChamadosPorDivisao(div);
-        return new ChamadoServico().chamadosDivisaoStatus(div,st);
+        return new ChamadoServico().chamadosDivisaoStatus("da",div,st);
     }
     
     private BarChartModel initBarModel() throws Exception {
@@ -501,8 +489,8 @@ public class ChamadoMB extends Artificial implements Serializable{
  
     
     public List<Chamado> getChamadosParaDivisaoStatus(String div, String st) throws NullPointerException, Exception{
-        if(st.equals("TODOS") || st.equals("")) return new ChamadoServico().chamadosParaDivisao(div);
-        return new ChamadoServico().chamadosParaDivisaoStatus(div,st);
+        if(st.equals("TODOS") || st.equals("")) return new ChamadoServico().chamadosDivisao("para",div);
+        return new ChamadoServico().chamadosDivisaoStatus("para",div,st);
     }
     
     public List<Chamado> getChamadosEntreDatas(Date dinicio, Date dfim) throws Exception{
@@ -530,7 +518,8 @@ public class ChamadoMB extends Artificial implements Serializable{
     }
     
     public List<Chamado> getChamados() throws Exception{
-        return new ChamadoServico().todosChamados();
+        return (new ChamadoServico()).findAll();
+        //return new ChamadoServico().todosChamados();
     }
     
     public String atualizarLista(){
@@ -554,11 +543,8 @@ public class ChamadoMB extends Artificial implements Serializable{
     public String excluir(Long id) throws Exception {
         ChamadoServico pra = new ChamadoServico();
         try {
-            if (pra.excluir(id)) {
-                adicionaMensagem("Chamado removido com sucesso!", "destinoAviso", "SUCESSO!");
-            } else {
-                adicionaMensagem("Chamado não pode ser removido!", "destinoAviso", "ERRO!");
-            }
+            pra.excluir(id);
+            adicionaMensagem("Chamado removido com sucesso!", "destinoAviso", "SUCESSO!");
             chamFiltrados = this.getChamadosEntreDatas(dataInicial, dataFinal);
             return "relatorios";
         } catch (Exception e) {

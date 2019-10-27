@@ -176,7 +176,8 @@ public class PessoaMB extends Artificial implements Serializable{
     }
     
     public List<Pessoa> getPessoas() throws Exception{
-        return (new PessoaServico()).pessoas();
+        return (new PessoaServico()).findAll();
+        //return (new PessoaServico()).pessoas();
     }
     
     public String cadastraUsuario() throws ParseException, SQLException{
@@ -193,7 +194,7 @@ public class PessoaMB extends Artificial implements Serializable{
             pes.setEmail(email.toLowerCase());
             pes.setTelefone(telefone);
             
-            div = (new DivisaoServico()).retornaDivisao(divisao);
+            div = (new DivisaoServico()).retornaDivisao("nome",divisao);
             pes.setDivisao(div);
           
             if (cli.salvar(pes)) {

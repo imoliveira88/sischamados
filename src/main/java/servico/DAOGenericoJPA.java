@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
 
 @SuppressWarnings("unchecked")
 public class DAOGenericoJPA<PK, T> {
@@ -13,53 +14,58 @@ public class DAOGenericoJPA<PK, T> {
     private static EntityManager em;
  
     public DAOGenericoJPA() {
-        this.geraFactory();
+        geraFactory();
+    }
+    
+    public void queryMataConexoes() throws Exception{
+        String query = "WITH inactive_connections AS (SELECT pid, rank() over (partition by client_addr order by backend_start ASC) as rank FROM pg_stat_activity WHERE pid <> pg_backend_pid( ) AND application_name !~ '(?:psql)|(?:pgAdmin.+)' AND datname = current_database() AND usename = current_user AND state in ('idle', 'idle in transaction', 'idle in transaction (aborted)', 'disabled') AND current_timestamp - state_change > interval '2 minutes' ) SELECT pg_terminate_backend(pid) FROM inactive_connections WHERE rank > 1";
+        Query q = this.getEm().createNativeQuery(query);
+        q.getResultList();
     }
     
     public void geraFactory(){
         if(factory == null || !factory.isOpen()) factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
-        if(em == null || !em.isOpen()) this.em = factory.createEntityManager();
+        if(em == null || !em.isOpen()) em = factory.createEntityManager();
     }
     
     public EntityManagerFactory getFactory(){
-        return this.factory;
+        return factory;
     }
     
     public EntityManager getEm() throws Exception{
         //Talvez seja o caso de inserir a consulta e query de finalização aqui
         if(em == null || !em.isOpen()){
             //this.encerraConexoes();
-            if(factory == null || !factory.isOpen()) factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
-            this.em = factory.createEntityManager();
+            this.geraFactory();
         }
-        return this.em;
+        return em;
     }
     
     public static void fecharFabrica(){
         if(em.isOpen()) em.close();
-        if(factory.isOpen())factory.close();
+        if(factory.isOpen()) factory.close();
+    }
+    
+    public void excluir(PK pk) throws Exception{
+        this.queryMataConexoes();
+        if(!em.getTransaction().isActive()) em.getTransaction().begin();
+        
+        T elemento = (T) em.find(getTypeClass(), pk);
+        em.remove(elemento);
+        em.getTransaction().commit();
+        em.close();
     }
  
     public T getById(PK pk) {
-        return (T) em.find(getTypeClass(), pk);
+        T elemento = (T) em.find(getTypeClass(), pk);
+        em.close();
+        return elemento;
     }
  
     public List<T> findAll() {
-        return em.createQuery(("FROM " + getTypeClass().getName())).getResultList();
-    }
-    
-    public int encerraConexoes() throws Exception {
-        String query = "SELECT pg_terminate_backend(pid) FROM pg_stat_activity WHERE (pid <> pg_backend_pid()) AND (SELECT sum(numbackends) FROM pg_stat_database) > 10";
-        try {
-            
-            DAOGenericoJPA djpa = new DAOGenericoJPA();
-            djpa.getEm().getTransaction().begin();
-            djpa.getEm().createNativeQuery(query).executeUpdate();
-            djpa.getEm().getTransaction().commit();
-            return 1;
-        } catch (Exception e) {
-            return 0;
-        }
+        List<T> elementos = em.createQuery(("FROM " + getTypeClass().getName())).getResultList();
+        em.close();
+        return elementos;
     }
  
     private Class<?> getTypeClass() {

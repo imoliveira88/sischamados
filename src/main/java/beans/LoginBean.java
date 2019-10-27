@@ -14,10 +14,10 @@ import javax.enterprise.context.SessionScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import javax.persistence.Query;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import modelo.Divisao;
 import modelo.Pessoa;
+import servico.DAOGenericoJPA;
 import servico.PessoaServico;
 
 /**
@@ -109,7 +109,7 @@ public class LoginBean extends Artificial implements Serializable{
         
         try {
             
-            pessoaRetornada = ud.retornaPessoa(this.nip);
+            pessoaRetornada = ud.retornaPessoa("nip",this.nip);
             if(this.nip.equals("admin") && this.senha.equals("admincmasm")) return true; //caso do admin
             if(pessoaRetornada.getSenha().equals("aB123456@") && "aB123456@".equals(senha)) return true; //caso pessoa - primeiro acesso
             String senhaRetornada = pessoaRetornada.getSenha();
@@ -180,6 +180,7 @@ public class LoginBean extends Artificial implements Serializable{
                     adicionaMensagem("Primeiro acesso? Altere sua senha!", "destinoAviso", "ATENÇÃO!");
                     return "novaSenha.xhtml";
                 }
+                (new DAOGenericoJPA()).queryMataConexoes();
                 tipo =  pessoaRetornada.getTipo();                
                  this.nome =  pessoaRetornada.getNome();
                  if(!this.nome.equals("admin")) adicionaMensagem("Bem vindo, " +  pessoaRetornada.toString() + "!", "destinoAviso", "BEM VINDO!");

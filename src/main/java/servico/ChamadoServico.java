@@ -1,18 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package servico;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import modelo.Chamado;
-import javax.persistence.NoResultException;
 import javax.persistence.Query;
-import modelo.Divisao;
-import modelo.Pessoa;
 
 public class ChamadoServico extends DAOGenericoJPA<Long, Chamado>{
 
@@ -20,38 +12,17 @@ public class ChamadoServico extends DAOGenericoJPA<Long, Chamado>{
         super();
     }
     
-    public Chamado getById(long pk) {
-        return super.getById(pk);
-    }
-    
-    public boolean excluir(Long id) throws Exception{
-        if(!super.getEm().getTransaction().isActive()) super.getEm().getTransaction().begin();
-        
-        Chamado d1 = super.getEm().find(Chamado.class,id);
-        
-        try{
-            super.getEm().remove(d1);
-            super.getEm().getTransaction().commit();
-            super.getEm().close();
-            return true;
-        }catch(Exception e){
-            super.getEm().close();
-            return false;
-        }
-   
-    }
-    
     public void salvar(Chamado b) throws Exception {
+            this.queryMataConexoes();
             if(!super.getEm().getTransaction().isActive()) super.getEm().getTransaction().begin();
             super.getEm().persist(b);
             super.getEm().getTransaction().commit();
             super.getEm().close();
     }
     
-      //Solicitado, status, atribuído a: os três são Strings formatadas
-    
     //"chamado" já é um objeto recuperado
     public boolean atualizaChamado(Chamado chamado) throws Exception{
+        this.queryMataConexoes();
         if(!super.getEm().getTransaction().isActive()) super.getEm().getTransaction().begin();       
         
         try{
@@ -60,12 +31,14 @@ public class ChamadoServico extends DAOGenericoJPA<Long, Chamado>{
             super.getEm().close();
             return true;
         }catch(Exception e){
+            super.getEm().close();
             return false;
         }
     }
     
     // Retorna chamados entre duas datas distintas
     public List<Chamado> chamadosEntreDatas(Date dinicio, Date dfim) throws Exception{
+        this.queryMataConexoes();
         if(!super.getEm().getTransaction().isActive()) super.getEm().getTransaction().begin();
         Query query = super.getEm().createQuery("Select e FROM Chamado e WHERE e.data BETWEEN :data1 AND :data2 ORDER BY e.data DESC, e.status, e.solicitado");
         query.setParameter("data1",dinicio);
@@ -78,13 +51,15 @@ public class ChamadoServico extends DAOGenericoJPA<Long, Chamado>{
             super.getEm().close();
             return chamados;
         }
-        catch(NoResultException e){
+        catch(Exception e){
+            super.getEm().close();
             return new ArrayList<>();
         }
      }
     
     // Retorna chamados de certo status entre duas datas distintas
     public List<Chamado> chamadosEntreDatasStatus(Date dinicio, Date dfim, String status) throws Exception{
+        this.queryMataConexoes();
         if(!super.getEm().getTransaction().isActive()) super.getEm().getTransaction().begin();
         Query query = super.getEm().createQuery("Select e FROM Chamado e WHERE (e.data BETWEEN :data1 AND :data2) AND e.status = :status ORDER BY e.data DESC, e.status, e.solicitado");
         query.setParameter("data1",dinicio);
@@ -98,13 +73,15 @@ public class ChamadoServico extends DAOGenericoJPA<Long, Chamado>{
             super.getEm().close();
             return chamados;
         }
-        catch(NoResultException e){
+        catch(Exception e){
+            super.getEm().close();
             return new ArrayList<>();
         }
      }
     
     // Retorna chamados de certo status e divisão entre duas datas distintas
     public List<Chamado> chamadosEntreDatasStatusDivisao(Date dinicio, Date dfim, String status, String divisao) throws Exception{
+        this.queryMataConexoes();
         if(!super.getEm().getTransaction().isActive()) super.getEm().getTransaction().begin();
         Query query = super.getEm().createQuery("Select e FROM Chamado e WHERE (e.data BETWEEN :data1 AND :data2) AND e.status = :status AND e.solicitado = :divisao ORDER BY e.data DESC, e.status");
         query.setParameter("data1",dinicio);
@@ -119,12 +96,14 @@ public class ChamadoServico extends DAOGenericoJPA<Long, Chamado>{
             super.getEm().close();
             return chamados;
         }
-        catch(NoResultException e){
+        catch(Exception e){
+            super.getEm().close();
             return new ArrayList<>();
         }
      }
     
     public List<Chamado> chamadosEntreDatasDivisao(Date dinicio, Date dfim, String divisao) throws Exception{
+        this.queryMataConexoes();
         if(!super.getEm().getTransaction().isActive()) super.getEm().getTransaction().begin();
         Query query = super.getEm().createQuery("Select e FROM Chamado e WHERE (e.data BETWEEN :data1 AND :data2) AND e.solicitado = :divisao ORDER BY e.data DESC, e.status");
         query.setParameter("data1",dinicio);
@@ -138,14 +117,16 @@ public class ChamadoServico extends DAOGenericoJPA<Long, Chamado>{
             super.getEm().close();
             return chamados;
         }
-        catch(NoResultException e){
+        catch(Exception e){
+            super.getEm().close();
             return new ArrayList<>();
         }
      }
     
     
     //Método lista todos os chamados que se encontram no status pedido
-    public List<Chamado> chamadosStatus(String status)throws NoResultException, Exception{
+    public List<Chamado> chamadosStatus(String status)throws Exception{
+        this.queryMataConexoes();
         Query query = super.getEm().createNamedQuery("Chamado.porStatus");
         query.setParameter("status", status);
         List<Chamado> chamados;
@@ -155,13 +136,15 @@ public class ChamadoServico extends DAOGenericoJPA<Long, Chamado>{
             super.getEm().close();
             return chamados;
         }
-        catch(NoResultException e){
+        catch(Exception e){
+            super.getEm().close();
             return new ArrayList<>();
         }
     }
     
     //Método conta todos os chamados que se encontram no status pedido
-    public int chamadosStatusConta(String status)throws NoResultException, Exception{
+    public int chamadosStatusConta(String status)throws Exception{
+        this.queryMataConexoes();
         if(!super.getEm().getTransaction().isActive()) super.getEm().getTransaction().begin();
         Query query = super.getEm().createQuery("SELECT COUNT(e) FROM Chamado e WHERE e.status = :status");
         
@@ -170,13 +153,14 @@ public class ChamadoServico extends DAOGenericoJPA<Long, Chamado>{
         try{
             return query.executeUpdate();
         }
-        catch(NoResultException e){
+        catch(Exception e){
             return 0;
         }
     }
     
     //Método dá a média de tempo de resolução de todos os chamados finalizados da divisao
-    public double chamadosMedia(String divisao)throws NoResultException, NullPointerException, Exception{
+    public double chamadosMedia(String divisao)throws Exception{
+        this.queryMataConexoes();
         if(!super.getEm().getTransaction().isActive()) super.getEm().getTransaction().begin();
         Query query = super.getEm().createQuery("SELECT AVG(e.tempo_solucao) FROM Chamado e WHERE e.solicitado = :divisao AND e.status = 'Satisfeito'");
         
@@ -185,139 +169,56 @@ public class ChamadoServico extends DAOGenericoJPA<Long, Chamado>{
         try{
             return (double) query.getSingleResult();
         }
-        catch(NoResultException | NullPointerException e){
+        catch(Exception e){
             return 0;
         }
     }
     
-    public List<Chamado> chamadosDivisao(String divisao)throws NoResultException, IllegalStateException, NullPointerException, Exception{
+    //Se daPara="da" retorna os chamados da Divisão, se "para" retorna os chamados PARA a divisao
+    public List<Chamado> chamadosDivisao(String daPara, String parametro)throws Exception{
+        this.queryMataConexoes();
         if(!super.getEm().getTransaction().isActive()) super.getEm().getTransaction().begin();
-        Query query = super.getEm().createQuery("SELECT e FROM Chamado e ORDER BY e.data DESC, e.status, e.solicitado");
-        List<Chamado> chamados;
+        
+        Query query;
+        
+        if(daPara.equals("da")) query = super.getEm().createQuery("SELECT e FROM Chamado e WHERE e.solicitante.divisao.nome = :parametro ORDER BY e.data DESC, e.status, e.solicitado");
+        else query = super.getEm().createQuery("SELECT e FROM Chamado e WHERE e.solicitado = :parametro ORDER BY e.data DESC, e.status, e.solicitado");
+        
+        query.setParameter("parametro",parametro);
         List<Chamado> resultado = new ArrayList<>();
-        
-        try{
-            chamados = query.getResultList();
-            for (int i = 0; i < chamados.size(); i++) {
-                if (chamados.get(i).getSolicitante() != null) {
-                    if (chamados.get(i).getSolicitante().getDivisao().getNome().equals(divisao)) {
-                        resultado.add(chamados.get(i));
-                    }
-                }
-            }
-            super.getEm().close();
-            return resultado;
-        }
-        catch(NoResultException | NullPointerException e){
-            return resultado;
-        }
-    }
-    
-    //Lista todos os chamados que têm "divisao" como solicitada
-    public List<Chamado> chamadosParaDivisao(String divisao)throws NoResultException, IllegalStateException, NullPointerException, Exception{
-        DAOGenericoJPA.fecharFabrica();
-        if(!super.getEm().getTransaction().isActive()) super.getEm().getTransaction().begin();
-        Query query = super.getEm().createQuery("SELECT e FROM Chamado e WHERE e.solicitado = :divisao ORDER BY e.data DESC, e.status, e.solicitado");
-        query.setParameter("divisao",divisao);
-
-        List<Chamado> resultado = new ArrayList<>();
-        
-        
         
         try{
             resultado = query.getResultList();
             super.getEm().close();
             return resultado;
         }
-        catch(NoResultException | NullPointerException e){
-            return resultado;
-        }
-    }
-    
-    public List<Chamado> chamadosDivisaoStatus(String divisao, String status)throws NoResultException, IllegalStateException, NullPointerException, Exception{
-        if(!super.getEm().getTransaction().isActive()) super.getEm().getTransaction().begin();
-        Query query = super.getEm().createQuery("SELECT e FROM Chamado e WHERE e.status = :status ORDER BY e.data DESC, e.status, e.solicitado");
-        List<Chamado> chamados;
-        List<Chamado> resultado = new ArrayList<>();
-        query.setParameter("status",status);
-        
-        try{
-            chamados = query.getResultList();
-            for (int i = 0; i < chamados.size(); i++) {
-                if (chamados.get(i).getSolicitante() != null) {
-                    if (chamados.get(i).getSolicitante().getDivisao().getNome().equals(divisao)) {
-                        resultado.add(chamados.get(i));
-                    }
-                }
-            }
+        catch(Exception e){
             super.getEm().close();
             return resultado;
         }
-        catch(NoResultException | NullPointerException e){
-            return resultado;
-        }
     }
     
-    public List<Chamado> chamadosParaDivisaoStatus(String divisao, String status)throws NoResultException, IllegalStateException, NullPointerException, Exception{
+    public List<Chamado> chamadosDivisaoStatus(String daPara, String parametro, String status)throws Exception{
+        this.queryMataConexoes();
         if(!super.getEm().getTransaction().isActive()) super.getEm().getTransaction().begin();
-        Query query = super.getEm().createQuery("SELECT e FROM Chamado e WHERE e.solicitado = :solicitado AND e.status = :status ORDER BY e.data DESC, e.status, e.solicitado");
-        List<Chamado> resultado = new ArrayList<>();
+        Query query;
         
-        query.setParameter("solicitado",divisao);
+        if(daPara.equals("da")) query = super.getEm().createQuery("SELECT e FROM Chamado e WHERE e.status = :status AND e.solicitante.divisao.nome = :parametro ORDER BY e.data DESC, e.status, e.solicitado");
+        else query = super.getEm().createQuery("SELECT e FROM Chamado e WHERE e.solicitado = :parametro AND e.status = :status ORDER BY e.data DESC, e.status, e.solicitante");
+        
+        List<Chamado> resultado = new ArrayList<>();
         query.setParameter("status",status);
+        query.setParameter("parametro", parametro);
         
         try{
             resultado = query.getResultList();
+            this.queryMataConexoes();
             super.getEm().close();
             return resultado;
         }
-        catch(NoResultException | NullPointerException e){
+        catch(Exception e){
+            super.getEm().close();
             return resultado;
-        }
-    }
-    
-    public List<Chamado> todosChamados()throws NoResultException, Exception{
-        Query query = super.getEm().createNamedQuery("Chamado.TODOS");
-        List<Chamado> chamados;
-        
-        try{
-            chamados = query.getResultList();
-            super.getEm().close();
-            return chamados;
-        }
-        catch(NoResultException e){
-            return new ArrayList<>();
-        }
-    }
-    
-    public List<Chamado> chamadosDivisao(Divisao d)throws NoResultException, Exception{
-        Query query = super.getEm().createNamedQuery("Chamado.porDivisao");
-        query.setParameter("solicitante", d.getNome());
-        List<Chamado> chamados;
-        
-        try{
-            chamados = query.getResultList();
-            super.getEm().close();
-            return chamados;
-        }
-        catch(NoResultException e){
-            return new ArrayList<>();
-        }
-    }
-
-
-    public List<Chamado> chamadosSolicitante(Pessoa sol)throws NoResultException, Exception{
-        Query query = super.getEm().createNamedQuery("Chamado.porSolicitante");
-        query.setParameter("solicitante", sol);
-        List<Chamado> chamados;
-        
-        try{
-            chamados = query.getResultList();
-            super.getEm().close();
-            return chamados;
-        }
-        catch(NoResultException e){
-            return new ArrayList<>();
         }
     }
     

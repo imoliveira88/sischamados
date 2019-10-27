@@ -69,11 +69,12 @@ public class DivisaoMB extends Artificial implements Serializable{
     }
     
     public Divisao retornaDivisao(String div) throws Exception{
-        return (new DivisaoServico()).retornaDivisao(div);
+        return (new DivisaoServico()).retornaDivisao("nome",div);
     }
     
     public List<Divisao> getDivisoes() throws Exception{
-        return new DivisaoServico().todasDivisoes();
+        return (new DivisaoServico()).findAll();
+        //return new DivisaoServico().todasDivisoes();
     }
     
     public List<Divisao> getPrestadores() throws Exception{
@@ -83,11 +84,8 @@ public class DivisaoMB extends Artificial implements Serializable{
     public String excluir(Long id) throws Exception {
         DivisaoServico pra = new DivisaoServico();
         try {
-            if (pra.deletarDivisao(id)) {
-                adicionaMensagem("Divisão removida com sucesso!", "destinoAviso", "SUCESSO!");
-            } else {
-                adicionaMensagem("Divisão não pode ser removida, pois há colaboradores cadastrados nela! Caso queira excluí-la atualize primeiro as informações de seus colaboradores e, então, tente novamente!", "destinoAviso", "ERRO!");
-            }
+            pra.excluir(id);
+            adicionaMensagem("Divisão removida com sucesso!", "destinoAviso", "SUCESSO!");
             return "cadDivisao";
         } catch (Exception e) {
             adicionaMensagem("Uma divisão precisa ser selecionada, antes de clicar em excluir!", "destinoAviso", "ERRO!");

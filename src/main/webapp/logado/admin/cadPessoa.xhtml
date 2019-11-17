@@ -11,18 +11,6 @@
         <h:outputStylesheet library="css" name="style.css" />
     </h:head>
     <h:body>
-        
-        <h:outputScript target="body">
-
-            function mostraAlerta(){
-            alert("O usuário selecionado será excluído!);
-            }
-
-            var botao = documento.querySelector("#excluiPessoa");
-
-            botao.onclick = mostraAlerta;
-
-        </h:outputScript>
 
 
         <ui:decorate template="/templates/decoratorAdmin.xhtml">
@@ -82,7 +70,7 @@
                         <h:form>
                         <p:fieldset class="field" legend="Usuários cadastrados" style="margin-bottom:20px; background-color: beige">
                             <h:panelGrid columns="2" id = "sol"  cellpadding="5">
-                                <p:dataTable var="pessoa" rows="10" rowsPerPageTemplate="5,10,15" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" paginator="true" value="#{pessoaMB.pessoas}"  rowKey="#{pessoa.id}" selection="#{pessoaMB.pessoaSelecionada}" selectionMode="single">
+                                <p:dataTable var="pessoa" rows="10" rowsPerPageTemplate="5,10,15" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" paginator="true" value="#{pessoaMB.pessoas}" rowKey="#{pessoa.id}" selection="#{pessoaMB.pessoaSelecionada}" selectionMode="single">
                                     <p:column>
                                         <f:facet name="header">ID</f:facet>
                                         <h:outputText value="#{pessoa.id}"/>
@@ -109,9 +97,10 @@
                                     </p:column>
                                 </p:dataTable>
                             </h:panelGrid>
-                            <h:panelGrid columns="2" cellpadding="5">
+                            <h:panelGrid columns="3" cellpadding="5">
                                 <h:commandButton styleClass="botaoTabela" value="Resetar senha" action="#{pessoaMB.resetaSenha(pessoaMB.pessoaSelecionada.id)}"/>
                                 <h:commandButton id="excluiPessoa" styleClass="botaoTabela" value="Excluir" action="#{pessoaMB.excluiUsuario(pessoaMB.pessoaSelecionada.id)}"/>
+                                <h:commandButton id="atualizaPessoa" styleClass="botaoTabela" value="Atualizar" action="#{pessoaMB.atualizaUsuario(pessoaMB.pessoaSelecionada.id)}"/>
                             </h:panelGrid>
                         </p:fieldset>
                         </h:form>

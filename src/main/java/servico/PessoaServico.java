@@ -55,27 +55,20 @@ public class PessoaServico extends DAOGenericoJPA<Long, Pessoa>{
     }
     
     
-    public void atualizar(Pessoa p) throws Exception{
+    public boolean atualizar(Pessoa p) throws Exception{
         this.queryMataConexoes();
-        if(!super.getEm().getTransaction().isActive()) super.getEm().getTransaction().begin();
-        Query query = super.getEm().createQuery("Select e.id FROM Pessoa e WHERE e.nip = :nip");
-        query.setParameter("nip",p.getNip());
+        if(!super.getEm().getTransaction().isActive()) super.getEm().getTransaction().begin();       
         
-        Long id = (Long) query.getSingleResult();
-        
-        Pessoa pes = super.getEm().find(Pessoa.class,id);
-        pes.setNome(p.getNome());
-        pes.setTelefone(p.getTelefone());
-        pes.setEmail(p.getEmail());
-        pes.setNip(p.getNip());
-        pes.setChamados(p.getChamados());
-        pes.setEspecialidade(p.getEspecialidade());
-        pes.setMilitar(p.getMilitar());
-        pes.setPosto(p.getPosto());
-        pes.setSenha(p.getSenha());
-        super.getEm().merge(pes);
-        super.getEm().getTransaction().commit();
-        super.getEm().close();
+        try{
+            super.getEm().merge(p);
+            super.getEm().getTransaction().commit();
+            super.getEm().close();
+            this.queryMataConexoes();
+            return true;
+        }catch(Exception e){
+            super.getEm().close();
+            return false;
+        }
     }
     
     public void resetaSenha(Long id) throws NoSuchAlgorithmException, Exception{

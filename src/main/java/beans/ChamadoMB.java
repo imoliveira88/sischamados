@@ -269,13 +269,13 @@ public class ChamadoMB extends Artificial implements Serializable{
             HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
             String historico;
             ChamadoServico pra = new ChamadoServico();
-            Chamado cha = pra.getById(chamadoSelecionado.getId());
+            Chamado cha = chamadoSelecionado;
+            status = chamadoSelecionado.getStatus();
             historico = cha.getHistorico();
 
             DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
             Date date = new Date();
-            System.out.println(dateFormat.format(date));
-
+            
             String novaDesc;
             if(this.texto.equals("")) novaDesc = chamadoSelecionado.getDescricao();
             else{
@@ -325,6 +325,27 @@ public class ChamadoMB extends Artificial implements Serializable{
         }
     }
     
+    public String encaminhaChamado(String destino){
+        return destino;
+    }
+    
+    public String encaminhaAtualChamado() throws Exception{
+        FacesContext fc = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+        ChamadoServico pra = new ChamadoServico();
+        
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        Date date = new Date();
+        
+        if (pra.atualizaChamado(chamadoSelecionado)){
+            chamadoSelecionado.setHistorico(chamadoSelecionado.getHistorico() + "<br/><b>" + dateFormat.format(date) + " " + session.getAttribute("usuario").toString() + "</b> encaminhou o chamado para " + chamadoSelecionado.getSolicitado());
+            adicionaMensagem("Chamado de número " + chamadoSelecionado.getId() + " encaminhado!", "destinoAviso","SUCESSO!");
+        }
+        else adicionaMensagem("Chamado não pôde ser encaminhado!", "destinoAviso","ERRO!");
+        
+        return "chamadosParaDivisao.xhtml?faces-redirect=true";
+    }
+    
     public int semAlteracao(Chamado c) throws NullPointerException {
         try {
            
@@ -361,7 +382,7 @@ public class ChamadoMB extends Artificial implements Serializable{
 
     public String finalizaChamado(String destino) throws Exception {
         ChamadoServico pra = new ChamadoServico();
-        Chamado cha = pra.getById(chamadoSelecionado.getId());
+        Chamado cha = chamadoSelecionado;
         cha.setStatus("Satisfeito");
 
         FacesContext fc = FacesContext.getCurrentInstance();
@@ -522,7 +543,7 @@ public class ChamadoMB extends Artificial implements Serializable{
     }
     
     public List<Chamado> getChamados() throws Exception{
-        return (new ChamadoServico()).findAll();
+        return (new ChamadoServico()).todosChamadosData();
         //return new ChamadoServico().todosChamados();
     }
     

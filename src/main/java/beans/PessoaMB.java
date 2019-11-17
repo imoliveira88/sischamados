@@ -10,10 +10,9 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import modelo.Chamado;
 import modelo.Divisao;
@@ -21,7 +20,7 @@ import modelo.Pessoa;
 import servico.DivisaoServico;
 import servico.PessoaServico;
 
-@RequestScoped
+@SessionScoped
 @ManagedBean(name = "pessoaMB")
 public class PessoaMB extends Artificial implements Serializable{
     
@@ -40,7 +39,7 @@ public class PessoaMB extends Artificial implements Serializable{
 
     public PessoaMB() {
         chamados = new ArrayList<>();
-        pessoaSelecionada = new Pessoa();
+        //pessoaSelecionada = new Pessoa();
         //divisao = new Divisao();
     }
 
@@ -238,6 +237,33 @@ public class PessoaMB extends Artificial implements Serializable{
             this.adicionaMensagem("Um usuário precisa ser selecionado, antes de resetar sua senha! Tente novamente!","destinoAviso","ERRO!");
             return "cadPessoa";
         }  
+    }
+    
+    public String atualizaPessoa() throws IllegalArgumentException, Exception {
+        try {
+            FacesContext fc = FacesContext.getCurrentInstance();
+            HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+            
+            Divisao div = (new DivisaoServico()).retornaDivisao("nome",divisao);
+            
+            PessoaServico pra = new PessoaServico();
+            
+            pessoaSelecionada.setDivisao(div);
+            /*Pessoa pe = pra.getById(pessoaSelecionada.getId());*/
+
+            
+            if (pra.atualizar(pessoaSelecionada)) adicionaMensagem("Usuário atualizado!", "destinoAviso", "SUCESSO!");
+            else adicionaMensagem("Usuário não foi atualizado!", "destinoAviso","ERRO!");
+            return "cadPessoa.xhtml?faces-redirect=true";
+        } catch (IllegalArgumentException e) {
+            adicionaMensagem("Escolha uma pessoa!", "destinoAviso", "ERRO!");
+            return "cadPessoa.xhtml?faces-redirect=true";
+        }
+    }
+    
+    public String atualizaUsuario(Long id){
+        pessoaSelecionada = (new PessoaServico()).getById(id);
+        return "atualizaPessoa.xhtml?faces-redirect=true";
     }
     
 }

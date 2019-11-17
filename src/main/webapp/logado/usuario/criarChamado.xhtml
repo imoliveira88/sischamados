@@ -52,10 +52,10 @@
                                     <f:selectItems value="#{divisaoMB.prestadores}" />
                                 </p:selectOneMenu>
 
-                                <p:outputLabel for="titulo" value="Titulo" />
-                                <h:inputText id="titulo" value="#{chamadoMB.titulo}"/>
+                                <p:outputLabel for="titulo" value="Título"/>
+                                <h:inputText id="titulo" value="#{chamadoMB.titulo}" style="width: 300px" />
 
-                                <p:outputLabel for="descricao" value="Descricao" />
+                                <p:outputLabel for="descricao" value="Descrição" />
                                 <p:textEditor id="descricao" value="#{chamadoMB.descricao}" height="200"  style="width: 400px">
                                         <f:facet name="toolbar">
                                             <span class="ql-formats">

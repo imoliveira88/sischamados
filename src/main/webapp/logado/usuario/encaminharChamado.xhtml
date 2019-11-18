@@ -40,45 +40,14 @@
                                     <f:selectItems value="#{divisaoMB.prestadores}" var="prestador" itemValue="#{prestador.nome}"/>
                                 </p:selectOneMenu>
 
-                                <h:commandButton styleClass="botaoTabela" value="Encaminhar chamado" action="#{chamadoMB.encaminhaAtualChamado()}"/>
+                                
+                            </h:panelGrid>
+                            
+                            <h:panelGrid columns="1" cellpadding="5">
+                                <h:commandButton style="width: 200px" value="Encaminhar chamado" action="#{chamadoMB.encaminhaAtualChamado()}"/>
                             </h:panelGrid>
 
-
-                        </p:fieldset>
-
-                        <p:fieldset legend="Descrição" style="margin-bottom:20px; background-color: beige">
-
-                            <h:outputText value="#{chamadoMB.chamadoSelecionado.descricao}" escape="false" styleClass="descricao"/>
-                        </p:fieldset>
-
-                        <p:fieldset legend="Acrescentar à descrição" style="margin-bottom:20px; background-color: beige" >
-                            <p:textEditor widgetVar="editor2" value="#{chamadoMB.texto}" height="100" style="width: 400px"  >
-                                <f:facet name="toolbar">
-                                    <span class="ql-formats">
-                                        <button class="ql-bold"></button>
-                                        <button class="ql-italic"></button>
-                                        <button class="ql-underline"></button>
-                                        <button class="ql-strike"></button>
-                                    </span>
-                                    <span class="ql-formats">
-                                        <select class="ql-size"></select>
-                                    </span>
-                                </f:facet>
-                            </p:textEditor>
-
-                            <h:panelGrid columns="1">
-                                <h:commandButton styleClass="botaoTabela" value="Atualizar" action="#{chamadoMB.atualizaChamado('chamadosParaDivisao')}"/>
-                            </h:panelGrid>
-                        </p:fieldset>
-
-
-                        <p:fieldset class="field" legend="Histórico" style="margin-bottom:20px; background-color: beige">
-                            <h:panelGrid columns="1" id = "sol"  cellpadding="5">
-
-                                <h:outputText value="#{chamadoMB.chamadoSelecionado.historico}" escape="false"/>
-
-                            </h:panelGrid>
-                        </p:fieldset>
+                        </p:fieldset>      
 
                     </h:form>
                 </td>

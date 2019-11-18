@@ -76,7 +76,9 @@
 
                             </h:panelGrid>
                             
-                            <h:commandButton styleClass="botaoTabela" value="Encaminhar chamado" action="#{chamadoMB.encaminhaChamado('encaminharChamado')}"/>
+                            <h:panelGrid columns="1" cellpadding="5">
+                                <h:commandButton value="Encaminhar chamado" style="width: 200px" action="#{chamadoMB.encaminhaChamado('encaminharChamado')}"/>
+                            </h:panelGrid>
                         </p:fieldset>
 
                         <p:fieldset legend="Descrição" style="margin-bottom:20px; background-color: beige">

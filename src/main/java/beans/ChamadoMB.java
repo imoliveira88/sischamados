@@ -304,9 +304,6 @@ public class ChamadoMB extends Artificial implements Serializable{
             }
             
             cha.setDescricao(novaDesc);
-            cha.setAtribuido(atribuido);
-            cha.setPrioridade(prioridade);
-            cha.setStatus(status);
             
             if (pra.atualizaChamado(cha)) {
                 if (chamadoSelecionado.getStatus().equals("Satisfeito") && semAlteracao(cha)!=1) {
@@ -337,13 +334,12 @@ public class ChamadoMB extends Artificial implements Serializable{
         DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
         Date date = new Date();
         
-        if (pra.atualizaChamado(chamadoSelecionado)){
-            chamadoSelecionado.setHistorico(chamadoSelecionado.getHistorico() + "<br/><b>" + dateFormat.format(date) + " " + session.getAttribute("usuario").toString() + "</b> encaminhou o chamado para " + chamadoSelecionado.getSolicitado());
-            adicionaMensagem("Chamado de número " + chamadoSelecionado.getId() + " encaminhado!", "destinoAviso","SUCESSO!");
-        }
+        chamadoSelecionado.setHistorico(chamadoSelecionado.getHistorico() + "<br/><b>" + dateFormat.format(date) + " " + session.getAttribute("usuario").toString() + "</b> encaminhou o chamado para " + chamadoSelecionado.getSolicitado());
+        
+        if (pra.atualizaChamado(chamadoSelecionado)) adicionaMensagem("Chamado de número " + chamadoSelecionado.getId() + " encaminhado!", "destinoAviso","SUCESSO!");
         else adicionaMensagem("Chamado não pôde ser encaminhado!", "destinoAviso","ERRO!");
         
-        return "chamadosParaDivisao.xhtml?faces-redirect=true";
+        return "chamadosParaDivisao.xhtml";
     }
     
     public int semAlteracao(Chamado c) throws NullPointerException {
@@ -400,8 +396,6 @@ public class ChamadoMB extends Artificial implements Serializable{
                 novaDesc += "<br/><b>" + dateFormat.format(date) + " " + session.getAttribute("usuario").toString() + "</b> " +  this.texto;
             }
         cha.setDescricao(novaDesc);
-        cha.setAtribuido(chamadoSelecionado.getAtribuido());
-        cha.setPrioridade(chamadoSelecionado.getPrioridade());
         
         this.texto = "";
 

@@ -31,6 +31,25 @@ public class PessoaServico extends DAOGenericoJPA<Long, Pessoa>{
         }
     }
     
+    public int excluiTransfere(Long id) throws Exception{
+        this.queryMataConexoes();
+        if(!super.getEm().getTransaction().isActive()) super.getEm().getTransaction().begin();
+        
+        Pessoa pes = super.getEm().find(Pessoa.class,id);
+        
+        /*
+         - Achar os chamados criados por aquela pessoa
+         - Pegar a divisão daquela pessoa
+         - Escolher outro militar daquela divisão
+         - Atualizar todos aqueles chamados
+        */
+        
+        super.getEm().merge(pes);
+        super.getEm().getTransaction().commit();
+        super.getEm().close();
+        return 0;
+    }
+    
     public Pessoa retornaPessoa(String tipo, String parametro) throws Exception{//Tipo pode ser nome ou nip
         Query query;
         this.queryMataConexoes();

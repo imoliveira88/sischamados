@@ -35,7 +35,7 @@
                                 <h:outputText value="#{chamadoMB.chamadoSelecionado.status}"/>
 
                                 <h:outputText value="Alterar para:"/>
-                                <p:selectOneMenu value="#{chamadoMB.status}">
+                                <p:selectOneMenu value="#{chamadoMB.chamadoSelecionado.status}">
                                     <f:selectItems value="#{chamadoMB.listaProxStatus(chamadoMB.chamadoSelecionado.status)}" var="status" itemValue="#{status}"/>
                                 </p:selectOneMenu>
 
@@ -43,7 +43,7 @@
                                 <h:outputText value="#{chamadoMB.chamadoSelecionado.atribuido}" />
 
                                 <h:outputText value="Atribuir a:"/>
-                                <p:selectOneMenu value="#{chamadoMB.atribuido}">
+                                <p:selectOneMenu value="#{chamadoMB.chamadoSelecionado.atribuido}">
                                     <f:selectItems value="#{pessoaMB.retornaPessoasDivisao(usuario.divisao)}" var="divi" itemValue="#{divi}"/>
                                 </p:selectOneMenu>
 
@@ -51,7 +51,7 @@
                                 <h:outputText value="#{chamadoMB.chamadoSelecionado.prioridade}" />
 
                                 <h:outputText value="Alterar para:"/>
-                                <p:selectOneMenu value="#{chamadoMB.prioridade}">
+                                <p:selectOneMenu value="#{chamadoMB.chamadoSelecionado.prioridade}">
                                     <f:selectItems value="#{chamadoMB.prioridades}" var="prior" itemValue="#{prior}"/>
                                 </p:selectOneMenu>
                             </h:panelGrid>

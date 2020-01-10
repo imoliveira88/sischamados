@@ -282,10 +282,20 @@ public class ChamadoMB extends Artificial implements Serializable{
                 novaDesc = chamadoSelecionado.getDescricao();
                 novaDesc += "<br/><b>" + dateFormat.format(date) + " " + session.getAttribute("usuario").toString() + "</b> " +  this.texto;
             }
+           
+            String auxStatus, auxAtribuido, auxPrioridade;
+            if(status == null) auxStatus = "nulo";
+            else auxStatus = status;
+            
+            if(atribuido == null) auxAtribuido = "nulo";
+            else auxAtribuido = atribuido;
+            
+            if(prioridade == null) auxPrioridade = "nulo";
+            else auxPrioridade = prioridade;
             
                                     
             if (semAlteracao(cha) == 1) {
-                historico += "<br/><b>" + dateFormat.format(date) + " " + session.getAttribute("usuario").toString() + "</b> alterou status para " + status + ", atribuído para " + atribuido + " e prioridade para " + prioridade;
+                historico += "<br/><b>" + dateFormat.format(date) + " " + session.getAttribute("usuario").toString() + "</b> alterou status para " + auxStatus + ", atribuído para " + auxAtribuido + " e prioridade para " + auxPrioridade;
                 cha.setHistorico(historico);
             } else if (semAlteracao(cha) == 2) {
                 historico += "<br/><b>" + dateFormat.format(date) + " " + session.getAttribute("usuario").toString() + "</b> atualizou a descrição";
@@ -405,12 +415,31 @@ public class ChamadoMB extends Artificial implements Serializable{
         if(diffHours < 12) cha.setTempo_solucao(0);
         else cha.setTempo_solucao((int) diffHours - 12);
 
-        if(semAlteracao(cha) == 1){
-                historico += "<br/><b>" + dateFormat.format(date) + " " + session.getAttribute("usuario").toString() + "</b> alterou status para " + chamadoSelecionado.getStatus() + ", atribuído para " + chamadoSelecionado.getAtribuido() + " e prioridade para " + chamadoSelecionado.getPrioridade();
-                cha.setHistorico(historico);
-        }else if(semAlteracao(cha) == 2){
-                historico += "<br/><b>" + dateFormat.format(date) + " " + session.getAttribute("usuario").toString() + "</b> atualizou a descrição";
-                cha.setHistorico(historico);
+        String auxStatus, auxAtribuido, auxPrioridade;
+        if (status == null) {
+            auxStatus = "nulo";
+        } else {
+            auxStatus = status;
+        }
+
+        if (atribuido == null) {
+            auxAtribuido = "nulo";
+        } else {
+            auxAtribuido = atribuido;
+        }
+
+        if (prioridade == null) {
+            auxPrioridade = "nulo";
+        } else {
+            auxPrioridade = prioridade;
+        }
+
+        if (semAlteracao(cha) == 1) {
+            historico += "<br/><b>" + dateFormat.format(date) + " " + session.getAttribute("usuario").toString() + "</b> alterou status para " + auxStatus + ", atribuído para " + auxAtribuido + " e prioridade para " + auxPrioridade;
+            cha.setHistorico(historico);
+        } else if (semAlteracao(cha) == 2) {
+            historico += "<br/><b>" + dateFormat.format(date) + " " + session.getAttribute("usuario").toString() + "</b> atualizou a descrição";
+            cha.setHistorico(historico);
         }
 
         if (pra.atualizaChamado(cha)) {

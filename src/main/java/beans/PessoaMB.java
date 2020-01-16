@@ -215,10 +215,14 @@ public class PessoaMB extends Artificial implements Serializable{
     
     public String excluiUsuario(Long id) throws ParseException{
         PessoaServico cli = new PessoaServico();
+        Pessoa removida, destino;
         
         try {
+            removida = cli.getById(id); //Resgata a pessoa a ser removida
+            destino = cli.outroDivisao(removida); //Toma uma nova pessoa da divisão
+            cli.transfereChamados(removida, destino); //Transfere os chamados
             cli.excluir(id);
-            this.adicionaMensagem("Usuário removido!","destinoAviso","SUCESSO!");
+            this.adicionaMensagem("Usuário removido e chamados transferidos para outro usuário da mesma divisão!","destinoAviso","SUCESSO!");
             return "cadPessoa";
         } catch (Exception e) {
             this.adicionaMensagem("Um usuário precisa ser selecionado, antes de clicar em excluir! Tente novamente!","destinoAviso","ERRO!");

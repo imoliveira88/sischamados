@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
+import modelo.Chamado;
 import modelo.Divisao;
 import modelo.Pessoa;
 
@@ -31,23 +32,50 @@ public class PessoaServico extends DAOGenericoJPA<Long, Pessoa>{
         }
     }
     
-    public int excluiTransfere(Long id) throws Exception{
+    public Pessoa outroDivisao(Pessoa p) throws Exception{
+        Query query;
         this.queryMataConexoes();
         if(!super.getEm().getTransaction().isActive()) super.getEm().getTransaction().begin();
+        query = super.getEm().createQuery("Select e FROM Pessoa e WHERE e.divisao = :parametro");
         
-        Pessoa pes = super.getEm().find(Pessoa.class,id);
+        query.setParameter("parametro", p.getDivisao());
         
-        /*
-         - Achar os chamados criados por aquela pessoa
-         - Pegar a divisão daquela pessoa
-         - Escolher outro militar daquela divisão
-         - Atualizar todos aqueles chamados
-        */
+        Pessoa usu;
         
-        super.getEm().merge(pes);
-        super.getEm().getTransaction().commit();
-        super.getEm().close();
-        return 0;
+        
+        try{
+            usu = (Pessoa) query.getResultList().get(0);
+            if(usu.equals(p)) usu = (Pessoa) query.getResultList().get(1);
+            super.getEm().close();
+            return usu;
+        }
+        catch(NoResultException e){
+            super.getEm().close();
+            return null;
+        }
+    }
+    
+    public void transfereChamados(Pessoa origem, Pessoa destino) throws Exception{
+        Query query;
+        this.queryMataConexoes();
+        if(!super.getEm().getTransaction().isActive()) super.getEm().getTransaction().begin();
+        query = super.getEm().createQuery("Select c FROM Chamado c WHERE c.solicitante = :parametro");
+        
+        query.setParameter("parametro", origem);
+        
+        List<Chamado> chamados;
+        
+        try{
+            chamados = query.getResultList(); //Obtidos todos os chamados da pessoa Origem
+            for(int i=0; i<chamados.size(); i++){
+                chamados.get(i).setSolicitante(destino);
+                (new ChamadoServico()).atualizaChamado(chamados.get(i)); //Atualiza os chamados
+            }
+            super.getEm().close();
+        }
+        catch(NoResultException e){
+            super.getEm().close();
+        }
     }
     
     public Pessoa retornaPessoa(String tipo, String parametro) throws Exception{//Tipo pode ser nome ou nip

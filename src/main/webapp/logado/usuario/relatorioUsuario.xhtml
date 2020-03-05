@@ -24,7 +24,7 @@
                 </td>
                 <td>
                     <h:form enctype="multipart/form-data" id="form">
-                        <p:fieldset legend="FIltro de datas" style="margin-bottom:20px; background-color: beige" >
+                        <p:fieldset legend="Filtro de datas" style="margin-bottom:20px; background-color: beige" >
                             
                             <h:panelGrid columns="2"  cellpadding="5">
 
@@ -44,11 +44,10 @@
                         <br/>
 
                             <p:fieldset legend="Chamados" style="margin-bottom:20px">
-                                <p:dataTable  id="detalhes" rowIndexVar="indice" var="chamado" value="#{chamadoMB.chamFiltradosDivisao}" widgetVar="selecaoCham" emptyMessage="Não há chamados que atendam esses critérios!">
+                                <p:dataTable  id="detalhes" rows="20" rowsPerPageTemplate="20,40,60" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" paginator="true" rowIndexVar="indice" var="chamado" value="#{chamadoMB.chamFiltradosDivisao}" widgetVar="selecaoCham" emptyMessage="Não há chamados que atendam esses critérios!">
 
-                                <p:column>
-                                    <f:facet name="header">ID</f:facet>
-                                    <h:outputText value="#{chamado.id}"/>
+                                <p:column filterBy="#{chamado.id}" headerText="ID" filterMatchMode="contains">
+                                        <h:outputText value="#{chamado.id}"/>
                                 </p:column>
                                 <p:column filterBy="#{chamado.status}" headerText="Status" filterMatchMode="exact">
                                     <f:facet name="filter">

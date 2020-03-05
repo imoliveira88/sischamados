@@ -36,7 +36,7 @@
 
                                 <h:outputText value="Alterar para:"/>
                                 <p:selectOneMenu value="#{chamadoMB.chamadoSelecionado.status}">
-                                    <f:selectItems value="#{chamadoMB.listaProxStatus(chamadoMB.chamadoSelecionado.status)}" var="status" itemValue="#{status}"/>
+                                    <f:selectItems value="#{chamadoMB.listaStatus()}" var="status" itemValue="#{status}"/>
                                 </p:selectOneMenu>
 
                                 <h:outputText value="Atribuído a"/>

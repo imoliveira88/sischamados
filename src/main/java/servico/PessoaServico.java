@@ -165,7 +165,7 @@ public class PessoaServico extends DAOGenericoJPA<Long, Pessoa>{
     
     public List<Pessoa> pessoasDivisao(Divisao d)throws NoResultException, Exception{
         this.queryMataConexoes();
-        Query query = super.getEm().createNamedQuery("Pessoa.retornaPessoasDivisao");
+        Query query = super.getEm().createQuery("SELECT e FROM Pessoa e WHERE e.divisao = :divisao");
         query.setParameter("divisao", d);
         List<Pessoa> pessoas;
         

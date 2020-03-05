@@ -265,6 +265,28 @@ public class PessoaMB extends Artificial implements Serializable{
         }
     }
     
+    public String atualizaPessoaDiv() throws IllegalArgumentException, Exception {
+        try {
+            FacesContext fc = FacesContext.getCurrentInstance();
+            HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+            
+            Divisao div = (new DivisaoServico()).retornaDivisao("nome",divisao);
+            
+            PessoaServico pra = new PessoaServico();
+            
+            pessoaSelecionada.setDivisao(div);
+            /*Pessoa pe = pra.getById(pessoaSelecionada.getId());*/
+
+            
+            if (pra.atualizar(pessoaSelecionada)) adicionaMensagem("Usuário atualizado!", "destinoAviso", "SUCESSO!");
+            else adicionaMensagem("Usuário não foi atualizado!", "destinoAviso","ERRO!");
+            return "pessoal.xhtml?faces-redirect=true";
+        } catch (IllegalArgumentException e) {
+            adicionaMensagem("Escolha uma pessoa!", "destinoAviso", "ERRO!");
+            return "pessoal.xhtml?faces-redirect=true";
+        }
+    }
+    
     public String atualizaUsuario(Long id){
         pessoaSelecionada = (new PessoaServico()).getById(id);
         return "atualizaPessoa.xhtml?faces-redirect=true";

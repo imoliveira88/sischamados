@@ -30,7 +30,6 @@
                         <td><h:form><h:commandButton styleClass="botaoTabela" action="#{logoutBean.logout()}" value="Logout" /></h:form></td>
                         <td onclick="location.href='/sischamados/faces/logado/admin/cadDivisao.xhtml'">Divisões</td>
                         <td onclick="location.href='/sischamados/faces/logado/admin/cadPessoa.xhtml'">Usuários</td>
-                        <td onclick="location.href='/sischamados/faces/logado/admin/sql.xhtml'">SQL</td>
                         <td onclick="location.href='/sischamados/faces/logado/admin/relatorios.xhtml'">Relatorios</td>
                     </tr>
                 </table>
@@ -41,13 +40,6 @@
                 
                 
                 <table width="40%" align="center">
-            <tr>
-                <td>
-                   <h:form>
-                    <h:outputLabel value="Número de sessões ativas: #{loginBean.getNumeroSessoes()}" />
-                </h:form>
-                </td>
-            </tr>
                     <tr>
                 <td>
                     <h:form enctype="multipart/form-data">

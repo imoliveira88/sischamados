@@ -3,12 +3,10 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:h="http://java.sun.com/jsf/html">
 
     <h:head>
-        <title>IGNORED</title>        
+        <title>IGNORED</title>
     </h:head>
 
     <h:body>
@@ -29,14 +27,13 @@
                     <tr>
                         <td><h:form><h:commandButton styleClass="botaoTabela" action="#{logoutBean.logout()}" value="Logout" /></h:form></td>
                         <td onclick="location.href='/sischamados/faces/logado/usuario/pessoal.xhtml'">Pessoal</td>
-                        <td onclick="location.href='/sischamados/faces/logado/usuario/meusChamados.xhtml'">Chamados</td>
+                        <td id="btChamados" onclick="location.href='/sischamados/faces/logado/usuario/meusChamados.xhtml'">Chamados</td>
                         <td onclick="location.href='/sischamados/faces/logado/usuario/documentacao.xhtml'">Documentação</td>
                         <td onclick="location.href='/sischamados/faces/logado/usuario/sobre.xhtml'">Sobre</td>
                     </tr>
                 </table>
                 <br/>
                 <br/>
-
                 <table id="menuLeft" align="center" width="100%">
                     <tr>
                         <td onclick="location.href='/sischamados/faces/logado/usuario/meusChamados.xhtml'">Meus chamados</td>

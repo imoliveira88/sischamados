@@ -51,6 +51,13 @@ public class PessoaMB extends Artificial implements Serializable{
         this.chamados = chamados;
     }
 
+    public List<Character> getTipos() {
+        List<Character> tipos = new ArrayList<>();
+        tipos.add('A');
+        tipos.add('U');
+        return tipos;
+    }
+
     public String getDivisao() {
         return divisao;
     }
@@ -58,8 +65,6 @@ public class PessoaMB extends Artificial implements Serializable{
     public void setDivisao(String divisao) {
         this.divisao = divisao;
     }
-    
-    
 
     public Pessoa getPessoaSelecionada() {
         return pessoaSelecionada;
@@ -189,7 +194,7 @@ public class PessoaMB extends Artificial implements Serializable{
                 return "cadPessoa";
             }
             Pessoa pes = new Pessoa(nome.toUpperCase(),this.hash(senha),nip,militar,especialidade.toUpperCase(),posto.toUpperCase());
-            pes.setTipo('U'); 
+            pes.setTipo(tipo); 
             pes.setEmail(email.toLowerCase());
             pes.setTelefone(telefone);
             
@@ -253,6 +258,7 @@ public class PessoaMB extends Artificial implements Serializable{
             PessoaServico pra = new PessoaServico();
             
             pessoaSelecionada.setDivisao(div);
+            pessoaSelecionada.setTipo(tipo);
             /*Pessoa pe = pra.getById(pessoaSelecionada.getId());*/
 
             

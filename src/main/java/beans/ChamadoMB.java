@@ -44,6 +44,7 @@ public class ChamadoMB extends Artificial implements Serializable{
     private String texto;
     private BarChartModel barModel;
     private int maior;
+    private int tempoResolucao;
     
     private List<Integer> chamadosPara;
     private List<Integer> chamadosDe;
@@ -120,6 +121,7 @@ public class ChamadoMB extends Artificial implements Serializable{
         this.texto = texto;
     }
 
+
     public BarChartModel getBarModel() throws Exception {
         this.createBarModel();
         return barModel;
@@ -139,6 +141,14 @@ public class ChamadoMB extends Artificial implements Serializable{
 
     public void setChamFiltradosDivisao(List<Chamado> chamFiltradosDivisao) {
         this.chamFiltradosDivisao = chamFiltradosDivisao;
+    }
+
+    public int getTempoResolucao(){
+        return this.tempoResolucao;
+    }
+
+    public void setTempoResolucao(int tempo){
+        this.tempoResolucao = tempo;
     }
 
     public String getAtribuido() {
@@ -189,8 +199,6 @@ public class ChamadoMB extends Artificial implements Serializable{
         this.dataFinal = dataFinal;
     }
     
-    
-
     public String getSolicitado() {
         return solicitado;
     }
@@ -304,14 +312,7 @@ public class ChamadoMB extends Artificial implements Serializable{
             
             this.texto = "";
                         
-            if (status.equals("Satisfeito") && semAlteracao(cha)!=1) {
-
-                long diff = Calendar.getInstance().getTimeInMillis() - cha.getData().getTime();
-                long diffHours = diff / (60 * 60 * 1000);
-                                
-                if(diffHours < 12) cha.setTempo_solucao(0);
-                else cha.setTempo_solucao((int) diffHours - 12); //aproxima o tempo de resolução, uma vez que chamados finalizados no mesmo dia apresentarão distorção no tempo de resolução, pois a hora inicial é salva no formato "data"
-            }
+            if (status.equals("Executado")) cha.setTempo_solucao(tempoResolucao);
             
             cha.setDescricao(novaDesc);
             

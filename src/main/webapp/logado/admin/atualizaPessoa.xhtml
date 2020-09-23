@@ -36,6 +36,11 @@
 
                                 <p:outputLabel value="Nome" />
                                 <h:outputText value="#{pessoaMB.pessoaSelecionada.nome}"/>
+                                
+                                <p:outputLabel value="Perfil de usuário: "/>
+                                <p:selectOneMenu id="tipos" value="#{pessoaMB.tipo}">
+                                    <f:selectItems value="#{pessoaMB.tipos}" var="tip" itemValue="#{tip}" />
+                                </p:selectOneMenu>
 
                             </h:panelGrid>
 

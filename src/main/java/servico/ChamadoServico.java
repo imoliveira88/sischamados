@@ -64,7 +64,8 @@ public class ChamadoServico extends DAOGenericoJPA<Long, Chamado>{
     public List<Chamado> chamadosEntreDatasStatus(Date dinicio, Date dfim, String status) throws Exception{
         this.queryMataConexoes();
         if(!super.getEm().getTransaction().isActive()) super.getEm().getTransaction().begin();
-        Query query = super.getEm().createQuery("Select e FROM Chamado e WHERE (e.data BETWEEN :data1 AND :data2) AND e.status = :status ORDER BY e.data DESC, e.status, e.solicitado");
+
+        Query query = super.getEm().createQuery("Select e FROM Chamado e WHERE (e.data BETWEEN :data1 AND :data2) AND e.status = :status ORDER BY e.data DESC");
         query.setParameter("data1",dinicio);
         query.setParameter("data2",dfim);
         query.setParameter("status",status);

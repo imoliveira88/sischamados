@@ -1,6 +1,15 @@
 var texto1 = document.getElementById("texto");
 var timer = setInterval(digita, 200);
 
+function exibeMenu(){
+    var subMenu = document.getElementById("menuLeft");
+    if (subMenu.style.display === "none") {
+    subMenu.style.display = "block";
+    } else {
+    subMenu.style.display = "none";
+    }
+}
+
 var texto = "SisChamados 2.0";
 var texto2 = "";
 var posicao = 0;

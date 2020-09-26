@@ -15,27 +15,7 @@ h1{
 .ui-filter-column .ui-column-customfilter .custom-filter {
     width: 100%;
     box-sizing: border-box;
-    }
-    
-
-#sidebarLeft {
-   margin-top: 300px;
-   width: 400px;
-   height: 200px;
-   float: left;
-}
-
-#itens tr:nth-child(odd){
-    background-color: gainsboro;
-    font-weight: bold;
-    font-size: large;
-}
-
-#itens tr:nth-child(even){
-    background-color: blue;
-    font-weight: bold;
-    font-size: large;
-}
+    }    
 
 #content {
     float: inside;
@@ -44,7 +24,6 @@ h1{
 table#menu{
         box-shadow: 10px 10px 5px #888888;
 	width: 60%;
-        background-color: #ccccff;
 	text-align: center;
 	height: 50px;
 }
@@ -56,7 +35,6 @@ table#menu td{
 }
 
 table#menu td:hover{
-        border: chartreuse solid 1px;
 	background-color: white;
         color: #ccccff;
 	cursor: pointer;   
@@ -65,7 +43,6 @@ table#menu td:hover{
 table#menuLeft{
         box-shadow: 10px 10px 5px #888888;
 	width: 55%;
-        background-color: #ccccff;
 	text-align: center;
 	height: 30px;
 }
@@ -77,7 +54,6 @@ table#menuLeft td{
 }
 
 table#menuLeft td:hover{
-        border: chartreuse solid 1px;
 	background-color: white;
         color: darkcyan;
 	cursor: pointer;   
@@ -104,22 +80,6 @@ table#menuLeft td:hover{
     margin-right: auto;
     padding: 10px;
     width: 50%;
-}
-
-.destaque {
-    font-weight: bold;
-    color: yellowgreen;
-}
-
-.chamativo {
-    font-weight: bold;
-    font-style: italic;
-    color: green;
-}
-
-.explicativo {
-    background-color: lawngreen;
-    width: 40%;
 }
 
 body {
@@ -160,23 +120,4 @@ body {
     background-color: transparent;
     color: aqua;
     cursor:pointer;
-}
-
-.botaoTabelaVermelho{
-    width: 130px;
-    height: 40px;
-    color: red;
-    background-color: transparent;
-    font-size: 14px;
-    border: 0;
-}
-
-.botaoTabelaVermelho:hover{
-    background-color: transparent;
-    font-size: 24px;
-    cursor:pointer;
-}
-
-h2{
-    text-align: center;
 }

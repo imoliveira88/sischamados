@@ -12,7 +12,7 @@
     <h:body>
         <ui:composition>
             
-            <h:outputStylesheet library="css" name="style.css"/>
+            <h:outputStylesheet library="css" name="style.css?v=1.1"/>
             
             <div id="heading">
                 <ui:insert name="heading">
@@ -27,14 +27,14 @@
                     <tr>
                         <td><h:form><h:commandButton styleClass="botaoTabela" action="#{logoutBean.logout()}" value="Logout" /></h:form></td>
                         <td onclick="location.href='/sischamados/faces/logado/usuario/pessoal.xhtml'">Pessoal</td>
-                        <td id="btChamados" onclick="location.href='/sischamados/faces/logado/usuario/meusChamados.xhtml'">Chamados</td>
+                        <td onmouseover="exibeMenu()">Chamados</td>
                         <td onclick="location.href='/sischamados/faces/logado/usuario/documentacao.xhtml'">Documentação</td>
                         <td onclick="location.href='/sischamados/faces/logado/usuario/sobre.xhtml'">Sobre</td>
                     </tr>
                 </table>
                 <br/>
                 <br/>
-                <table id="menuLeft" align="center" width="100%">
+                <table id="menuLeft" style="display: none" align="center" width="100%">
                     <tr>
                         <td onclick="location.href='/sischamados/faces/logado/usuario/meusChamados.xhtml'">Meus chamados</td>
                         <td onclick="location.href='/sischamados/faces/logado/usuario/chamadosSatisfacao.xhtml'">Chamados executados</td>

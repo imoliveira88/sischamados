@@ -71,24 +71,6 @@ public class Chamado implements Serializable {
     @Size(max = 2000)
     @Column(name = "HISTORICO")
     private String historico;
-    
-    public String ultimo(String s){
-        String aux = "";
-        for(int i=0; i < s.length(); i++){
-            if(s.charAt(i)==',' ) aux = "";
-            else aux += s.charAt(i);
-        }
-        return aux;
-    }
-    
-    public String exibeTrack(String s){
-        String aux = "";
-        for(int i=0; i < s.length(); i++){
-            if(s.charAt(i)==',' ) aux += " => ";
-            else aux += s.charAt(i);
-        }
-        return aux;
-    }
 
     public Long getId() {
         return id;

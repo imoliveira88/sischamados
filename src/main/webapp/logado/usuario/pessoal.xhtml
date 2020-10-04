@@ -13,7 +13,7 @@
     <h:body>
 
 
-        <ui:decorate template="/templates/decoratorPadrao.xhtml">
+        <ui:decorate template="/templates/masterDecorator.xhtml">
 
             <br/>
             <br/>
@@ -25,7 +25,7 @@
                         <td>
 
                             <p:growl id="msgs" for="destinoAviso" autoUpdate="true" showDetail="true" life="4000"/>
-                            <p:fieldset class="field" legend="Cadastro de usuário" style="margin-bottom:20px; background-color: beige">
+                            <p:fieldset class="field" legend="Cadastro de usuário" style="margin-bottom:20px; background-color: lightsteelblue">
                                 <h:panelGrid columns="2" id = "cham"  cellpadding="5">
 
                                     <p:outputLabel for="nome" value="Nome" />
@@ -68,7 +68,7 @@
                 <tr>
                     <td>
                         <h:form>
-                        <p:fieldset class="field" legend="Usuários cadastrados" style="margin-bottom:20px; background-color: beige">
+                        <p:fieldset class="field" legend="Usuários cadastrados" style="margin-bottom:20px; background-color: lightsteelblue">
                             <h:panelGrid columns="2" id = "sol"  cellpadding="5">
                                 <p:dataTable var="pessoa" value="#{pessoaMB.retornaPessoasDivisao(usuario.getDivisao())}" rowKey="#{pessoa.id}" selection="#{pessoaMB.pessoaSelecionada}" selectionMode="single">
                                     <p:column>

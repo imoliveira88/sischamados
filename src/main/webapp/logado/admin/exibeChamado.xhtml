@@ -27,7 +27,7 @@
                 </td>
                 <td>
                     <h:form enctype="multipart/form-data" id="form">
-                        <p:fieldset legend="Chamado #{chamadoMB.chamadoSelecionado.id}" style="margin-bottom:20px; background-color: beige">
+                        <p:fieldset legend="Chamado #{chamadoMB.chamadoSelecionado.id}" style="margin-bottom:20px; background-color: lightsteelblue">
                             
                             <h:panelGrid columns="4"  cellpadding="5">
 
@@ -76,12 +76,12 @@
                             </h:panelGrid>
                             </p:fieldset>
                         
-                        <p:fieldset legend="Descrição" style="margin-bottom:20px; background-color: beige">
+                        <p:fieldset legend="Descrição" style="margin-bottom:20px; background-color: lightsteelblue">
                                 
                                 <h:outputText value="#{chamadoMB.chamadoSelecionado.descricao}" escape="false" styleClass="descricao"/>
                         </p:fieldset>
                         
-                        <p:fieldset legend="Acrescentar à descrição" style="margin-bottom:20px; background-color: beige" >
+                        <p:fieldset legend="Acrescentar à descrição" style="margin-bottom:20px; background-color: lightsteelblue" >
                                 <p:textEditor widgetVar="editor2" value="#{chamadoMB.texto}" height="100" style="width: 400px"  >
                                     <f:facet name="toolbar">
                                         <span class="ql-formats">
@@ -102,7 +102,7 @@
                         </p:fieldset>
 
 
-                        <p:fieldset class="field" legend="Histórico" style="margin-bottom:20px; background-color: beige">
+                        <p:fieldset class="field" legend="Histórico" style="margin-bottom:20px; background-color: lightsteelblue">
                             <h:panelGrid columns="1" id = "sol"  cellpadding="5">
 
                                 <h:outputText value="#{chamadoMB.chamadoSelecionado.historico}" escape="false"/>

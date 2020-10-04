@@ -2,7 +2,7 @@ var texto1 = document.getElementById("texto");
 var timer = setInterval(digita, 200);
 
 function exibeMenu(){
-    var subMenu = document.getElementById("menuLeft");
+    var subMenu = document.getElementById("menuCham");
     if (subMenu.style.display === "none") {
     subMenu.style.display = "block";
     } else {
@@ -10,7 +10,7 @@ function exibeMenu(){
     }
 }
 
-var texto = "SisChamados 2.0";
+var texto = "SisChamados 2.1";
 var texto2 = "";
 var posicao = 0;
 

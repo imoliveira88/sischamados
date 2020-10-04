@@ -24,9 +24,6 @@ import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "TB_DIVISAO")
-@NamedQueries(value = 
-        {@NamedQuery(name = "Divisao.TODAS", query= " SELECT u FROM Divisao u ORDER BY u.nome"),
-         @NamedQuery(name = "Divisao.DIVISAO_POR_NUMERO", query = " SELECT u FROM Divisao u WHERE u.numero = :numero")})
 public class Divisao implements Serializable {
 
     private static final long serialVersionUID = 1L;

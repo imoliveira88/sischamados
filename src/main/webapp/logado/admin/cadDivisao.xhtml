@@ -24,7 +24,7 @@
                         <td>
                             <p:growl id="msgs" for="destinoAviso" autoUpdate="true" showDetail="true" life="4000"/>
 
-                            <p:fieldset class="field" legend="Cadastro de divisão" style="margin-bottom:20px; background-color: beige">
+                            <p:fieldset class="field" legend="Cadastro de divisão" style="margin-bottom:20px; background-color: lightsteelblue">
                                 <h:panelGrid columns="2" id = "sol"  cellpadding="5">
 
                                     <p:outputLabel for="nome" value="Nome da divisão" />
@@ -47,7 +47,7 @@
                 <tr>
                     <td>
                         <h:form>
-                        <p:fieldset class="field" legend="Divisões cadastradas" style="margin-bottom:20px; background-color: beige">
+                        <p:fieldset class="field" legend="Divisões cadastradas" style="margin-bottom:20px; background-color: lightsteelblue">
                             <h:panelGrid columns="2" id = "sol"  cellpadding="5">
                                 <p:dataTable id="lista" rows="10" rowsPerPageTemplate="5,10,15" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" paginator="true" var="divisao" value="#{divisaoMB.divisoes}" rowKey="#{divisao.id}" selection="#{divisaoMB.divisaoSelecionada}" selectionMode="single">
                                     <p:column>

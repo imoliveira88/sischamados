@@ -56,7 +56,10 @@
                                     <h:outputText value="#{chamado.tempo_solucao}" />
                                 </p:column>
                             </p:dataTable>
-                            <h:commandButton styleClass="botaoTabela" value="Exibir" action="#{chamadoMB.exibeChamado(chamadoMB.chamadoSelecionado.id)}" />
+                            <h:panelGrid columns="2" cellpadding="5">
+                                <h:commandButton id="atualizaPessoa" styleClass="botaoTabela" value="Finalizar" action="#{chamadoMB.finalizaChamado(chamadoMB.chamadoSelecionado.id)}"/>
+                            </h:panelGrid>
+                            
                         </p:fieldset>
                         
                     </h:form>

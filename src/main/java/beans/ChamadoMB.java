@@ -270,6 +270,21 @@ public class ChamadoMB extends Artificial implements Serializable{
         chamadoSelecionado = (new ChamadoServico()).getById(id);
         return "exibeMeuChamado.xhtml?faces-redirect=true";
     }
+
+    public String finalizaChamado(Long id) throws Exception{
+        Chamado cha = (new ChamadoServico()).getById(id);
+        cha.setStatus("Satisfeito");
+        if ((new ChamadoServico()).atualizaChamado(cha)) {
+                if (chamadoSelecionado.getStatus().equals("Satisfeito") && semAlteracao(cha)!=1) {
+                    adicionaMensagem("Chamado de número " + cha.getId() + " finalizado!", "destinoAviso","SUCESSO!");
+                } else {
+                    adicionaMensagem("Chamado de número " + cha.getId() + " atualizado!", "destinoAviso", "SUCESSO!");
+                }
+            } else {
+                adicionaMensagem("Status não pode ser alterado!", "destinoAviso","ERRO!");
+            }
+        return "";
+    }
     
     public String atualizaChamado(String destino) throws IllegalArgumentException, Exception {
         try {
@@ -312,8 +327,8 @@ public class ChamadoMB extends Artificial implements Serializable{
             
             this.texto = "";
                         
-            if (status.equals("Executado")) cha.setTempo_solucao(tempoResolucao);
-            
+            cha.setTempo_solucao(tempoResolucao);
+
             cha.setDescricao(novaDesc);
             
             if (pra.atualizaChamado(cha)) {
@@ -385,70 +400,6 @@ public class ChamadoMB extends Artificial implements Serializable{
             }
             return 0; //caso tenha sido lançada uma NullPointerException, será considerado que nada foi alterado
         }
-    }
-
-    public String finalizaChamado(String destino) throws Exception {
-        ChamadoServico pra = new ChamadoServico();
-        Chamado cha = chamadoSelecionado;
-        cha.setStatus("Satisfeito");
-
-        FacesContext fc = FacesContext.getCurrentInstance();
-        HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
-        String historico = cha.getHistorico();
-
-        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-        Date date = new Date();
-        System.out.println(dateFormat.format(date));
-
-        String novaDesc;
-        if(this.texto.equals("")) novaDesc = chamadoSelecionado.getDescricao();
-            else{
-                novaDesc = chamadoSelecionado.getDescricao();
-                novaDesc += "<br/><b>" + dateFormat.format(date) + " " + session.getAttribute("usuario").toString() + "</b> " +  this.texto;
-            }
-        cha.setDescricao(novaDesc);
-        
-        this.texto = "";
-
-        long diff = Calendar.getInstance().getTimeInMillis() - cha.getData().getTime();
-        long diffHours = diff / (60 * 60 * 1000);
-                
-        if(diffHours < 12) cha.setTempo_solucao(0);
-        else cha.setTempo_solucao((int) diffHours - 12);
-
-        String auxStatus, auxAtribuido, auxPrioridade;
-        if (status == null) {
-            auxStatus = "nulo";
-        } else {
-            auxStatus = status;
-        }
-
-        if (atribuido == null) {
-            auxAtribuido = "nulo";
-        } else {
-            auxAtribuido = atribuido;
-        }
-
-        if (prioridade == null) {
-            auxPrioridade = "nulo";
-        } else {
-            auxPrioridade = prioridade;
-        }
-
-        if (semAlteracao(cha) == 1) {
-            historico += "<br/><b>" + dateFormat.format(date) + " " + session.getAttribute("usuario").toString() + "</b> alterou status para " + auxStatus + ", atribuído para " + auxAtribuido + " e prioridade para " + auxPrioridade;
-            cha.setHistorico(historico);
-        } else if (semAlteracao(cha) == 2) {
-            historico += "<br/><b>" + dateFormat.format(date) + " " + session.getAttribute("usuario").toString() + "</b> atualizou a descrição";
-            cha.setHistorico(historico);
-        }
-
-        if (pra.atualizaChamado(cha)) {
-            adicionaMensagem("Chamado de número " + cha.getId() + " finalizado!", "destinoAviso", "SUCESSO!");
-        } else {
-            adicionaMensagem("Status não pode ser finalizado!", "destinoAviso", "ERRO!");
-        }
-        return destino;
     }
     
     public List<String> getPrioridades(){

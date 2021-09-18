@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    
+    <h:head>
+        <title>Nova senha</title> 
+        <h:outputStylesheet library="css" name="style.css"/>
+    </h:head>
+    <h:body>
+
+        <ui:decorate template="/templates/masterDecorator.xhtml">
+            
+            <br/>
+            <br/>
+
+            <h:form id="login" class="formGeral">
+                <p:fieldset class="field" legend="Alterar senha" style="background-color: lightsteelblue">
+                    <p:growl id="msgs" for="destinoAviso" autoUpdate="true" showDetail="true" life="4000"/>
+
+                    <p:outputLabel value="Nova senha" />
+                    
+                    <h:panelGrid columns="2" cellpadding="5">
+
+                        <p:outputLabel value="Senha atual:" />
+                        <p:password id="atual" value="#{loginBean.senha}"/>
+
+                        <p:outputLabel value="Nova senha:" />
+                        <p:password id="nova" value="#{loginBean.senhaNova}" />
+                        
+                        <h:commandButton styleClass="botaoTabela" value="Alterar senha" action="#{loginBean.alterarSenha()}" />
+
+                    </h:panelGrid>
+
+                </p:fieldset>
+                
+                
+            </h:form>
+            
+        </ui:decorate>
+
+    </h:body>
+</html>

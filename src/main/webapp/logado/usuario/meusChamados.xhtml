@@ -1,0 +1,76 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>Chamados</title>
+        <h:outputStylesheet library="css" name="style.css" />
+    </h:head>
+    <h:body>
+
+
+        <ui:decorate template="/templates/masterDecorator.xhtml">
+        
+        <table align="center" width="80%"> 
+            <tr>
+                <td>
+                    <h:form id="aviso">
+                        <p:growl id="msgs" for="destinoAviso" autoUpdate="true" showDetail="true" life="4000"/>
+                    </h:form>
+
+                </td>
+                <td>
+                    <h:form enctype="multipart/form-data" id="form">
+                        <p:fieldset legend="Meus chamados" style="margin-bottom:20px; background-color: lightsteelblue">
+                            <h:outputText value="Exibir chamados com status " />
+                            <p:selectOneMenu value="#{chamadoMB.exibir}" >
+                                <f:selectItems value="#{chamadoMB.listaStatus()}" var="status" itemValue="#{status}"/>
+                                <f:selectItem itemLabel="TODOS" itemValue="TODOS" noSelectionOption="true"/>
+                                <p:ajax event="itemSelect" update=":form:detalhes"/>
+                            </p:selectOneMenu>
+                            <br/><br/>
+                            
+                            <p:dataTable id="detalhes" paginator="true" rows="10" rowsPerPageTemplate="5,10,15" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" emptyMessage="Não há chamados criados por sua divisão com esse critério!"  var="chamado" value="#{chamadoMB.getChamadosPorDivisaoStatus(usuario.divisao,chamadoMB.exibir)}" rowKey="#{chamado.id}" selection="#{chamadoMB.chamadoSelecionado}" selectionMode="single">
+                                <p:column filterBy="#{chamado.id}" headerText="ID" filterMatchMode="contains">
+                                        <h:outputText value="#{chamado.id}"/>
+                                </p:column>
+                                <p:column>
+                                    <f:facet name="header">Status</f:facet>
+                                    <h:outputText value="#{chamado.status}"/>
+                                </p:column>
+                                <p:column>
+                                    <f:facet name="header">Solicitado</f:facet>
+                                    <h:outputText value="#{chamado.solicitado}"/>
+                                </p:column>
+                                <p:column>
+                                    <f:facet name="header">Prioridade</f:facet>
+                                    <h:outputText value="#{chamado.prioridade}"/>
+                                </p:column>
+                                <p:column>
+                                    <f:facet name="header">Título</f:facet>
+                                    <h:outputText value="#{chamado.titulo}"/>
+                                </p:column>
+                                <p:column>
+                                    <f:facet name="header">Data</f:facet>
+                                    <h:outputText value="#{chamado.data}"/>
+                                </p:column>
+                                <p:column>
+                                    <f:facet name="header">Tempo de resolução (em horas)</f:facet>
+                                    <h:outputText value="#{chamado.tempo_solucao}" />
+                                </p:column>
+                            </p:dataTable>
+                            <h:commandButton styleClass="botaoTabela" value="Exibir" action="#{chamadoMB.exibeMeuChamado(chamadoMB.chamadoSelecionado.id)}" />
+                        </p:fieldset>
+                        
+                    </h:form>
+                </td>
+            </tr>
+        </table>
+            
+        </ui:decorate>
+            
+    </h:body>
+</html>

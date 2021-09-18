@@ -1,0 +1,68 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <h:head>
+        <title>IGNORED</title>        
+    </h:head>
+
+    <h:body>
+        <ui:composition>
+            
+            <h:outputStylesheet library="css" name="style.css"/>
+            
+            <div id="heading">
+                <ui:insert name="heading">
+                    <ui:include src="/templates/header.xhtml"/>
+                </ui:insert>
+            </div>
+            
+            <h:outputScript library="js" name="teste.js"/>
+            
+            <div id="content">
+                <table id="menu" align="center">
+                    <tr>
+                        <td><h:form><h:commandButton styleClass="botaoTabela" action="#{logoutBean.logout()}" value="Logout" /></h:form></td>
+                        <td onclick="location.href='/sischamados/faces/logado/admin/cadDivisao.xhtml'">Divisões</td>
+                        <td onclick="location.href='/sischamados/faces/logado/admin/cadPessoa.xhtml'">Usuários</td>
+                        <td onclick="location.href='/sischamados/faces/logado/admin/relatorios.xhtml'">Relatorios</td>
+                    </tr>
+                </table>
+                
+                <br/>
+                <br/>
+                
+                
+                
+                <table width="40%" align="center">
+                    <tr>
+                <td>
+                    <h:form enctype="multipart/form-data">
+
+                            <p:fieldset legend="Sessões ativas" style="margin-bottom:20px">
+                                <p:dataTable id="detalhes" var="sessao" value="#{loginBean.listaSessoes()}" emptyMessage="Não há sessões ativas!">
+
+                                <p:column>
+                                    <f:facet name="header">Usuário</f:facet>
+                                    <h:outputText value="#{sessao.getAttribute('usuario').toString()}"/>
+                                </p:column>
+                                
+                            </p:dataTable>
+                                
+                        </p:fieldset>
+                        
+                    </h:form>
+                </td>
+            </tr>
+        </table>
+                
+            <ui:insert/>
+            </div>
+        </ui:composition>
+    </h:body>
+</html>

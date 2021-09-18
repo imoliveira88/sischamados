@@ -1,0 +1,131 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>Exibe chamado</title>
+        <h:outputStylesheet library="css" name="style.css" />
+    </h:head>
+    <h:body>
+
+
+        <ui:decorate template="/templates/masterDecorator.xhtml">
+            
+            <br/><br/>
+            
+        
+            <table align="center" width="35%">
+            <tr>
+                <td>
+                    <h:form id="aviso">
+                        <p:growl id="msgs" for="destinoAviso" autoUpdate="true" showDetail="true" life="4000"/>
+                    </h:form>
+
+                </td>
+                <td>
+                    <h:form enctype="multipart/form-data" id="form">
+                        <p:fieldset legend="Chamado #{chamadoMB.chamadoSelecionado.id}" style="margin-bottom:20px; background-color: lightsteelblue">
+
+                            <h:panelGrid columns="4"  cellpadding="5">
+
+                                <h:outputText value="Status"/>
+                                <h:outputText value="#{chamadoMB.chamadoSelecionado.status}"/>
+
+                                <h:outputText value="Alterar para:"/>
+
+                                <p:selectOneMenu value="#{chamadoMB.chamadoSelecionado.status}">
+                                    <f:selectItems value="#{chamadoMB.listaProxStatusPrestador(chamadoMB.chamadoSelecionado.status)}" var="status" itemValue="#{status}"/>
+                                    </p:selectOneMenu>
+
+                                    <h:outputText value="Atribuído a"/>
+                                    <h:outputText value="#{chamadoMB.chamadoSelecionado.atribuido}" />
+
+                                    <h:outputText value="Atribuir a:"/>
+                                    <p:selectOneMenu value="#{chamadoMB.chamadoSelecionado.atribuido}">
+                                        <f:selectItems value="#{pessoaMB.retornaPessoasDivisao(usuario.divisao)}" var="divi" itemValue="#{divi}"/>
+                                    </p:selectOneMenu>
+
+                                    <h:outputText value="Prioridade"/>
+                                    <h:outputText value="#{chamadoMB.chamadoSelecionado.prioridade}" />
+
+                                    <h:outputText value="Alterar para:"/>
+                                    <p:selectOneMenu value="#{chamadoMB.chamadoSelecionado.prioridade}">
+                                        <f:selectItems value="#{chamadoMB.prioridades}" var="prior" itemValue="#{prior}"/>
+                                    </p:selectOneMenu>
+                                    
+                                    <h:outputText value="Tempo de resolução: "/>
+                                    <p:inputMask id="userNo1"  maxlength="2" mask="9?9999" value="#{chamadoMB.tempoResolucao}"/>
+                                    <h:outputText value="horas" />
+                            </h:panelGrid>
+
+                            <h:panelGrid columns="2"  cellpadding="5">
+
+                                <h:outputText value="Solicitante"/>
+                                <h:outputText value="#{chamadoMB.chamadoSelecionado.solicitante}"/>
+
+                                <h:outputText value="Telefone"/>
+                                <h:outputText value="#{chamadoMB.chamadoSelecionado.solicitante.telefone}"/>
+
+                                <h:outputText value="E-mail"/>
+                                <h:outputText value="#{chamadoMB.chamadoSelecionado.solicitante.email}"/>
+
+                                <h:outputText value="Título"/>
+                                <h:outputText value="#{chamadoMB.chamadoSelecionado.titulo}"/>
+
+                                <h:outputText value="Data"/>
+                                <h:outputText value="#{chamadoMB.chamadoSelecionado.data}"/>
+
+                            </h:panelGrid>
+                            
+                            <h:panelGrid columns="1" cellpadding="5">
+                                <h:commandButton value="Encaminhar chamado" action="#{chamadoMB.encaminhaChamado('encaminharChamado')}"/>
+                            </h:panelGrid>
+                        </p:fieldset>
+
+                        <p:fieldset legend="Descrição" style="margin-bottom:20px; background-color: lightsteelblue">
+
+                            <h:outputText value="#{chamadoMB.chamadoSelecionado.descricao}" escape="false" styleClass="descricao"/>
+                        </p:fieldset>
+
+                        <p:fieldset legend="Acrescentar à descrição" style="margin-bottom:20px; background-color: lightsteelblue" >
+                            <p:textEditor widgetVar="editor2" value="#{chamadoMB.texto}" height="100" style="width: 400px"  >
+                                <f:facet name="toolbar">
+                                    <span class="ql-formats">
+                                        <button class="ql-bold"></button>
+                                        <button class="ql-italic"></button>
+                                        <button class="ql-underline"></button>
+                                        <button class="ql-strike"></button>
+                                    </span>
+                                    <span class="ql-formats">
+                                        <select class="ql-size"></select>
+                                    </span>
+                                </f:facet>
+                            </p:textEditor>
+                            
+                            <h:panelGrid columns="1">
+                                <h:commandButton value="Atualizar" action="#{chamadoMB.atualizaChamado('chamadosParaDivisao')}"/>
+                            </h:panelGrid>
+  
+                        </p:fieldset>
+
+
+                        <p:fieldset class="field" legend="Histórico" style="margin-bottom:20px; background-color: lightsteelblue">
+                            <h:panelGrid columns="1" id = "sol"  cellpadding="5">
+
+                                <h:outputText value="#{chamadoMB.chamadoSelecionado.historico}" escape="false"/>
+
+                            </h:panelGrid>
+                        </p:fieldset>
+
+                    </h:form>
+                </td>
+            </tr>
+        </table>
+            
+        </ui:decorate>
+            
+    </h:body>
+</html>

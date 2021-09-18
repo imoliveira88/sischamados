@@ -1,0 +1,114 @@
+h2{
+    color: blue;
+    text-align: center;
+    margin-top: 15px;
+    margin-bottom: -30px;
+}
+
+h1{
+    color: blue;
+    text-align: center;
+    margin-top: 15px;
+    margin-bottom: -30px;
+}
+
+.ui-filter-column .ui-column-customfilter .custom-filter {
+    width: 100%;
+    box-sizing: border-box;
+    }    
+
+#content {
+    float: inside;
+}
+
+table#menu{
+        box-shadow: 10px 10px 5px #888888;
+        background-color: #ccccff;
+	width: 60%;
+	text-align: center;
+	height: 50px;
+}
+
+table#menu td{
+        background-color: #ccccff;
+        color: #ffffff;      
+        font-size: large;
+}
+
+table#menu td:hover{
+	background-color: white;
+        color: #ccccff;
+	cursor: pointer;   
+}
+
+#menuCham{
+    display: none;
+}
+
+table#menuLeft{
+        box-shadow: 10px 10px 5px #888888;
+        background-color: dodgerblue;
+	width: 55%;
+	text-align: center;
+	height: 30px;
+}
+
+table#menuLeft td{
+        background-color: dodgerblue;
+        color: #ffffff;
+        font-size: large;        
+}
+
+table#menuLeft td:hover{
+	background-color: white;
+        color: dodgerblue;
+	cursor: pointer;   
+}
+
+#corpo{
+        align-self: center;
+	width: 70%;
+        background-color: white;
+	text-align: justify;
+        appearance: desktop;
+}
+
+body {
+    background-color: white;
+}
+
+.formGeral{
+    width: 40%;
+    margin: 0 auto;
+}
+
+*{
+    font-family: Verdana;
+}
+
+.botao{
+    width: 110px;
+    height: 40px;
+    background-color: lightblue;
+    font-size: 14px;
+}
+
+.botaoTabela{
+    width: 130px;
+    height: 40px;
+    background-color: transparent;
+    font-size: 14px;
+    border: 0;
+}
+
+.botao:hover{
+    background-color: transparent;
+    color: aqua;
+    cursor:pointer;
+}
+
+.botaoTabela:hover{
+    background-color: transparent;
+    color: aqua;
+    cursor:pointer;
+}

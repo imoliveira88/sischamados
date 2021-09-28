@@ -10,7 +10,7 @@ function exibeMenu(){
     }
 }
 
-var texto = "SisChamados 2.1";
+var texto = "SisChamados 3.0";
 var texto2 = "";
 var posicao = 0;
 

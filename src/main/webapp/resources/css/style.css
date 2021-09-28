@@ -6,7 +6,7 @@ h2{
 }
 
 h1{
-    color: blue;
+    color: dodgerblue;
     text-align: center;
     margin-top: 15px;
     margin-bottom: -30px;
@@ -23,21 +23,21 @@ h1{
 
 table#menu{
         box-shadow: 10px 10px 5px #888888;
-        background-color: #ccccff;
+        background-color: #ffffff;
 	width: 60%;
 	text-align: center;
 	height: 50px;
 }
 
 table#menu td{
-        background-color: #ccccff;
-        color: #ffffff;      
+        background-color: #ffffff;
+        color: dodgerblue;      
         font-size: large;
 }
 
 table#menu td:hover{
-	background-color: white;
-        color: #ccccff;
+	background-color: dodgerblue;
+        color: #ffffff;
 	cursor: pointer;   
 }
 
@@ -47,21 +47,21 @@ table#menu td:hover{
 
 table#menuLeft{
         box-shadow: 10px 10px 5px #888888;
-        background-color: dodgerblue;
+        background-color: #ffffff;
 	width: 55%;
 	text-align: center;
 	height: 30px;
 }
 
 table#menuLeft td{
-        background-color: dodgerblue;
-        color: #ffffff;
+        background-color: #ffffff;
+        color: dodgerblue;
         font-size: large;        
 }
 
 table#menuLeft td:hover{
-	background-color: white;
-        color: dodgerblue;
+	background-color: dodgerblue;
+        color: #ffffff;
 	cursor: pointer;   
 }
 

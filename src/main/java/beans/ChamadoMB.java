@@ -39,15 +39,11 @@ public class ChamadoMB extends Artificial implements Serializable{
     private String divisao;
     private List<Chamado> chamFiltrados;
     private List<Chamado> chamFiltradosDivisao;
-    private int linhasExistentes;
     private String atribuido;
     private String texto;
     private BarChartModel barModel;
     private int maior;
     private int tempoResolucao;
-    
-    private List<Integer> chamadosPara;
-    private List<Integer> chamadosDe;
 
     public ChamadoMB() throws Exception {
         chamado = new Chamado();
@@ -461,12 +457,7 @@ public class ChamadoMB extends Artificial implements Serializable{
             model.addSeries(lista.get(i));
         }
         
- 
         return model;
-    }
- 
-    private void createBarModels() throws Exception {
-        createBarModel();
     }
  
     private void createBarModel() throws Exception {

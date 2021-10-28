@@ -178,4 +178,18 @@ public class PessoaServico extends DAOGenericoJPA<Long, Pessoa>{
         }
     }
     
+    public List<Pessoa> pessoasOrdenadasNome()throws NoResultException, Exception{
+        this.queryMataConexoes();
+        Query query = super.getEm().createQuery("SELECT e FROM Pessoa e ORDER BY e.nome");
+        List<Pessoa> pessoas;
+        
+        try{
+            pessoas = query.getResultList();
+            return pessoas;
+        }
+        catch(NoResultException e){
+            return new ArrayList<>();
+        }
+    }
+    
 }

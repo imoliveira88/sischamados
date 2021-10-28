@@ -180,8 +180,7 @@ public class PessoaMB extends Artificial implements Serializable{
     }
     
     public List<Pessoa> getPessoas() throws Exception{
-        return (new PessoaServico()).findAll();
-        //return (new PessoaServico()).pessoas();
+        return (new PessoaServico()).pessoasOrdenadasNome();
     }
     
     public String cadastraUsuario() throws ParseException, SQLException{

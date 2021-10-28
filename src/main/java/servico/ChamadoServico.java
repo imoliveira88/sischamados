@@ -209,8 +209,8 @@ public class ChamadoServico extends DAOGenericoJPA<Long, Chamado>{
         
         Query query;
         
-        if(daPara.equals("da")) query = super.getEm().createQuery("SELECT e FROM Chamado e WHERE e.solicitante.divisao.nome = :parametro ORDER BY e.id DESC, e.data DESC, e.status, e.solicitado");
-        else query = super.getEm().createQuery("SELECT e FROM Chamado e WHERE e.solicitado = :parametro ORDER BY e.id DESC, e.data DESC, e.status, e.solicitado");
+        if(daPara.equals("da")) query = super.getEm().createQuery("SELECT e FROM Chamado e WHERE e.solicitante.divisao.nome = :parametro ORDER BY e.data DESC, e.id DESC, e.status, e.solicitado");
+        else query = super.getEm().createQuery("SELECT e FROM Chamado e WHERE e.solicitado = :parametro ORDER BY e.data DESC, e.id DESC, e.status, e.solicitado");
         
         query.setParameter("parametro",parametro);
         List<Chamado> resultado = new ArrayList<>();

@@ -83,8 +83,7 @@ public class DivisaoMB extends Artificial implements Serializable{
     }
     
     public List<Divisao> getDivisoes() throws Exception{
-        return (new DivisaoServico()).findAll();
-        //return new DivisaoServico().todasDivisoes();
+        return (new DivisaoServico()).divisoesOrdenadasNome();
     }
     
     public List<Divisao> getPrestadores() throws Exception{

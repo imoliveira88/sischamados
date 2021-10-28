@@ -85,4 +85,10 @@ public class DivisaoServico extends DAOGenericoJPA<Long, Divisao>{
         Query query = super.getEm().createQuery("SELECT e FROM Divisao e WHERE e.prestadora=TRUE");
         return query.getResultList();
     }
+    
+    public List<Divisao> divisoesOrdenadasNome() throws Exception {
+        //this.queryMataConexoes();
+        Query query = super.getEm().createQuery("SELECT e FROM Divisao e ORDER BY e.nome");
+        return query.getResultList();
+    }
 }

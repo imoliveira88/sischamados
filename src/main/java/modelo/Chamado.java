@@ -57,16 +57,13 @@ public class Chamado implements Serializable {
     private Date data;
     
     @Column(name = "SOLICITADO")
-    private String solicitado; //Track do setor solicitado
+    private String solicitado;
     
     @Column(name = "STATUS")
-    private String status; //Track do status do chamado
+    private String status;
     
     @Column(name = "ATRIBUIDO_A")
     private String atribuido; //Track das atribuições
-    
-    @Column(name = "TEMPO_SOLUCAO")
-    private int tempo_solucao; //Tempo dado em dias. Quando o status for definido como "Executado", atualizar também esse campo
     
     @Size(max = 2000)
     @Column(name = "HISTORICO")
@@ -151,16 +148,7 @@ public class Chamado implements Serializable {
     public void setAtribuido(String atribuido) {
         this.atribuido = atribuido;
     }
-
-    public int getTempo_solucao() {
-        return tempo_solucao;
-    }
-
-    public void setTempo_solucao(int tempo_solucao) {
-        this.tempo_solucao = tempo_solucao;
-    }
-    
-    
+   
 
     @Override
     public boolean equals(Object other) {

@@ -38,7 +38,7 @@ public class Pessoa implements Serializable {
     private List<Chamado> chamados;
     
     //@NotNull
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_DIVISAO", referencedColumnName = "ID_DIVISAO")
     private Divisao divisao;
     
@@ -65,7 +65,7 @@ public class Pessoa implements Serializable {
     
     @NotNull
     @Column(name = "MILITAR")
-    private boolean militar;//no front-end implementar a aquisição uma drop-down com "militar" e "civil" como opções
+    private boolean militar;
     
     @NotBlank
     @Column(name = "SENHA")

@@ -21,26 +21,19 @@
     </navigation-rule>
     
     <navigation-rule>
-        <from-view-id>/logado/admin/relatorios.xhtml</from-view-id>
-        <navigation-case>
-            <from-outcome>relatorios</from-outcome>
-            <to-view-id>/logado/admin/relatorios.xhtml</to-view-id>
-        </navigation-case>  
-    </navigation-rule>
-    
-    <navigation-rule>
-        <from-view-id>/logado/usuario/chamadosParaDivisao.xhtml</from-view-id>
-        <navigation-case>
-            <from-outcome>chamadosParaDivisao</from-outcome>
-            <to-view-id>/logado/usuario/chamadosParaDivisao.xhtml</to-view-id>
-        </navigation-case>  
-    </navigation-rule>
-    
-    <navigation-rule>
         <from-view-id>/login.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>login</from-outcome>
             <to-view-id>/login.xhtml</to-view-id>
+            <redirect/>   
+        </navigation-case>  
+    </navigation-rule>
+    
+    <navigation-rule>
+        <from-view-id>/contateAdmin.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>contateAdmin</from-outcome>
+            <to-view-id>/contateAdmin.xhtml</to-view-id>
             <redirect/>   
         </navigation-case>  
     </navigation-rule>
@@ -54,18 +47,26 @@
     </navigation-rule>
     
     <navigation-rule>
-        <from-view-id>/admin/cadDivisao.xhtml</from-view-id>
+        <from-view-id>/logado/admin/cadDivisao.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>cadDivisao</from-outcome>
-            <to-view-id>/admin/cadDivisao.xhtml</to-view-id>
+            <to-view-id>/logado/admin/cadDivisao.xhtml</to-view-id>
         </navigation-case>  
     </navigation-rule>
     
     <navigation-rule>
-        <from-view-id>/admin/cadPessoa.xhtml</from-view-id>
+        <from-view-id>/logado/admin/cadPessoa.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>cadPessoa</from-outcome>
-            <to-view-id>/admin/cadPessoa.xhtml</to-view-id>
+            <to-view-id>/logado/admin/cadPessoa.xhtml</to-view-id>
+        </navigation-case>  
+    </navigation-rule>
+    
+    <navigation-rule>
+        <from-view-id>/logado/admin/relatorios.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>relatorios</from-outcome>
+            <to-view-id>/logado/admin/relatorios.xhtml</to-view-id>
         </navigation-case>  
     </navigation-rule>
     

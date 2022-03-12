@@ -119,7 +119,6 @@ public class PessoaServico extends DAOGenericoJPA<Long, Pessoa>{
     }
     
     public void resetaSenha(Long id) throws NoSuchAlgorithmException, Exception{
-        this.queryMataConexoes();
         if(!super.getEm().getTransaction().isActive()) super.getEm().getTransaction().begin();
         
         Pessoa pes = super.getEm().find(Pessoa.class,id);
@@ -132,9 +131,7 @@ public class PessoaServico extends DAOGenericoJPA<Long, Pessoa>{
     public boolean existePessoa(Pessoa usu) throws NoResultException, IndexOutOfBoundsException, Exception{
         Query query = super.getEm().createQuery("SELECT count(e) FROM Pessoa e WHERE e.nip = :nip");
         query.setParameter("nip", usu.getNip());
-        
-        this.queryMataConexoes();
-       
+               
         try{
             int quantidade = Integer.parseInt(query.getResultList().get(0).toString());
             super.getEm().close();

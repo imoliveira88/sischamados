@@ -11,32 +11,22 @@
     </h:head>
     <h:body>
 
-        <ui:decorate template="/templates/usuarioDecorator.xhtml">
+        <ui:decorate template="/templates/masterDecorator.xhtml">
             
             <br/>
             <br/>
 
             <h:form id="login" class="formGeral">
-                <p:fieldset class="field" legend="Sobre" style="background-color: lightsteelblue">
+                <p:fieldset class="field" legend="Documentação" style="background-color: lightsteelblue">
                     <p:growl id="msgs" for="destinoAviso" showDetail="true" life="4000"/>
                     
                     <h:panelGrid columns="2" cellpadding="5">
 
-                        <p:outputLabel for="versao" value="Versão" />
-                        <p:outputLabel id="versao" value="3.0"/>
+                        <p:commandLink value="Manual do Usuário (300 KB)" onclick="location.href='/sischamados/resources/documentos/manual1.pdf'" />
 
-                        <p:outputLabel for="descricao" value="Descrição" />
-                        <p:outputLabel id="descricao" value="Sistema de gerenciamento corporativo de chamados, elaborado segundo requisitos definidos pelo CMASM" />
-
-                        <p:outputLabel value="Desenvolvimento" />
-                        <p:outputLabel value="1T(EN) MAGALHÃES"/>
-                        
-                        <p:outputLabel value="Pesquisa e implantação" />
-                        <p:outputLabel value="1T(RM2-T) BARRETO" />
                     </h:panelGrid>
 
                 </p:fieldset>
-                
                 
             </h:form>
             

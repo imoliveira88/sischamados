@@ -12,7 +12,7 @@
     <h:body>
 
 
-        <ui:decorate template="/templates/usuarioDecorator.xhtml">
+        <ui:decorate template="/templates/masterDecorator.xhtml">
         
         <table align="center" width="80%"> 
             <tr>
@@ -59,10 +59,8 @@
                                         <f:convertDateTime pattern="dd/MM/yyyy" />
                                     </h:outputText>
                                 </p:column>
-                                <p:column>
-                                    <h:commandButton styleClass="botaoTabela" value="Exibir" action="#{chamadoMB.exibeMeuChamado(chamado.id)}" />
-                                </p:column>
                             </p:dataTable>
+                            <h:commandButton styleClass="botaoTabela" value="Exibir" action="#{chamadoMB.exibeMeuChamado(chamadoMB.chamadoSelecionado.id)}" />
                         </p:fieldset>
                         
                     </h:form>

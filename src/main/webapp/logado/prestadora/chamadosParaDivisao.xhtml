@@ -18,7 +18,7 @@
                 <tr>
                     <td>
                         <h:form id="aviso">
-                            <p:growl id="msgs" for="destinoAviso" autoUpdate="true" showDetail="true" life="4000"/>
+                            <p:growl id="msgs" for="destinoAviso" showDetail="true" life="4000"/>
                         </h:form>
 
                     </td>
@@ -60,22 +60,18 @@
                                     </p:column>
                                     <p:column>
                                         <f:facet name="header">Data</f:facet>
-                                        <h:outputText value="#{chamado.data}"/>
+                                        <h:outputText  value="#{chamado.data}">
+                                            <f:convertDateTime pattern="dd/MM/yyyy" />
+                                        </h:outputText>
                                     </p:column>
                                     <p:column>
-                                        <f:facet name="header">Tempo de resolução (em horas)</f:facet>
-                                        <h:outputText value="#{chamado.tempo_solucao}" />
+                                        <h:commandButton styleClass="botaoTabela" action="#{chamadoMB.exibeChamadoPrestador(chamado.id)}" value="Exibir" />
                                     </p:column>
                                 </p:dataTable>
-                                <h:commandButton styleClass="botaoTabela" action="#{chamadoMB.exibeChamadoPrestador(chamadoMB.chamadoSelecionado.id)}" value="Exibir" />
                             </p:fieldset>
 
                             <p:fieldset legend="Estatísticas" style="margin-bottom:20px; background-color: lightsteelblue">
                                 <p:chart type="bar" model="#{chamadoMB.barModel}" style="height:300px"/>
-                                <br /><br />
-                                
-                                <h:outputText value="Média de tempo de resolução: "/>
-                                <h:outputText value="#{chamadoMB.mediaResolucao(usuario.divisao)}"/>
                             </p:fieldset>
 
 

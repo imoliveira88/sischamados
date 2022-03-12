@@ -79,7 +79,21 @@ public class Divisao implements Serializable {
 
     public List<Pessoa> getPessoas() {
         return pessoas;
-    }   
+    }
+    
+    public int primeiroDigito(int numero){
+        return numero/((int) Math.pow(10, (int) Math.log10(numero)));
+    }
+    
+    public int semPrimeiroDigito(int numero){
+        return numero - (int) Math.pow(10, (int) Math.log10(numero))*this.primeiroDigito(numero);
+    }
+    
+    public String numeroString(){
+        if(primeiroDigito(this.numero) == 9) return "0" + this.semPrimeiroDigito(this.numero);
+        if(this.numero < 10) return "0" + this.numero;
+        return "" + this.numero;
+    }
 
     @Override
     public int hashCode() {
@@ -101,20 +115,6 @@ public class Divisao implements Serializable {
     @Override
     public String toString() {
         return this.nome;
-    }
-    
-    public int primeiroDigito(int numero){
-        return numero/((int) Math.pow(10, (int) Math.log10(numero)));
-    }
-    
-    public int semPrimeiroDigito(int numero){
-        return numero - (int) Math.pow(10, (int) Math.log10(numero))*this.primeiroDigito(numero);
-    }
-    
-    public String numeroString(){
-        if(primeiroDigito(this.numero) == 9) return "0" + this.semPrimeiroDigito(this.numero);
-        if(this.numero < 10) return "0" + this.numero;
-        return "" + this.numero;
     }
     
 }

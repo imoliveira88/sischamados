@@ -12,13 +12,13 @@
     <h:body>
 
 
-        <ui:decorate template="/templates/masterDecorator.xhtml">
+        <ui:decorate template="/templates/usuarioDecorator.xhtml">
         
         <table align="center" width="80%"> 
             <tr>
                 <td>
                     <h:form id="aviso">
-                        <p:growl id="msgs" for="destinoAviso" autoUpdate="true" showDetail="true" life="4000"/>
+                        <p:growl id="msgs" for="destinoAviso" showDetail="true" life="4000"/>
                     </h:form>
 
                 </td>
@@ -49,11 +49,9 @@
                                 </p:column>
                                 <p:column>
                                     <f:facet name="header">Data</f:facet>
-                                    <h:outputText value="#{chamado.data}"/>
-                                </p:column>
-                                <p:column>
-                                    <f:facet name="header">Tempo de resolução (em horas)</f:facet>
-                                    <h:outputText value="#{chamado.tempo_solucao}" />
+                                    <h:outputText  value="#{chamado.data}">
+                                        <f:convertDateTime pattern="dd/MM/yyyy" />
+                                    </h:outputText>
                                 </p:column>
                             </p:dataTable>
                             <h:panelGrid columns="2" cellpadding="5">

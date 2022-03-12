@@ -43,7 +43,6 @@ public class ChamadoMB extends Artificial implements Serializable{
     private String texto;
     private BarChartModel barModel;
     private int maior;
-    private int tempoResolucao;
 
     public ChamadoMB() throws Exception {
         chamado = new Chamado();
@@ -117,7 +116,6 @@ public class ChamadoMB extends Artificial implements Serializable{
         this.texto = texto;
     }
 
-
     public BarChartModel getBarModel() throws Exception {
         this.createBarModel();
         return barModel;
@@ -137,14 +135,6 @@ public class ChamadoMB extends Artificial implements Serializable{
 
     public void setChamFiltradosDivisao(List<Chamado> chamFiltradosDivisao) {
         this.chamFiltradosDivisao = chamFiltradosDivisao;
-    }
-
-    public int getTempoResolucao(){
-        return this.tempoResolucao;
-    }
-
-    public void setTempoResolucao(int tempo){
-        this.tempoResolucao = tempo;
     }
 
     public String getAtribuido() {
@@ -323,8 +313,6 @@ public class ChamadoMB extends Artificial implements Serializable{
             
             this.texto = "";
                         
-            cha.setTempo_solucao(tempoResolucao);
-
             cha.setDescricao(novaDesc);
             
             if (pra.atualizaChamado(cha)) {
@@ -513,30 +501,15 @@ public class ChamadoMB extends Artificial implements Serializable{
         //return new ChamadoServico().todosChamados();
     }
     
-    public String atualizarLista(){
-        return "meusChamados";
-    }
-    
     public String filtrarLista() throws Exception{
         chamFiltrados = this.getChamadosEntreDatas(dataInicial, dataFinal);
-        return "relatorioUsuario";
-    }
-    
-    public String mediaResolucao(String div) throws NullPointerException, Exception{
-        String resposta = "";
-        double media = (new ChamadoServico()).chamadosMedia(div);
-        double parteInteira = Math.floor(media);
-        resposta += (int) parteInteira;
-        resposta += " horas e ";
-        double aux = media - parteInteira;
-        int aux2 = (int) Math.floor(aux*60);
-        
-	return resposta + aux2 + " minutos";
+        return "relatorios";
     }
     
     public String filtrarListaDivisao(Divisao div){
         chamFiltradosDivisao = this.getChamadosEntreDatasDivisao(dataInicial, dataFinal, div.getNome());
-        return "relatorioUsuario";
+        if(div.isPrestadora()) return "logado/prestadora/relatorioUsuario.xhtml";
+        else return "relatorioUsuario";
     }
     
     public String excluir(Long id) throws Exception {
@@ -568,9 +541,12 @@ public class ChamadoMB extends Artificial implements Serializable{
         ChamadoServico chamadoDAO = new ChamadoServico();
         chamadoDAO.salvar(chamado);
         
+        boolean prestadora = chamado.getSolicitante().getDivisao().isPrestadora();
+        
         titulo = "";
         descricao = "";
-        return "meusChamados";
+        if(prestadora) return "logado/prestadora/chamadosParaDivisao.xhtml";
+        else return "logado/usuario/meusChamados.xhtml";
     }
     
 }

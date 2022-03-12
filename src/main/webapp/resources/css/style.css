@@ -77,6 +77,10 @@ body {
     background-color: white;
 }
 
+#tabelaOculta{
+    visibility: hidden;
+}
+
 .formGeral{
     width: 40%;
     margin: 0 auto;

@@ -37,8 +37,7 @@ public class Pessoa implements Serializable {
     @OneToMany(mappedBy = "solicitante", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Chamado> chamados;
     
-    //@NotNull
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "ID_DIVISAO", referencedColumnName = "ID_DIVISAO")
     private Divisao divisao;
     

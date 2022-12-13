@@ -33,7 +33,7 @@
                                 </p:selectOneMenu>
                                 <br/><br/>
 
-                                <p:dataTable id="detalhes" rows="10" rowsPerPageTemplate="5,10,15" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" paginator="true" var="chamado" emptyMessage="Não há chamados para sua divisão com esse critério!"  value="#{chamadoMB.getChamadosParaDivisaoStatus(usuario.divisao,chamadoMB.exibir)}" rowKey="#{chamado.id}" selection="#{chamadoMB.chamadoSelecionado}" selectionMode="single">
+                                <p:dataTable id="detalhes" rows="10" rowsPerPageTemplate="10,20,40" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" paginator="true" var="chamado" emptyMessage="Não há chamados para sua divisão com esse critério!"  value="#{chamadoMB.getChamadosParaDivisaoStatus(usuario.divisao,chamadoMB.exibir)}" rowKey="#{chamado.id}" selection="#{chamadoMB.chamadoSelecionado}" selectionMode="single">
 
                                     <p:column filterBy="#{chamado.id}" headerText="ID" filterMatchMode="contains">
                                         <h:outputText value="#{chamado.id}"/>
@@ -71,7 +71,36 @@
                             </p:fieldset>
 
                             <p:fieldset legend="Estatísticas" style="margin-bottom:20px; background-color: lightsteelblue">
-                                <p:chart type="bar" model="#{chamadoMB.barModel}" style="height:300px"/>
+                                <table>
+                                    <tr>
+                                        <td>Iniciado</td>
+                                        <td><h:outputText  value="#{chamadoMB.quantidades.get(0)}"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Delineando</td>
+                                        <td><h:outputText  value="#{chamadoMB.quantidades.get(1)}"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Aguardando material</td>
+                                        <td><h:outputText  value="#{chamadoMB.quantidades.get(2)}"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Aguardando execução</td>
+                                        <td><h:outputText  value="#{chamadoMB.quantidades.get(3)}"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Executando</td>
+                                        <td><h:outputText  value="#{chamadoMB.quantidades.get(4)}"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Executado</td>
+                                        <td><h:outputText  value="#{chamadoMB.quantidades.get(5)}"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Satisfeito</td>
+                                        <td><h:outputText  value="#{chamadoMB.quantidades.get(6)}"/></td>
+                                    </tr>
+                                </table>
                             </p:fieldset>
 
 

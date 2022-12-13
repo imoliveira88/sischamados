@@ -14,10 +14,6 @@ import javax.servlet.http.HttpSession;
 import modelo.Chamado;
 import modelo.Divisao;
 import modelo.Pessoa;
-import org.primefaces.model.chart.Axis;
-import org.primefaces.model.chart.AxisType;
-import org.primefaces.model.chart.BarChartModel;
-import org.primefaces.model.chart.ChartSeries;
 import servico.ChamadoServico;
 import servico.PessoaServico;
 
@@ -39,10 +35,9 @@ public class ChamadoMB extends Artificial implements Serializable{
     private String divisao;
     private List<Chamado> chamFiltrados;
     private List<Chamado> chamFiltradosDivisao;
+    private List<Integer> quantidades;
     private String atribuido;
     private String texto;
-    private BarChartModel barModel;
-    private int maior;
 
     public ChamadoMB() throws Exception {
         chamado = new Chamado();
@@ -52,6 +47,7 @@ public class ChamadoMB extends Artificial implements Serializable{
         chamFiltradosDivisao = new ArrayList<>();
         dataInicial = null;
         dataFinal = null;
+        quantidades = this.criaEstatistica();
     }
 
     public Chamado getChamado() {
@@ -116,15 +112,6 @@ public class ChamadoMB extends Artificial implements Serializable{
         this.texto = texto;
     }
 
-    public BarChartModel getBarModel() throws Exception {
-        this.createBarModel();
-        return barModel;
-    }
-
-    public void setBarModel(BarChartModel barModel) {
-        this.barModel = barModel;
-    }
-
     public void setChamado(Chamado chamado) {
         this.chamado = chamado;
     }
@@ -143,6 +130,14 @@ public class ChamadoMB extends Artificial implements Serializable{
 
     public void setAtribuido(String atribuido) {
         this.atribuido = atribuido;
+    }
+
+    public List<Integer> getQuantidades() {
+        return quantidades;
+    }
+
+    public void setQuantidades(List<Integer> quantidades) {
+        this.quantidades = quantidades;
     }
 
     public List<Chamado> getChamFiltrados() {
@@ -325,6 +320,7 @@ public class ChamadoMB extends Artificial implements Serializable{
                 adicionaMensagem("Status não pode ser alterado!", "destinoAviso","ERRO!");
             }
             chamFiltrados = this.getChamadosEntreDatas(dataInicial, dataFinal);
+            quantidades = this.criaEstatistica();
             return destino;
         } catch (IllegalArgumentException e) {
             adicionaMensagem("Escolha um chamado!", "destinoAviso", "ERRO!");
@@ -348,7 +344,7 @@ public class ChamadoMB extends Artificial implements Serializable{
         
         if (pra.atualizaChamado(chamadoSelecionado)) adicionaMensagem("Chamado de número " + chamadoSelecionado.getId() + " encaminhado!", "destinoAviso","SUCESSO!");
         else adicionaMensagem("Chamado não pôde ser encaminhado!", "destinoAviso","ERRO!");
-        
+        quantidades = this.criaEstatistica();
         return "chamadosParaDivisao.xhtml";
     }
     
@@ -421,49 +417,30 @@ public class ChamadoMB extends Artificial implements Serializable{
         return aux;
     }
     
-    private BarChartModel initBarModel() throws Exception {
-        BarChartModel model = new BarChartModel();
-        List<ChartSeries> lista = new ArrayList<>();
-        maior = 0;
+    private List<Integer> criaEstatistica() throws Exception {
+        List<Integer> quant = new ArrayList<>();
+        List<Chamado> chamadosDivisao;
         
         int aux;
         
         FacesContext fc = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+        Pessoa usu = (Pessoa) session.getAttribute("usuario");
         
-        Divisao div = ((Pessoa)session.getAttribute("usuario")).getDivisao();
+        if(usu.getTipo() == 'A') return quant;
         
-        List<Chamado> chamadosBar = this.getChamadosParaDivisao(div.toString()); //Receberá todos os chamados para a Divisão
-                
-        for(int i=0; i<listaStatus().size(); i++){
-            lista.add(new ChartSeries());
-            lista.get(i).setLabel(listaStatus().get(i).toString());
-            if(div != null) aux = this.extraiChamadosStatus(chamadosBar,listaStatus().get(i).toString()).size(); //Filtra por cada status
-            else aux = 0;
-            if(aux > maior) maior = aux;
-            lista.get(i).set("", aux);
-            model.addSeries(lista.get(i));
+        Divisao div = usu.getDivisao();
+        if (div.isPrestadora()) {
+            chamadosDivisao = this.getChamadosParaDivisao(div.toString());
+            if (!chamadosDivisao.isEmpty()) {
+                for (int i = 0; i < listaStatus().size(); i++) {
+                    aux = this.extraiChamadosStatus(chamadosDivisao, listaStatus().get(i).toString()).size(); //Filtra por cada status
+                    quant.add(aux);
+                }
+            }
         }
-        
-        return model;
-    }
- 
-    private void createBarModel() throws Exception {
-        barModel = initBarModel();
- 
-        barModel.setTitle("Quantidade de chamados por status");
-        barModel.setLegendPosition("ne");
-        barModel.setBarWidth(20);
-        barModel.setShowPointLabels(true);
- 
-        Axis xAxis = barModel.getAxis(AxisType.X);
-        xAxis.setLabel("");
- 
-        Axis yAxis = barModel.getAxis(AxisType.Y);
-        yAxis.setLabel("Quantidade");
-        
-        yAxis.setMin(0);
-        yAxis.setMax(maior);
+
+        return quant;
     }
  
     
@@ -545,6 +522,7 @@ public class ChamadoMB extends Artificial implements Serializable{
         
         titulo = "";
         descricao = "";
+        quantidades = this.criaEstatistica();
         if(prestadora) return "logado/prestadora/chamadosParaDivisao.xhtml";
         else return "logado/usuario/meusChamados.xhtml";
     }

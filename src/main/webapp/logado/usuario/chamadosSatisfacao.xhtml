@@ -53,10 +53,11 @@
                                         <f:convertDateTime pattern="dd/MM/yyyy" />
                                     </h:outputText>
                                 </p:column>
+                                <p:column>
+                                    <f:facet name="header"></f:facet>
+                                    <h:commandButton id="atualizaPessoa" styleClass="botaoTabela" value="Finalizar" action="#{chamadoMB.finalizaChamado(chamado.id)}"/>
+                                </p:column>
                             </p:dataTable>
-                            <h:panelGrid columns="2" cellpadding="5">
-                                <h:commandButton id="atualizaPessoa" styleClass="botaoTabela" value="Finalizar" action="#{chamadoMB.finalizaChamado(chamadoMB.chamadoSelecionado.id)}"/>
-                            </h:panelGrid>
                             
                         </p:fieldset>
                         

@@ -194,7 +194,6 @@ public class LoginBean extends Artificial implements Serializable {
                         adicionaMensagem("Primeiro acesso? Altere sua senha!", "destinoAviso", "ATENÇÃO!");
                         return "novaSenha.xhtml";
                     }
-                    (new DAOGenericoJPA()).queryMataConexoes();
                     tipo = pessoaRetornada.getTipo();
                     
                     this.nome = pessoaRetornada.getNome();

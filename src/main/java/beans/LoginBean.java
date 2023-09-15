@@ -8,9 +8,6 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import javax.faces.FacesException;
 import javax.enterprise.context.SessionScoped;
@@ -20,7 +17,6 @@ import javax.persistence.Query;
 import javax.servlet.http.HttpSession;
 import modelo.Divisao;
 import modelo.Pessoa;
-import servico.DAOGenericoJPA;
 import servico.PessoaServico;
 
 /**
@@ -113,7 +109,6 @@ public class LoginBean extends Artificial implements Serializable {
         try {
             pessoaRetornada = ud.retornaPessoa("nip", this.nip);
             String senhaRetornada = pessoaRetornada.getSenha();
-            System.out.println("PPPPPessoa: " + pessoaRetornada.getNome());
             if(pessoaRetornada.getNip().equals("admin")){
                 return senhaRetornada.equals(this.senha);
             }

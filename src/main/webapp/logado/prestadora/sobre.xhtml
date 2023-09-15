@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    
+    <h:head>
+        <title>SisChamados 3.0</title> 
+        <h:outputStylesheet library="css" name="style.css"/>
+    </h:head>
+    <h:body>
+
+        <ui:decorate template="/templates/masterDecorator.xhtml">
+            
+            <br/>
+            <br/>
+
+            <h:form id="login" class="formGeral">
+                <p:fieldset class="field" legend="Sobre" style="background-color: lightsteelblue">
+                    <p:growl id="msgs" for="destinoAviso" showDetail="true" life="4000"/>
+                    
+                    <h:panelGrid columns="2" cellpadding="5">
+
+                        <p:outputLabel for="versao" value="Versão" />
+                        <p:outputLabel id="versao" value="3.0"/>
+
+                        <p:outputLabel for="descricao" value="Descrição" />
+                        <p:outputLabel id="descricao" value="Sistema de gerenciamento corporativo de chamados, elaborado segundo requisitos definidos pelo CMASM" />
+
+                        <p:outputLabel value="Desenvolvimento" />
+                        <p:outputLabel value="1T(EN) MAGALHÃES"/>
+                        
+                        <p:outputLabel value="Pesquisa e implantação" />
+                        <p:outputLabel value="1T(RM2-T) BARRETO" />
+                    </h:panelGrid>
+
+                </p:fieldset>
+                
+                
+            </h:form>
+            
+        </ui:decorate>
+
+    </h:body>
+</html>

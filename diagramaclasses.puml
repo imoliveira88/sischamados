@@ -1,0 +1,26 @@
+@startuml
+class java.util.ArrayList
+class java.util.Date
+class java.util.List
+class java.util.Objects
+class javax.persistence.CascadeType
+class javax.persistence.FetchType
+class javax.persistence.GenerationType
+class modelo.Chamado
+class modelo.Divisao
+class modelo.Pessoa
+interface java.io.Serializable
+modelo.Chamado ..> java.util.Date
+modelo.Chamado ..> javax.persistence.GenerationType
+modelo.Chamado --|> java.io.Serializable
+modelo.Divisao ..> java.util.ArrayList
+modelo.Divisao ..> java.util.List
+modelo.Divisao ..> javax.persistence.CascadeType
+modelo.Divisao ..> javax.persistence.FetchType
+modelo.Divisao ..> javax.persistence.GenerationType
+modelo.Divisao --|> java.io.Serializable
+modelo.Pessoa ..> java.util.ArrayList
+modelo.Pessoa ..> java.util.List
+modelo.Pessoa ..> java.util.Objects
+modelo.Pessoa --|> java.io.Serializable
+@enduml

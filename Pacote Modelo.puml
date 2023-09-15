@@ -1,0 +1,282 @@
+@startuml
+annotation java.lang.Override
+annotation java.lang.SuppressWarnings
+annotation javax.enterprise.context.SessionScoped
+annotation javax.faces.bean.ManagedBean
+annotation javax.faces.bean.RequestScoped
+annotation javax.faces.bean.SessionScoped
+annotation javax.faces.bean.ViewScoped
+annotation javax.persistence.Column
+annotation javax.persistence.Entity
+annotation javax.persistence.GeneratedValue
+annotation javax.persistence.Id
+annotation javax.persistence.JoinColumn
+annotation javax.persistence.ManyToOne
+annotation javax.persistence.NamedQueries
+annotation javax.persistence.NamedQuery
+annotation javax.persistence.OneToMany
+annotation javax.persistence.Table
+annotation javax.persistence.Temporal
+annotation javax.transaction.Transactional
+annotation javax.validation.constraints.NotNull
+annotation javax.validation.constraints.Size
+annotation modelo.Column
+annotation modelo.Entity
+annotation modelo.GeneratedValue
+annotation modelo.Id
+annotation modelo.JoinColumn
+annotation modelo.ManyToOne
+annotation modelo.NamedQueries
+annotation modelo.NamedQuery
+annotation modelo.NotNull
+annotation modelo.OneToMany
+annotation modelo.Size
+annotation modelo.Table
+annotation org.hibernate.validator.constraints.NotBlank
+class beans.Artificial
+class beans.ChamadoMB
+class beans.DivisaoMB
+class beans.LoginBean
+class beans.LogoutBean
+class beans.PessoaMB
+class beans.SessionListener
+class controlador.PageFilter
+class java.io.IOException
+class java.lang.reflect.ParameterizedType
+class java.math.BigInteger
+class java.net.UnknownHostException
+class java.nio.charset.StandardCharsets
+class java.security.MessageDigest
+class java.security.NoSuchAlgorithmException
+class java.sql.SQLException
+class java.text.DateFormat
+class java.text.ParseException
+class java.text.SimpleDateFormat
+class java.util.ArrayList
+class java.util.Calendar
+class java.util.Date
+class java.util.List
+class java.util.Objects
+class javax.annotation.PostConstruct
+class javax.faces.FacesException
+class javax.faces.application.FacesMessage
+class javax.faces.context.FacesContext
+class javax.persistence.CascadeType
+class javax.persistence.EntityManager
+class javax.persistence.EntityManagerFactory
+class javax.persistence.FetchType
+class javax.persistence.GenerationType
+class javax.persistence.NoResultException
+class javax.persistence.Persistence
+class javax.persistence.Query
+class javax.servlet.FilterChain
+class javax.servlet.FilterConfig
+class javax.servlet.ServletException
+class javax.servlet.ServletRequest
+class javax.servlet.ServletResponse
+class javax.servlet.http.HttpServletRequest
+class javax.servlet.http.HttpServletResponse
+class javax.servlet.http.HttpSession
+class javax.servlet.http.HttpSessionEvent
+class modelo.Chamado
+class modelo.Divisao
+class modelo.Pessoa
+class org.primefaces.model.chart.Axis
+class org.primefaces.model.chart.AxisType
+class org.primefaces.model.chart.BarChartModel
+class org.primefaces.model.chart.ChartSeries
+class org.primefaces.model.chart.PieChartModel
+class org.primefaces.model.charts.ChartData
+class org.primefaces.model.charts.pie.PieChartDataSet
+class servico.ChamadoServico
+class servico.DAOGenericoJPA
+class servico.DivisaoServico
+class servico.PessoaServico
+interface java.io.Serializable
+interface javax.servlet.Filter
+interface javax.servlet.http.HttpSessionListener
+beans.Artificial ..> javax.faces.bean.ManagedBean
+beans.Artificial ..> javax.faces.bean.SessionScoped
+beans.Artificial ..> javax.transaction.Transactional
+beans.Artificial ..> java.util.ArrayList
+beans.Artificial ..> java.util.List
+beans.Artificial ..> javax.faces.application.FacesMessage
+beans.Artificial ..> javax.faces.context.FacesContext
+beans.Artificial ..> servico.DAOGenericoJPA
+beans.ChamadoMB ..> javax.faces.bean.ManagedBean
+beans.ChamadoMB ..> javax.faces.bean.SessionScoped
+beans.ChamadoMB --|> beans.Artificial
+beans.ChamadoMB ..> java.text.DateFormat
+beans.ChamadoMB ..> java.text.SimpleDateFormat
+beans.ChamadoMB ..> java.util.ArrayList
+beans.ChamadoMB ..> java.util.Calendar
+beans.ChamadoMB ..> java.util.Date
+beans.ChamadoMB ..> java.util.List
+beans.ChamadoMB ..> javax.annotation.PostConstruct
+beans.ChamadoMB ..> javax.faces.context.FacesContext
+beans.ChamadoMB ..> javax.servlet.http.HttpSession
+beans.ChamadoMB ..> modelo.Chamado
+beans.ChamadoMB ..> modelo.Divisao
+beans.ChamadoMB ..> modelo.Pessoa
+beans.ChamadoMB ..> org.primefaces.model.chart.Axis
+beans.ChamadoMB ..> org.primefaces.model.chart.AxisType
+beans.ChamadoMB ..> org.primefaces.model.chart.BarChartModel
+beans.ChamadoMB ..> org.primefaces.model.chart.ChartSeries
+beans.ChamadoMB ..> org.primefaces.model.chart.PieChartModel
+beans.ChamadoMB ..> org.primefaces.model.charts.ChartData
+beans.ChamadoMB ..> org.primefaces.model.charts.pie.PieChartDataSet
+beans.ChamadoMB ..> servico.ChamadoServico
+beans.ChamadoMB ..> servico.PessoaServico
+beans.ChamadoMB --|> java.io.Serializable
+beans.DivisaoMB ..> javax.faces.bean.ManagedBean
+beans.DivisaoMB ..> javax.faces.bean.RequestScoped
+beans.DivisaoMB --|> beans.Artificial
+beans.DivisaoMB ..> java.util.List
+beans.DivisaoMB ..> modelo.Divisao
+beans.DivisaoMB ..> servico.DivisaoServico
+beans.DivisaoMB --|> java.io.Serializable
+beans.LoginBean ..> javax.enterprise.context.SessionScoped
+beans.LoginBean ..> javax.faces.bean.ManagedBean
+beans.LoginBean --|> beans.Artificial
+beans.LoginBean ..> java.math.BigInteger
+beans.LoginBean ..> java.net.UnknownHostException
+beans.LoginBean ..> java.nio.charset.StandardCharsets
+beans.LoginBean ..> java.security.MessageDigest
+beans.LoginBean ..> java.security.NoSuchAlgorithmException
+beans.LoginBean ..> java.sql.SQLException
+beans.LoginBean ..> java.text.ParseException
+beans.LoginBean ..> java.util.List
+beans.LoginBean ..> javax.faces.FacesException
+beans.LoginBean ..> javax.faces.context.FacesContext
+beans.LoginBean ..> javax.persistence.Query
+beans.LoginBean ..> javax.servlet.http.HttpSession
+beans.LoginBean ..> modelo.Divisao
+beans.LoginBean ..> modelo.Pessoa
+beans.LoginBean ..> servico.DAOGenericoJPA
+beans.LoginBean ..> servico.PessoaServico
+beans.LoginBean --|> java.io.Serializable
+beans.LogoutBean ..> javax.faces.bean.ManagedBean
+beans.LogoutBean ..> javax.faces.bean.ViewScoped
+beans.LogoutBean --|> beans.Artificial
+beans.LogoutBean ..> javax.faces.context.FacesContext
+beans.LogoutBean ..> javax.servlet.ServletException
+beans.LogoutBean ..> javax.servlet.http.HttpServletRequest
+beans.LogoutBean ..> javax.servlet.http.HttpSession
+beans.LogoutBean ..> servico.DAOGenericoJPA
+beans.LogoutBean --|> java.io.Serializable
+beans.PessoaMB ..> javax.faces.bean.ManagedBean
+beans.PessoaMB ..> javax.faces.bean.SessionScoped
+beans.PessoaMB --|> beans.Artificial
+beans.PessoaMB ..> java.math.BigInteger
+beans.PessoaMB ..> java.nio.charset.StandardCharsets
+beans.PessoaMB ..> java.security.MessageDigest
+beans.PessoaMB ..> java.security.NoSuchAlgorithmException
+beans.PessoaMB ..> java.sql.SQLException
+beans.PessoaMB ..> java.text.ParseException
+beans.PessoaMB ..> java.util.ArrayList
+beans.PessoaMB ..> java.util.List
+beans.PessoaMB ..> javax.faces.context.FacesContext
+beans.PessoaMB ..> javax.servlet.http.HttpSession
+beans.PessoaMB ..> modelo.Chamado
+beans.PessoaMB ..> modelo.Divisao
+beans.PessoaMB ..> modelo.Pessoa
+beans.PessoaMB ..> servico.DivisaoServico
+beans.PessoaMB ..> servico.PessoaServico
+beans.PessoaMB --|> java.io.Serializable
+beans.SessionListener ..> java.lang.Override
+beans.SessionListener ..> java.util.ArrayList
+beans.SessionListener ..> java.util.List
+beans.SessionListener ..> javax.servlet.http.HttpSession
+beans.SessionListener ..> javax.servlet.http.HttpSessionEvent
+beans.SessionListener --|> javax.servlet.http.HttpSessionListener
+controlador.PageFilter ..> java.lang.Override
+controlador.PageFilter ..> java.io.IOException
+controlador.PageFilter ..> javax.servlet.FilterChain
+controlador.PageFilter ..> javax.servlet.FilterConfig
+controlador.PageFilter ..> javax.servlet.ServletException
+controlador.PageFilter ..> javax.servlet.ServletRequest
+controlador.PageFilter ..> javax.servlet.ServletResponse
+controlador.PageFilter ..> javax.servlet.http.HttpServletRequest
+controlador.PageFilter ..> javax.servlet.http.HttpServletResponse
+controlador.PageFilter ..> javax.servlet.http.HttpSession
+controlador.PageFilter --|> javax.servlet.Filter
+modelo.Chamado ..> java.lang.Override
+modelo.Chamado ..> javax.persistence.Column
+modelo.Chamado ..> javax.persistence.Entity
+modelo.Chamado ..> javax.persistence.GeneratedValue
+modelo.Chamado ..> javax.persistence.Id
+modelo.Chamado ..> javax.persistence.JoinColumn
+modelo.Chamado ..> javax.persistence.ManyToOne
+modelo.Chamado ..> javax.persistence.NamedQueries
+modelo.Chamado ..> javax.persistence.NamedQuery
+modelo.Chamado ..> javax.persistence.Table
+modelo.Chamado ..> javax.persistence.Temporal
+modelo.Chamado ..> javax.validation.constraints.NotNull
+modelo.Chamado ..> javax.validation.constraints.Size
+modelo.Chamado ..> java.util.Date
+modelo.Chamado ..> javax.persistence.GenerationType
+modelo.Chamado --|> java.io.Serializable
+modelo.Divisao ..> java.lang.Override
+modelo.Divisao ..> javax.persistence.Column
+modelo.Divisao ..> javax.persistence.Entity
+modelo.Divisao ..> javax.persistence.GeneratedValue
+modelo.Divisao ..> javax.persistence.Id
+modelo.Divisao ..> javax.persistence.OneToMany
+modelo.Divisao ..> javax.persistence.Table
+modelo.Divisao ..> javax.validation.constraints.NotNull
+modelo.Divisao ..> javax.validation.constraints.Size
+modelo.Divisao ..> java.util.ArrayList
+modelo.Divisao ..> java.util.List
+modelo.Divisao ..> javax.persistence.CascadeType
+modelo.Divisao ..> javax.persistence.FetchType
+modelo.Divisao ..> javax.persistence.GenerationType
+modelo.Divisao --|> java.io.Serializable
+modelo.Pessoa ..> java.lang.Override
+modelo.Pessoa ..> modelo.Column
+modelo.Pessoa ..> modelo.Entity
+modelo.Pessoa ..> modelo.GeneratedValue
+modelo.Pessoa ..> modelo.Id
+modelo.Pessoa ..> modelo.JoinColumn
+modelo.Pessoa ..> modelo.ManyToOne
+modelo.Pessoa ..> modelo.NamedQueries
+modelo.Pessoa ..> modelo.NamedQuery
+modelo.Pessoa ..> modelo.NotNull
+modelo.Pessoa ..> modelo.OneToMany
+modelo.Pessoa ..> modelo.Size
+modelo.Pessoa ..> modelo.Table
+modelo.Pessoa ..> org.hibernate.validator.constraints.NotBlank
+modelo.Pessoa ..> java.util.ArrayList
+modelo.Pessoa ..> java.util.List
+modelo.Pessoa ..> java.util.Objects
+modelo.Pessoa --|> java.io.Serializable
+servico.ChamadoServico ..> java.util.ArrayList
+servico.ChamadoServico ..> java.util.Date
+servico.ChamadoServico ..> java.util.List
+servico.ChamadoServico ..> javax.persistence.Query
+servico.ChamadoServico ..> modelo.Chamado
+servico.ChamadoServico --|> servico.DAOGenericoJPA
+servico.DAOGenericoJPA ..> java.lang.SuppressWarnings
+servico.DAOGenericoJPA ..> java.lang.reflect.ParameterizedType
+servico.DAOGenericoJPA ..> java.util.List
+servico.DAOGenericoJPA ..> javax.persistence.EntityManager
+servico.DAOGenericoJPA ..> javax.persistence.EntityManagerFactory
+servico.DAOGenericoJPA ..> javax.persistence.Persistence
+servico.DAOGenericoJPA ..> javax.persistence.Query
+servico.DivisaoServico ..> java.util.List
+servico.DivisaoServico ..> javax.persistence.NoResultException
+servico.DivisaoServico ..> javax.persistence.Query
+servico.DivisaoServico ..> modelo.Divisao
+servico.DivisaoServico --|> servico.DAOGenericoJPA
+servico.PessoaServico ..> beans.PessoaMB
+servico.PessoaServico ..> java.security.NoSuchAlgorithmException
+servico.PessoaServico ..> java.sql.SQLException
+servico.PessoaServico ..> java.text.ParseException
+servico.PessoaServico ..> java.util.ArrayList
+servico.PessoaServico ..> java.util.List
+servico.PessoaServico ..> javax.persistence.NoResultException
+servico.PessoaServico ..> javax.persistence.Query
+servico.PessoaServico ..> modelo.Chamado
+servico.PessoaServico ..> modelo.Divisao
+servico.PessoaServico ..> modelo.Pessoa
+servico.PessoaServico --|> servico.DAOGenericoJPA
+@enduml

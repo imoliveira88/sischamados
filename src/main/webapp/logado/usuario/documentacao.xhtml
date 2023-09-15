@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    
+    <h:head>
+        <title>SisChamados 3.0</title> 
+        <h:outputStylesheet library="css" name="style.css"/>
+    </h:head>
+    <h:body>
+
+        <ui:decorate template="/templates/usuarioDecorator.xhtml">
+            
+            <br/>
+            <br/>
+
+            <h:form id="login" class="formGeral">
+                <p:fieldset class="field" legend="Documentação" style="background-color: lightsteelblue">
+                    <p:growl id="msgs" for="destinoAviso" showDetail="true" life="4000"/>
+                    
+                    <h:panelGrid columns="2" cellpadding="5">
+
+                        <p:commandLink value="Manual do Usuário (300 KB)" onclick="location.href='/sischamados/resources/documentos/manual1.pdf'" />
+
+                    </h:panelGrid>
+
+                </p:fieldset>
+                
+            </h:form>
+            
+        </ui:decorate>
+
+    </h:body>
+</html>

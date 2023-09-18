@@ -184,7 +184,8 @@ public class Pessoa implements Serializable {
             if(this.especialidade.equals("")) s += this.posto + " " + this.nome;
             else s += this.posto + "(" + this.especialidade + ") " + this.nome;
         }else{
-            s += this.especialidade + " " + this.nome;
+            if(this.posto == null) s += this.nome;
+            else s += this.especialidade + " " + this.nome;
         }
         
         return s;

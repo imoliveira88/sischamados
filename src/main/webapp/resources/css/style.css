@@ -1,20 +1,21 @@
 body {
     font-size: 1.6rem;
     font-family: sans-serif;
+    color: black;
 }
     
 h2{
     color: blue;
     text-align: center;
     margin-top: 15px;
-    margin-bottom: -30px;
+    margin-bottom: 15px;
 }
 
 h1{
     color: dodgerblue;
     text-align: center;
     margin-top: 15px;
-    margin-bottom: -30px;
+    margin-bottom: 15px;
 }
 
 .ui-filter-column .ui-column-customfilter .custom-filter {
@@ -24,6 +25,7 @@ h1{
 
 #content {
     float: inside;
+    border-top: 20px;
 }
 
 table#menu{
@@ -43,7 +45,8 @@ table#menu td{
 table#menu td:hover{
 	background-color: dodgerblue;
         color: #ffffff;
-	cursor: pointer;   
+	cursor: pointer;  
+        transition: all 300ms ease-in-out;
 }
 
 #menuCham{
@@ -67,7 +70,8 @@ table#menuLeft td{
 table#menuLeft td:hover{
 	background-color: dodgerblue;
         color: #ffffff;
-	cursor: pointer;   
+	cursor: pointer;
+        transition: all 300ms ease-in-out;
 }
 
 #corpo{
@@ -89,10 +93,6 @@ body {
 .formGeral{
     width: 40%;
     margin: 0 auto;
-}
-
-*{
-    font-family: Verdana;
 }
 
 .botao{

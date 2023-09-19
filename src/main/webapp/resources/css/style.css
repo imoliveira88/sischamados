@@ -36,6 +36,36 @@ table#menu{
 	height: 50px;
 }
 
+.login-table{
+        box-shadow: 5px 5px 5px #888888;
+        background-color: white;
+        color: black;
+        font-size: 1rem;
+	width: 60%;
+	text-align: center;
+	height: 200px;
+        border: 1px;
+        border-radius: 5px;
+        border-color: gray;
+        padding:5px;
+}
+
+.login-table tr td{
+    text-align: center;
+}
+
+.login-button{
+        padding:5px;
+        box-shadow: 5px 5px 5px #888888;
+        background-color: white;
+        color: black;
+	width: 200px;
+	text-align: center;
+        border: 1px;
+        border-radius: 5px;
+        border-color: gray;
+}
+
 table#menu td{
         background-color: #ffffff;
         color: dodgerblue;      

@@ -17,22 +17,26 @@
             <br/>
 
             <h:form id="login" styleClass="formGeral">
-                <p:fieldset class="field" legend="Login" >
-                    <p:growl id="msgs" for="destinoAviso" showDetail="true" life="4000"/>
-
-                    <h:panelGrid columns="2" id = "sol" cellpadding="5">
-
-                        <p:outputLabel for="login" value="Login" />
-                        <h:inputText id="login" value="#{loginBean.nip}"/>
-
-                        <p:outputLabel for="senha" value="Senha" />
-                        <p:password id="senha" value="#{loginBean.senha}"/>
-
-                        <h:commandButton id="btLogin" class="botaoTabela" value="Entrar" action="#{loginBean.doLogin()}"/>
-
-                    </h:panelGrid>
-
-                </p:fieldset>
+                <p:growl id="msgs" for="destinoAviso" showDetail="true" life="4000"/>
+                <table class="login-table" align="center">
+                    <tr>
+                        <td>Login</td>
+                        <td><h:inputText id="login" value="#{loginBean.nip}" /></td>
+                    </tr>
+                    <tr>
+                        <td>Senha</td>
+                        <td><p:password id="senha" value="#{loginBean.senha}"/></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <table class="login-button" align="center">
+                                <tr>
+                                    <td><h:commandButton id="btLogin" class="botaoTabela" value="Entrar" action="#{loginBean.doLogin()}"/></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
             </h:form>
             
         </ui:decorate>

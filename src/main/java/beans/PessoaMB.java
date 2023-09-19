@@ -28,9 +28,7 @@ public class PessoaMB extends Artificial implements Serializable{
     private String divisao;
     private char tipo; //Se tipo='A', administrador, quem cadastra divisões, usuários, etc, se tipo='U', pessoa normal
     private String nome;
-    private String posto;
     private String especialidade;
-    private boolean militar;//no front-end implementar a aquisição uma drop-down com "militar" e "civil" como opções
     private String senha;
     private String nip;
     private String email;
@@ -91,28 +89,12 @@ public class PessoaMB extends Artificial implements Serializable{
         this.nome = nome;
     }
 
-    public String getPosto() {
-        return posto;
-    }
-
-    public void setPosto(String posto) {
-        this.posto = posto;
-    }
-
     public String getEspecialidade() {
         return especialidade;
     }
 
     public void setEspecialidade(String especialidade) {
         this.especialidade = especialidade;
-    }
-
-    public boolean getMilitar() {
-        return militar;
-    }
-
-    public void setMilitar(boolean militar) {
-        this.militar = militar;
     }
 
     public String getSenha() {
@@ -193,7 +175,7 @@ public class PessoaMB extends Artificial implements Serializable{
                 this.adicionaMensagem("A senha escolhida não atende os requisitos mínimos de segurança! A senha deve ter entre 6 e 15 caracteres, conter letras minúsculas, maiúsculas, números e caracteres especiais!","destinoAviso","ATENÇÃO!");
                 return "cadPessoa";
             }
-            Pessoa pes = new Pessoa(nome.toUpperCase(),this.hash(senha),nip,militar,especialidade.toUpperCase(),posto.toUpperCase());
+            Pessoa pes = new Pessoa(nome.toUpperCase(),this.hash(senha),nip,especialidade.toUpperCase());
             pes.setTipo(tipo);
             pes.setEmail(email.toLowerCase());
             pes.setTelefone(telefone);
@@ -205,7 +187,7 @@ public class PessoaMB extends Artificial implements Serializable{
                 this.adicionaMensagem("Cadastro feito com sucesso!","destinoAviso","SUCESSO!");
                 return "cadPessoa";
             } else {
-                this.adicionaMensagem("Já existe um usuário com este nip!","destinoAviso","ATENÇÃO!");
+                this.adicionaMensagem("Já existe um usuário com este login!","destinoAviso","ATENÇÃO!");
                 return "cadPessoa";
             }
         } catch (Exception e) {

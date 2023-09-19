@@ -27,11 +27,8 @@
                             <p:fieldset class="field" legend="Cadastro de divisão" style="margin-bottom:20px; background-color: lightsteelblue">
                                 <h:panelGrid columns="2" id = "sol"  cellpadding="5">
 
-                                    <p:outputLabel for="nome" value="Nome da divisão" />
+                                    <p:outputLabel for="nome" value="Nome do setor" />
                                     <h:inputText id="nome" value="#{divisaoMB.nome}"/>
-
-                                    <p:outputLabel for="numero" value="Número" />
-                                    <h:inputText id="numero" value="#{divisaoMB.numero}" />
                                     
                                     <p:outputLabel value="Prestadora"/>
                                     <p:selectBooleanCheckbox value="#{divisaoMB.prestadora}" itemLabel=""/>
@@ -39,8 +36,6 @@
                                     <h:commandButton class="botaoTabela" value="Salvar" action="#{divisaoMB.salvar()}"/>
 
                                 </h:panelGrid>
-                                
-                                <p:outputLabel value="Obs: Em caso de divisões com números iniciando em zero, substitua o zero inicial por nove." />
                             </p:fieldset>
                         </td>
 
@@ -60,10 +55,6 @@
                                     <p:column>
                                         <f:facet name="header">Nome</f:facet>
                                         <h:outputText value="#{divisao.nome}"/>
-                                    </p:column>
-                                    <p:column>
-                                        <f:facet name="header">Número</f:facet>
-                                        <h:outputText value="#{divisao.numeroString()}"/>
                                     </p:column>
                                     <p:column>
                                         <f:facet name="header">Quantidade de colaboradores</f:facet>

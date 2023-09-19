@@ -65,15 +65,14 @@ public class DivisaoMB extends Artificial implements Serializable{
     public String salvar() throws Exception {
         DivisaoServico pra = new DivisaoServico();
         divisao.setNome(nome.toUpperCase());
-        divisao.setNumero(numero);
         divisao.setPrestadora(prestadora);
         if(!pra.existeDivisao(this.divisao)){
             pra.salvar(divisao);
-            adicionaMensagem("Divisão cadastrada com sucesso!","destinoAviso","SUCESSO!");
+            adicionaMensagem("Setor cadastrado com sucesso!","destinoAviso","SUCESSO!");
             return "cadDivisao";
         }
         else{
-            adicionaMensagem("A divisão já está cadastrada!","destinoAviso","ERRO!");
+            adicionaMensagem("O setor já está cadastrado!","destinoAviso","ERRO!");
             return "cadDivisao";
         }
     }
@@ -94,10 +93,10 @@ public class DivisaoMB extends Artificial implements Serializable{
         DivisaoServico pra = new DivisaoServico();
         try {
             pra.excluir(id);
-            adicionaMensagem("Divisão removida com sucesso!", "destinoAviso", "SUCESSO!");
+            adicionaMensagem("Setor removido com sucesso!", "destinoAviso", "SUCESSO!");
             return "cadDivisao";
         } catch (Exception e) {
-            adicionaMensagem("Uma divisão precisa ser selecionada, antes de clicar em excluir!", "destinoAviso", "ERRO!");
+            adicionaMensagem("Um setor precisa ser selecionada, antes de clicar em excluir!", "destinoAviso", "ERRO!");
             return "cadDivisao";
         }
     }

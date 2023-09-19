@@ -109,7 +109,7 @@ public class LoginBean extends Artificial implements Serializable {
         try {
             pessoaRetornada = ud.retornaPessoa("nip", this.nip);
             String senhaRetornada = pessoaRetornada.getSenha();
-            if(pessoaRetornada.getNip().equals("admin")){
+            if(pessoaRetornada.getLogin().equals("admin")){
                 return senhaRetornada.equals(this.senha);
             }
             return this.hash(this.senha).equals(senhaRetornada) || this.senha.equals(senhaRetornada); //abrangendo o caso do Admin visitante

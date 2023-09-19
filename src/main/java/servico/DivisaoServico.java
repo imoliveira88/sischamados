@@ -26,14 +26,13 @@ public class DivisaoServico extends DAOGenericoJPA<Long, Divisao>{
     public void atualizar(Divisao div) throws Exception{
         this.queryMataConexoes();
         if(!super.getEm().getTransaction().isActive()) super.getEm().getTransaction().begin();
-        Query query = super.getEm().createQuery("Select e.id FROM Divisao e WHERE e.numero = :num");
-        query.setParameter("num",div.getNumero());
+        Query query = super.getEm().createQuery("Select e.id FROM Divisao e WHERE e.id = :num");
+        query.setParameter("num",div.getId());
         
         Long id = (Long) query.getSingleResult();
         
         Divisao divisao = super.getEm().find(Divisao.class,id);
         divisao.setNome(div.getNome());
-        divisao.setNumero(div.getNumero());
         super.getEm().merge(divisao);
         super.getEm().getTransaction().commit();
         super.getEm().close();
@@ -44,8 +43,7 @@ public class DivisaoServico extends DAOGenericoJPA<Long, Divisao>{
         this.queryMataConexoes();
         if(!super.getEm().getTransaction().isActive()) super.getEm().getTransaction().begin();
         
-        if(tipo.equals("nome")) query = super.getEm().createQuery("SELECT e FROM Divisao e WHERE e.nome = :parametro");
-        else query = super.getEm().createQuery("SELECT e FROM Divisao e WHERE e.numero = :parametro");
+        query = super.getEm().createQuery("SELECT e FROM Divisao e WHERE e.nome = :parametro");
             
         query.setParameter("parametro", parametro);
         
@@ -66,8 +64,8 @@ public class DivisaoServico extends DAOGenericoJPA<Long, Divisao>{
     //Houve diversos problemas com os resultados obtidos com esse método, no entanto com esta implementação obtivemos êxito
     public boolean existeDivisao(Divisao div) throws Exception{
         this.queryMataConexoes();
-        Query query = super.getEm().createQuery("SELECT COUNT(e) FROM Divisao e WHERE e.numero = :num");
-        query.setParameter("num", div.getNumero());
+        Query query = super.getEm().createQuery("SELECT COUNT(e) FROM Divisao e WHERE e.nome = :nome");
+        query.setParameter("nome", div.getNome());
        
         try{
             int quantidade = Integer.parseInt(query.getResultList().get(0).toString());

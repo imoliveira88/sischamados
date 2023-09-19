@@ -11,11 +11,9 @@
     </h:head>
     <h:body>
 
-
         <ui:decorate template="/templates/usuarioDecorator.xhtml">
             
             <br/><br/>
-            
         
             <table align="center" width="40%">
             <tr>
@@ -54,12 +52,6 @@
 
                                 <h:outputText value="Alterar para:"/>
                                 <h:inputText id="email" value="#{pessoaMB.pessoaSelecionada.email}"/>
-
-                                <p:outputLabel value="Posto" />
-                                <h:outputText value="#{pessoaMB.pessoaSelecionada.posto}"/>
-
-                                <h:outputText value="Alterar para:"/>
-                                <h:inputText id="posto" value="#{pessoaMB.pessoaSelecionada.posto}"/>
 
                                 <p:outputLabel value="Divisão" />
                                 <h:outputText value="#{pessoaMB.pessoaSelecionada.divisao}"/>

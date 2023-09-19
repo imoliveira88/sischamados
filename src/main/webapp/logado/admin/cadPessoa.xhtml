@@ -31,7 +31,7 @@
                                     <p:outputLabel for="nome" value="Nome" />
                                     <h:inputText id="nome" value="#{pessoaMB.nome}"/>
 
-                                    <p:outputLabel for="nip" value="NIP (Será o login do usuário)" />
+                                    <p:outputLabel for="nip" value="Login" />
                                     <h:inputText id="nip" value="#{pessoaMB.nip}"/>
                                     
                                     <p:outputLabel value="Perfil de usuário: "/>
@@ -48,14 +48,8 @@
                                     <p:outputLabel for="email" value="E-mail" />
                                     <h:inputText id="email" value="#{pessoaMB.email}"/>
 
-                                    <p:outputLabel value="Militar"/>
-                                    <p:selectBooleanCheckbox value="#{pessoaMB.militar}" itemLabel=""/>
-
-                                    <p:outputLabel for="especialidade" value="Especialidade" />
+                                    <p:outputLabel for="especialidade" value="Função" />
                                     <h:inputText id="especialidade" value="#{pessoaMB.especialidade}"/>
-
-                                    <p:outputLabel for="posto" value="Posto" />
-                                    <h:inputText id="posto" value="#{pessoaMB.posto}"/>
 
                                     <p:outputLabel for="divsol" value="Divisão" />
                                     <p:selectOneMenu id="divsol" value="#{pessoaMB.divisao}">
@@ -86,19 +80,11 @@
                                     </p:column>
                                     <p:column>
                                         <f:facet name="header">NIP</f:facet>
-                                        <h:outputText value="#{pessoa.nip}"/>
+                                        <h:outputText value="#{pessoa.login}"/>
                                     </p:column>
                                     <p:column>
                                         <f:facet name="header">Tipo</f:facet>
                                         <h:outputText value="#{pessoa.tipo}"/>
-                                    </p:column>
-                                    <p:column>
-                                        <f:facet name="header">Especialidade</f:facet>
-                                        <h:outputText value="#{pessoa.especialidade}"/>
-                                    </p:column>
-                                    <p:column>
-                                        <f:facet name="header">Posto</f:facet>
-                                        <h:outputText value="#{pessoa.posto}"/>
                                     </p:column>
                                     <p:column>
                                         <f:facet name="header">Divisão</f:facet>

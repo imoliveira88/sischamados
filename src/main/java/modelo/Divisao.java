@@ -35,10 +35,6 @@ public class Divisao implements Serializable {
     private String nome;
     
     @NotNull
-    @Column(name = "NUMERO")
-    private int numero;
-    
-    @NotNull
     @Column(name = "PRESTADORA")
     private boolean prestadora;
     
@@ -61,14 +57,6 @@ public class Divisao implements Serializable {
         this.nome = nome;
     }
 
-    public int getNumero() {
-        return numero;
-    }
-
-    public void setNumero(int numero) {
-        this.numero = numero;
-    }
-
     public boolean isPrestadora() {
         return prestadora;
     }
@@ -79,20 +67,6 @@ public class Divisao implements Serializable {
 
     public List<Pessoa> getPessoas() {
         return pessoas;
-    }
-    
-    public int primeiroDigito(int numero){
-        return numero/((int) Math.pow(10, (int) Math.log10(numero)));
-    }
-    
-    public int semPrimeiroDigito(int numero){
-        return numero - (int) Math.pow(10, (int) Math.log10(numero))*this.primeiroDigito(numero);
-    }
-    
-    public String numeroString(){
-        if(primeiroDigito(this.numero) == 9) return "0" + this.semPrimeiroDigito(this.numero);
-        if(this.numero < 10) return "0" + this.numero;
-        return "" + this.numero;
     }
 
     @Override

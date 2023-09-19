@@ -16,13 +16,11 @@ import org.hibernate.validator.constraints.NotBlank;
 public class Pessoa implements Serializable {
     private static final long serialVersionUID = 1L;
     
-    public Pessoa(String nome, String senha, String nip, boolean militar, String especialidade, String posto){
+    public Pessoa(String nome, String senha, String nip, String especialidade){
         this.nome = nome;
         this.senha = senha;
-        this.nip = nip;
-        this.militar = militar;
-        this.especialidade = especialidade;
-        this.posto = posto;
+        this.login = nip;
+        this.funcao = especialidade;
         this.chamados = new ArrayList<>();
     }
     
@@ -50,29 +48,22 @@ public class Pessoa implements Serializable {
     @Column(name = "NOME")
     private String nome;
     
-    @Column(name = "POSTO")
-    private String posto;
-    
     @Column(name = "TELEFONE")
     private String telefone;
     
     @Column(name = "EMAIL")
     private String email;
     
-    @Column(name = "ESPECIALIDADE")
-    private String especialidade;
-    
-    @NotNull
-    @Column(name = "MILITAR")
-    private boolean militar;
+    @Column(name = "FUNCAO")
+    private String funcao;
     
     @NotBlank
     @Column(name = "SENHA")
     private String senha;
     
     @NotBlank
-    @Column(name = "NIP")
-    private String nip;
+    @Column(name = "LOGIN")
+    private String login;
     
     public void addChamado(Chamado chamado) {
         chamados.add(chamado);
@@ -110,30 +101,12 @@ public class Pessoa implements Serializable {
         this.tipo = tipo;
     }
 
-    
-    
-    public String getPosto() {
-        return posto;
+    public String getFuncao() {
+        return funcao;
     }
 
-    public void setPosto(String posto) {
-        this.posto = posto;
-    }
-
-    public String getEspecialidade() {
-        return especialidade;
-    }
-
-    public void setEspecialidade(String especialidade) {
-        this.especialidade = especialidade;
-    }
-
-    public boolean getMilitar() {
-        return militar;
-    }
-
-    public void setMilitar(boolean militar) {
-        this.militar = militar;
+    public void setFuncao(String funcao) {
+        this.funcao = funcao;
     }
 
     public Divisao getDivisao() {
@@ -144,12 +117,12 @@ public class Pessoa implements Serializable {
         this.divisao = divisao;
     }
 
-    public String getNip() {
-        return nip;
+    public String getLogin() {
+        return login;
     }
 
-    public void setNip(String nip) {
-        this.nip = nip;
+    public void setLogin(String login) {
+        this.login = login;
     }
 
     public String getNome() {
@@ -178,17 +151,9 @@ public class Pessoa implements Serializable {
     
     @Override
     public String toString(){
-        String s = "";
-        
-        if(this.militar){
-            if(this.especialidade.equals("")) s += this.posto + " " + this.nome;
-            else s += this.posto + "(" + this.especialidade + ") " + this.nome;
-        }else{
-            if(this.posto == null) s += this.nome;
-            else s += this.especialidade + " " + this.nome;
-        }
-        
-        return s;
+        String aux = "";
+        if(this.funcao != null) aux += this.funcao + " ";
+        return  aux + this.nome;
     }
 
     @Override
@@ -199,7 +164,7 @@ public class Pessoa implements Serializable {
     }
 
     public boolean equals(Pessoa usu) {
-        return this.nip.equals(usu.nip);
+        return this.login.equals(usu.login);
     }
     
 }

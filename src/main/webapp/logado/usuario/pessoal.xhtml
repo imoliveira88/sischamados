@@ -25,7 +25,7 @@
                         <td>
 
                             <p:growl id="msgs" for="destinoAviso" showDetail="true" life="4000"/>
-                            <p:fieldset class="field" legend="Cadastro de usuário" style="margin-bottom:20px; background-color: lightsteelblue">
+                            <p:fieldset class="field" legend="Cadastro de usuário" style="margin-bottom:20px; background-color: #3383ff">
                                 <h:panelGrid columns="2" id = "cham"  cellpadding="5">
 
                                     <p:outputLabel for="nome" value="Nome" />
@@ -62,7 +62,7 @@
                 <tr>
                     <td>
                         <h:form>
-                        <p:fieldset class="field" legend="Usuários cadastrados" style="margin-bottom:20px; background-color: lightsteelblue">
+                        <p:fieldset class="field" legend="Usuários cadastrados" style="margin-bottom:20px; background-color: #3383ff">
                             <h:panelGrid columns="2" id = "sol"  cellpadding="5">
                                 <p:dataTable var="pessoa" value="#{pessoaMB.retornaPessoasDivisao(usuario.getDivisao())}" rowKey="#{pessoa.id}" selection="#{pessoaMB.pessoaSelecionada}" selectionMode="single">
                                     <p:column>

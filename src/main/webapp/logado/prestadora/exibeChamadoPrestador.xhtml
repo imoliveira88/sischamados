@@ -27,7 +27,7 @@
                 </td>
                 <td>
                     <h:form enctype="multipart/form-data" id="form">
-                        <p:fieldset legend="Chamado #{chamadoMB.chamadoSelecionado.id}" style="margin-bottom:20px; background-color: lightsteelblue">
+                        <p:fieldset legend="Chamado #{chamadoMB.chamadoSelecionado.id}" style="margin-bottom:20px; background-color: #3383ff">
 
                             <h:panelGrid columns="4"  cellpadding="5">
 
@@ -82,12 +82,12 @@
                             </h:panelGrid>
                         </p:fieldset>
 
-                        <p:fieldset legend="Descrição" style="margin-bottom:20px; background-color: lightsteelblue">
+                        <p:fieldset legend="Descrição" style="margin-bottom:20px; background-color: #3383ff">
 
                             <h:outputText value="#{chamadoMB.chamadoSelecionado.descricao}" escape="false" styleClass="descricao"/>
                         </p:fieldset>
 
-                        <p:fieldset legend="Acrescentar à descrição" style="margin-bottom:20px; background-color: lightsteelblue" >
+                        <p:fieldset legend="Acrescentar à descrição" style="margin-bottom:20px; background-color: #3383ff" >
                             <p:textEditor widgetVar="editor2" value="#{chamadoMB.texto}" height="100" style="width: 400px" secure="false" >
                                 <f:facet name="toolbar">
                                     <span class="ql-formats">

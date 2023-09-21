@@ -36,6 +36,22 @@ table#menu{
 	height: 50px;
 }
 
+.insert-table{
+        box-shadow: 5px 5px 5px #888888;
+        background-color: white;
+        color: black;
+        font-size: 1rem;
+	width: 60%;
+	text-align: center;
+	height: 200px;
+        border-bottom: 2px solid #3383ff;
+        border-top: 2px solid #3383ff;
+        border-left: 2px solid #3383ff;
+        border-right: 2px solid #3383ff;
+        border-radius: 5px;
+        padding:5px;
+}
+
 .login-table{
         box-shadow: 5px 5px 5px #888888;
         background-color: white;
@@ -44,9 +60,11 @@ table#menu{
 	width: 60%;
 	text-align: center;
 	height: 200px;
-        border: 1px;
+        border-bottom: 2px solid #3383ff;
+        border-top: 2px solid #3383ff;
+        border-left: 2px solid #3383ff;
+        border-right: 2px solid #3383ff;
         border-radius: 5px;
-        border-color: gray;
         padding:5px;
 }
 
@@ -55,15 +73,15 @@ table#menu{
 }
 
 .login-button{
-        padding:5px;
-        box-shadow: 5px 5px 5px #888888;
-        background-color: white;
-        color: black;
-	width: 200px;
+        padding:2px;
+        background-color: #3383ff;
+        color: white;
+	width: 100px;
 	text-align: center;
         border: 1px;
         border-radius: 5px;
         border-color: gray;
+        font-weight: bold;
 }
 
 table#menu td{
@@ -147,7 +165,5 @@ body {
 }
 
 .botaoTabela:hover{
-    background-color: transparent;
-    color: aqua;
     cursor:pointer;
 }

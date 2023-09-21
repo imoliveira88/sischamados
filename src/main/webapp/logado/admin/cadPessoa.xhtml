@@ -15,51 +15,63 @@
 
         <ui:decorate template="/templates/decoratorAdmin.xhtml">
 
-            <br/>
-            <br/>
-
+            <h2>Cadastro de usuário</h2>
             <table align="center" width="80%">
                 <tr>
                     <h:form class="formGeral">
-
                         <td>
-
                             <p:growl id="msgs" for="destinoAviso" showDetail="true" life="4000"/>
-                            <p:fieldset class="field" legend="Cadastro de usuário" style="margin-bottom:20px; background-color: lightsteelblue">
-                                <h:panelGrid columns="2" id = "cham"  cellpadding="5">
-
-                                    <p:outputLabel for="nome" value="Nome" />
-                                    <h:inputText id="nome" value="#{pessoaMB.nome}"/>
-
-                                    <p:outputLabel for="nip" value="Login" />
-                                    <h:inputText id="nip" value="#{pessoaMB.nip}"/>
-                                    
-                                    <p:outputLabel value="Perfil de usuário: "/>
-                                    <p:selectOneMenu id="tipos" value="#{pessoaMB.tipo}">
-                                        <f:selectItems value="#{pessoaMB.tipos}" var="tip" itemValue="#{tip}" />
-                                    </p:selectOneMenu>
-                                    
-                                    <p:outputLabel for="senha" value="Senha" />
-                                    <p:password id="senha" value="#{pessoaMB.senha}"/>
-                                    
-                                    <p:outputLabel for="telefone" value="Telefone" />
-                                    <h:inputText id="telefone" value="#{pessoaMB.telefone}"/>
-                                    
-                                    <p:outputLabel for="email" value="E-mail" />
-                                    <h:inputText id="email" value="#{pessoaMB.email}"/>
-
-                                    <p:outputLabel for="especialidade" value="Função" />
-                                    <h:inputText id="especialidade" value="#{pessoaMB.especialidade}"/>
-
-                                    <p:outputLabel for="divsol" value="Divisão" />
-                                    <p:selectOneMenu id="divsol" value="#{pessoaMB.divisao}">
-                                        <f:selectItems value="#{divisaoMB.divisoes}" var="divi" itemValue="#{divi.nome}" />
-                                    </p:selectOneMenu>
-
-                                    <h:commandButton class="botaoTabela" value="Salvar" action="#{pessoaMB.cadastraUsuario()}"/>
-
-                                </h:panelGrid>
-                            </p:fieldset>
+                            <table class="insert-table" align="center">
+                                <tr>
+                                    <td><p:outputLabel for="nome" value="Nome" /></td>
+                                    <td><h:inputText id="nome" value="#{pessoaMB.nome}"/></td>
+                                </tr>
+                                <tr>
+                                    <td><p:outputLabel for="nip" value="Login" /></td>
+                                    <td><h:inputText id="nip" value="#{pessoaMB.nip}"/></td>
+                                </tr>
+                                <tr>
+                                    <td><p:outputLabel value="Perfil de usuário: "/></td>
+                                    <td>
+                                        <p:selectOneMenu id="tipos" value="#{pessoaMB.tipo}">
+                                            <f:selectItems value="#{pessoaMB.tipos}" var="tip" itemValue="#{tip}" />
+                                        </p:selectOneMenu>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><p:outputLabel for="senha" value="Senha" /></td>
+                                    <td><p:password id="senha" value="#{pessoaMB.senha}"/></td>
+                                </tr>
+                                <tr>
+                                    <td><p:outputLabel for="telefone" value="Telefone" /></td>
+                                    <td><h:inputText id="telefone" value="#{pessoaMB.telefone}"/></td>
+                                </tr>
+                                <tr>
+                                    <td><p:outputLabel for="email" value="E-mail" /></td>
+                                    <td><h:inputText id="email" value="#{pessoaMB.email}"/></td>
+                                </tr>
+                                <tr>
+                                    <td><p:outputLabel for="especialidade" value="Função" /></td>
+                                    <td><h:inputText id="especialidade" value="#{pessoaMB.especialidade}"/></td>
+                                </tr>
+                                <tr>
+                                    <td><p:outputLabel for="divsol" value="Divisão" /></td>
+                                    <td>
+                                        <p:selectOneMenu id="divsol" value="#{pessoaMB.divisao}">
+                                            <f:selectItems value="#{divisaoMB.divisoes}" var="divi" itemValue="#{divi.nome}" />
+                                        </p:selectOneMenu>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <table class="login-button" align="center">
+                                            <tr>
+                                                <td><h:commandButton class="botaoTabela" value="Salvar" action="#{pessoaMB.cadastraUsuario()}"/></td>
+                                            </tr>
+                                        </table>  
+                                    </td>
+                                </tr>
+                            </table>
                         </td>
                     </h:form>
                 </tr>
@@ -67,7 +79,7 @@
                 <tr>
                     <td>
                         <h:form>
-                        <p:fieldset class="field" legend="Usuários cadastrados" style="margin-bottom:20px; background-color: lightsteelblue">
+                        <p:fieldset class="field" legend="Usuários cadastrados" style="margin-bottom:20px; background-color: #3383ff">
                             <h:panelGrid columns="2" id = "sol"  cellpadding="5">
                                 <p:dataTable var="pessoa" rows="10" rowsPerPageTemplate="5,10,15" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" paginator="true" value="#{pessoaMB.pessoas}" rowKey="#{pessoa.id}" selection="#{pessoaMB.pessoaSelecionada}" selectionMode="single">
                                     <p:column>

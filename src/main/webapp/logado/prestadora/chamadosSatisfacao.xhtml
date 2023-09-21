@@ -24,7 +24,7 @@
                 </td>
                 <td>
                     <h:form enctype="multipart/form-data" id="form">
-                        <p:fieldset legend="Meus chamados" style="margin-bottom:20px; background-color: lightsteelblue">
+                        <p:fieldset legend="Meus chamados" style="margin-bottom:20px; background-color: #3383ff">
                             
                             <p:dataTable id="detalhes" paginator="true" rows="10" rowsPerPageTemplate="10,20" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" emptyMessage="Não há chamados criados por sua divisão com status 'Executado'!"  var="chamado" value="#{chamadoMB.getChamadosPorDivisaoStatus(usuario.divisao,'Executado')}" rowKey="#{chamado.id}" selection="#{chamadoMB.chamadoSelecionado}" selectionMode="single">
                                 <p:column>

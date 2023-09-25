@@ -55,7 +55,7 @@
                                     <td><h:inputText id="especialidade" value="#{pessoaMB.especialidade}"/></td>
                                 </tr>
                                 <tr>
-                                    <td><p:outputLabel for="divsol" value="Divisão" /></td>
+                                    <td><p:outputLabel for="divsol" value="Setor" /></td>
                                     <td>
                                         <p:selectOneMenu id="divsol" value="#{pessoaMB.divisao}">
                                             <f:selectItems value="#{divisaoMB.divisoes}" var="divi" itemValue="#{divi.nome}" />
@@ -79,43 +79,49 @@
                 <tr>
                     <td>
                         <h:form>
-                        <p:fieldset class="field" legend="Usuários cadastrados" style="margin-bottom:20px; background-color: #3383ff">
-                            <h:panelGrid columns="2" id = "sol"  cellpadding="5">
-                                <p:dataTable var="pessoa" rows="10" rowsPerPageTemplate="5,10,15" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" paginator="true" value="#{pessoaMB.pessoas}" rowKey="#{pessoa.id}" selection="#{pessoaMB.pessoaSelecionada}" selectionMode="single">
-                                    <p:column>
-                                        <f:facet name="header">ID</f:facet>
-                                        <h:outputText value="#{pessoa.id}"/>
-                                    </p:column>
-                                    
-                                    <p:column filterBy="#{pessoa.nome}" headerText="Nome" filterMatchMode="contains">
-                                        <h:outputText value="#{pessoa.nome}"/>
-                                    </p:column>
-                                    <p:column>
-                                        <f:facet name="header">NIP</f:facet>
-                                        <h:outputText value="#{pessoa.login}"/>
-                                    </p:column>
-                                    <p:column>
-                                        <f:facet name="header">Tipo</f:facet>
-                                        <h:outputText value="#{pessoa.tipo}"/>
-                                    </p:column>
-                                    <p:column>
-                                        <f:facet name="header">Divisão</f:facet>
-                                        <h:outputText value="#{pessoa.divisao}"/>
-                                    </p:column>
-                                </p:dataTable>
-                            </h:panelGrid>
-                            <h:panelGrid columns="3" cellpadding="5">
-                                <h:commandButton styleClass="botaoTabela" value="Resetar senha" action="#{pessoaMB.resetaSenha(pessoaMB.pessoaSelecionada.id)}"/>
-                                <h:commandButton id="excluiPessoa" styleClass="botaoTabela" value="Excluir" action="#{pessoaMB.excluiUsuario(pessoaMB.pessoaSelecionada.id)}"/>
-                                <h:commandButton id="atualizaPessoa" styleClass="botaoTabela" value="Atualizar" action="#{pessoaMB.atualizaUsuario(pessoaMB.pessoaSelecionada.id)}"/>
-                            </h:panelGrid>
-                        </p:fieldset>
+                            <h2>Usuários cadastrados</h2>
+                            <table class="insert-table" align="center">
+                                <tr><td>
+
+                                        <h:panelGrid columns="2" id = "sol"  cellpadding="5">
+                                            <p:dataTable var="pessoa" rows="10" rowsPerPageTemplate="5,10,15" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" paginator="true" value="#{pessoaMB.pessoas}" rowKey="#{pessoa.id}" selection="#{pessoaMB.pessoaSelecionada}" selectionMode="single">
+                                                <p:column>
+                                                    <f:facet name="header">ID</f:facet>
+                                                    <h:outputText value="#{pessoa.id}"/>
+                                                </p:column>
+
+                                                <p:column filterBy="#{pessoa.nome}" headerText="Nome" filterMatchMode="contains">
+                                                    <h:outputText value="#{pessoa.nome}"/>
+                                                </p:column>
+                                                <p:column>
+                                                    <f:facet name="header">Login</f:facet>
+                                                    <h:outputText value="#{pessoa.login}"/>
+                                                </p:column>
+                                                <p:column>
+                                                    <f:facet name="header">Tipo</f:facet>
+                                                    <h:outputText value="#{pessoa.tipo}"/>
+                                                </p:column>
+                                                <p:column>
+                                                    <f:facet name="header">Setor</f:facet>
+                                                    <h:outputText value="#{pessoa.divisao}"/>
+                                                </p:column>
+                                            </p:dataTable>
+
+                                        </h:panelGrid>
+                                    </td>
+                                </tr>
+                                <tr><td>
+                                        <h:panelGrid columns="3" cellpadding="5">
+                                            <h:commandButton styleClass="botaoTabela" value="Resetar senha" action="#{pessoaMB.resetaSenha(pessoaMB.pessoaSelecionada.id)}"/>
+                                            <h:commandButton id="excluiPessoa" styleClass="botaoTabela" value="Excluir" action="#{pessoaMB.excluiUsuario(pessoaMB.pessoaSelecionada.id)}"/>
+                                            <h:commandButton id="atualizaPessoa" styleClass="botaoTabela" value="Atualizar" action="#{pessoaMB.atualizaUsuario(pessoaMB.pessoaSelecionada.id)}"/>
+                                        </h:panelGrid>
+                                    </td>
+                                </tr>
+                            </table>
                         </h:form>
-                    </td>
-                </tr>
-
-
-            </table>
+                    </td></tr>
+                        </table>
 
         </ui:decorate>
 

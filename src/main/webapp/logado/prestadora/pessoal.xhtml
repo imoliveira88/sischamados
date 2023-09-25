@@ -46,7 +46,7 @@
                                     <p:outputLabel for="especialidade" value="Especialidade" />
                                     <h:inputText id="especialidade" value="#{pessoaMB.especialidade}"/>
 
-                                    <p:outputLabel for="divsol" value="Divisão" />
+                                    <p:outputLabel for="divsol" value="Setor" />
                                     <p:selectOneMenu id="divsol" value="#{pessoaMB.divisao}">
                                         <f:selectItems value="#{divisaoMB.divisoes}" var="divi" itemValue="#{divi.nome}" />
                                     </p:selectOneMenu>
@@ -74,7 +74,7 @@
                                         <h:outputText value="#{pessoa.nome}"/>
                                     </p:column>
                                     <p:column>
-                                        <f:facet name="header">NIP</f:facet>
+                                        <f:facet name="header">Login</f:facet>
                                         <h:outputText value="#{pessoa.login}"/>
                                     </p:column>
                                     <p:column>
